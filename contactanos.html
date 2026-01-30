@@ -16,31 +16,33 @@
  
 
     <div class="container-izquierda justify-content-start">
-        <form class="form">
+
+            <form action="https://formsubmit.co/emmanperez.19@gmail.com" method="POST">
             <p class="subtitulo">Envíanos un Mensaje</p>
               <div class="mb-3">
                 <h3 class="subtitulo"></h3>
     <label for="fullName" class="form-label">Nombre Completo*</label>
-    <input type="text" class="submissionfield form-control" id="nombreCompleto" required>
+    <input type="text" name="NombreCompleto" class="submissionfield form-control" id="nombreCompleto" required>
   </div>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email*</label>
-    <input type="email" class="submissionfield form-control" id="exampleInputEmail1" required>
+    <input type="email" name="email" class="submissionfield form-control" id="exampleInputEmail1" required>
   </div>
     <div class="mb-3">
     <label for="phoneNumber" class="form-label">Teléfono</label>
-    <input type="text" class="submissionfield form-control" id="numeroTelefono" >
+    <input type="tel" name="NumerodeTelefono" class="submissionfield form-control" id="numeroTelefono" >
   </div>
       <div class="mb-3">
     <label for="subject" class="form-label">Asunto*</label>
-    <input type="tel" class="submissionfield form-control" id="asunto" required>
+    <input type="tel" name="Asunto" class="submissionfield form-control" id="asunto" required>
   </div>
       <div class="mb-3">
     <label for="message" class="form-label">Mensaje*</label>
-    <input type="text" class="submissionfieldLarge form-control" id="mensaje" required>
+    <input type="text" name="Mensaje" class="submissionfieldLarge form-control" id="mensaje" required>
   </div>
   
-  
+    <input type="hidden" name="_autoresponse" value="Muchas gracias por contactanos, le enviamos una copia de su solicitud, en breve nos pondremos en Contacto">
+
   <button type="submit" class="btn btn-primary">Enviar Mensaje</button> 
 </form> </div>
     <div class="container-derecha d-flex justify-content-end">
@@ -101,7 +103,6 @@
 
 
 
-<!-- <a class="llamar" href="tel:+521121231212"></a> -->
 
 
 
