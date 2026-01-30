@@ -185,3 +185,103 @@ border-radius: 0px;
  .acomodar{
     padding: 10px;
  }
+
+ *,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.container-total{
+  padding: 0 16px;
+}
+
+.container-izquierda,
+.container-derecha,
+.container-arriba,
+.container-abajo{
+  width: 100%;
+  max-width: 584px;
+}
+
+.container-izquierda{
+  height: auto;
+  min-height: 800px;
+}
+
+.container-derecha{
+  height: auto;
+  min-height: 800px;
+}
+
+.container-arriba{
+  height: auto;
+  min-height: 531px;
+}
+
+.container-abajo{
+  height: auto;
+  min-height: 232px;
+}
+
+.submissionfield,
+.submissionfieldLarge,
+.btn{
+  width: 100%;
+  max-width: 520.03px;
+}
+
+.submissionfieldLarge{
+  max-width: 520px;
+}
+
+@media (max-width: 992px){
+  .container-total{
+    gap: 24px;
+  }
+
+  .container-izquierda,
+  .container-derecha,
+  .container-arriba,
+  .container-abajo{
+    max-width: 720px;
+  }
+}
+
+@media (max-width: 576px){
+  .container-total{
+    margin-top: 20px;
+    gap: 18px;
+    padding: 0 12px;
+  }
+
+  .container-izquierda,
+  .container-arriba,
+  .container-abajo{
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .subtitulo,
+  .subtituloa{
+    font-size: 20px;
+  }
+
+  .subtituloAyuda{
+    font-size: 20px;
+  }
+
+  .infoTexto{
+    margin-left: 0;
+    margin-top: 6px;
+  }
+
+  .info{
+    gap: 10px;
+  }
+
+  .logoMini{
+    height: 40px;
+    width: 40px;
+  }
+}
