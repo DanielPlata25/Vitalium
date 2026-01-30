@@ -70,28 +70,18 @@ nav {
     color: var(--background);
 }
 
-.title-nosotros h2 {
-    font-size: 3.5rem;
+.title-nosotros h1 {
+    font-size: 50px;
+    color: white;
     font-weight: 800;
     margin-bottom: 10px;
-    text-shadow: 2px 2px 10px rgba(0,0,0,0.3); /* Ayuda a que el texto resalte más */
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.3); 
 }
 
-.title-nosotros p {
-    font-size: 1.4rem;
-    color: var(--acent-green);
-}
-
-
-.title-nosotros h2 {
-    color: white; 
-    font-size: 3rem;
-    margin-bottom: 10px;
-}
 
 .title-nosotros p {
     color: var(--acent-green);
-    font-size: 1.2rem;
+    font-size: 20px;
 }
 
 /* Sección Quiénes Somos */
@@ -103,9 +93,9 @@ nav {
     align-items: center;
 }
 
-.qs-content h3 {
+.qs-content h2 {
     color: var(--dark-green);
-    font-size: 2rem;
+    font-size: 42px;
     margin-bottom: 20px;
 }
 
@@ -115,6 +105,7 @@ nav {
     text-align: justify;
     color:var(--textcolor);
     line-height: 1.8;
+    font-size: 19px;
 }
 
 .qs-image img {
@@ -140,6 +131,9 @@ nav {
 .origen-section .qs-content {
     order: 2; 
 }
+.origen-section .qs-content p{
+    font-size: 19;
+}
 .origen-section .qs-image {
     order: 1; 
 }
@@ -147,6 +141,32 @@ nav {
     width: 100%;
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(45, 90, 39, 0.2);
+}
+
+.team-section {
+    display: block; /* Cambiamos de grid a block para que ocupe todo el ancho */
+    padding: 60px 10%; /* Mantenemos el respiro a los lados */
+    text-align: center; /* Opcional: centra el título y el cuerpo para mejor estética */
+}
+
+.ts-content {
+    max-width: 900px;  
+    margin: 0 auto;
+}
+
+.ts-content h2 {
+    color: var(--dark-green);
+    font-size: 42px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.ts-content p {
+    margin-bottom: 15px;
+    line-height: 1.8;
+    text-align: justify; /* Mantiene el bloque de texto limpio */
+    color: var(--textcolor);
+    font-size: 19px;
 }
 
 
@@ -173,7 +193,7 @@ nav {
 .valor-card .number {
     background: var(--acent-green);
     font-weight: bold;
-    color:var(--background);
+    color:var(--dark-green);
     width: 40px;
     height: 40px;
     display: flex;
@@ -181,16 +201,17 @@ nav {
     justify-content: center;
     border-radius: 50%;
     margin-bottom: 15px;
-    font-size: 1.2rem;
+    font-size: 19px;
 }
 
-.valor-card h4 {
+.valor-card h3 {
     color: var(--dark-green);
     margin-bottom: 10px;
+    font-size: 20px;
 }
 
 .valor-card p {
-    font-size: 0.9rem;
+    font-size: 16px;
     color:var(--textcolor);
     line-height: 1.4;
 }
@@ -262,13 +283,13 @@ nav {
 
 .team-info h4 {
     color: var(--dark-green); 
-    font-size: 1.2rem;
+    font-size: 22px;
     margin-bottom: 8px;
 }
 
 .team-info p {
     color: #666;
-    font-size: 0.9rem;
+    font-size: 19px;
     margin-bottom: 20px;
     font-weight: 300;
 }
@@ -282,7 +303,7 @@ nav {
     border-radius: 20px;
     text-decoration: none;
     color:var(--dark-green);
-    font-size: 0.85rem;
+    font-size: 19px;
     font-weight: 600;
     transition: background 0.3s;
 }
@@ -302,6 +323,103 @@ nav {
 @media (max-width: 600px) {
     .equipo-grid { grid-template-columns: 1fr; }
 }
+
+
+/*! Normativas*/
+
+.normativas {
+  padding: 80px 70px;
+  text-align: center;
+}
+
+.normativas h2 {
+  font-size: 42px;
+  color: var(--dark-green);
+  margin-bottom: 20px;
+}
+
+.normativas-text {
+  font-size: 22px;
+  max-width: 850px;
+  margin: 0 auto 60px;
+  color: var(--textcolor);
+}
+
+/* Flexbox para permitir el centrado de la última fila */
+.normativas-cards {
+  display: flex;
+  flex-wrap: wrap;       /* Permite que las cards bajen a la siguiente fila */
+  gap: 35px;
+  justify-content: center; /* ESTA ES LA CLAVE: centra las 3 de arriba y las 2 de abajo */
+  max-width: 1200px;     /* Ajusta según el ancho de tu contenedor */
+  margin: 0 auto;
+}
+
+.normativa-card {
+  background-color: white;
+  padding: 35px 25px;
+  border-radius: 14px;
+  /* Calculamos el ancho para que quepan 3 por fila restando el gap */
+  flex: 1 1 calc(33.333% - 35px); 
+  max-width: 320px;
+  min-width: 280px;      /* Evita que se hagan demasiado flacas */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* Centra el contenido interno (imagen, h3, p) */
+}
+
+.normativa-card:hover {
+  transform: translateY(-8px);
+}
+
+/* Iconos */
+.normativa-card img {
+  width: 70px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+/* Títulos más grandes */
+.normativa-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--dark-green);
+  margin-bottom: 14px;
+}
+
+/* Texto */
+.normativa-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--textcolor);
+}
+
+/* Responsive */
+
+/* Ajuste para tablets: 2 por fila */
+@media (max-width: 1024px) {
+  .normativa-card {
+    flex: 1 1 calc(50% - 35px);
+  }
+}
+
+/* Ajuste para móviles: 1 por fila */
+@media (max-width: 600px) {
+  .normativas {
+    padding: 60px 20px;
+  }
+  .normativa-card {
+    flex: 1 1 100%;
+  }
+}
+  .normativas-cards {
+    grid-template-columns: 1fr;
+  }
+
+
+
 
 /*! Footer*/
 
