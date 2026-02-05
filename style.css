@@ -1,0 +1,288 @@
+body{
+    background-color: rgb(242,242,242);
+   
+}
+.container-total{
+     display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 40px;
+    
+ 
+}
+.container-izquierda{
+  box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  background-color: white;
+
+  height: 800px;
+  width: 584px;
+  padding: 30px;
+
+  display: flex;
+  flex-direction: column;   
+  align-items: stretch;
+}
+
+.container-derecha{
+        display: flex;
+
+    flex-direction: column;
+     height: 800px;
+    width: 584px;
+    gap: 38px;
+}
+.container-arriba{
+    
+        border-radius: 15px;
+box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.3);
+
+        display: flex;
+flex-direction: column;
+    background-color: white;
+    padding: 20px;
+    height: 531px ;
+    width: 584px;
+}
+.container-abajo{
+        border-radius: 15px;
+box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.3);
+
+    padding: 30px;
+        display: flex;
+flex-direction: column;
+    background-color: rgb(45, 90, 39);
+     height: 232px;
+    width: 584px;
+}
+.subtitulo{
+    margin-top: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    color: rgb(45, 90, 39);;
+
+}
+.subtituloa{
+    margin-top: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    color: rgb(45, 90, 39);;
+
+}
+/* .form{
+    
+} */
+ .btn{
+margin-top: 20px;
+width: 520.03px;
+height: 47.98px;
+
+background: #70AD47;
+border-radius: 8px;
+
+/* Dentro del diseño automático */
+flex: none;
+order: 5;
+align-self: stretch;
+flex-grow: 0;
+
+ }
+ .buttonLlamanos{
+    margin-top: 10px;
+color: white;
+width: 161.49px;
+height: 47.98px;
+left: 31.99px;
+top: 151.95px;
+
+background: #70AD47;
+border-radius: 8px;
+
+ }
+ .a{
+    /* Form */
+
+/* Diseño automático */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+gap: 23.99px;
+
+width: 520.03px;
+height: 679.23px;
+
+border-radius: 0px;
+
+/* Dentro del diseño automático */
+
+
+ }
+ .submissionfieldLarge{
+    height: 146px;
+    width: 520px;
+ }
+  .submissionfield{
+    height: 48.36px;
+    width: 520.03px;
+  }
+  .subtitulosub{
+   color:  rgb(45 90 39);
+   font-family: Arial, Helvetica, sans-serif;
+   font-size: 18px;
+   margin-bottom: 0px;
+  }
+  .infoContacto{
+     
+      margin: 1px;
+  line-height: 1.2;
+   
+    color: rgb(45 52 54);
+    font-family: Arial, Helvetica, sans-serif;
+    font-family: 16px;
+  }
+  .logoMini{
+    height: 48px;
+    width: 48px;
+  }
+  .subtituloAyuda{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    color: white;
+  }
+  .textoAyuda{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: rgb(169 208 142);
+  }
+
+  .info{
+
+    display: flex;
+    gap: 16px;
+    margin-bottom: 0;
+  }
+  .subtitulob{
+    margin-bottom: 20px;
+  }
+  .tituloContacto{
+   color: #2D5A27;
+  }
+  .infoTexto{
+    margin-bottom: 12px;
+    margin-top: -15px;
+  margin-left: 64px;
+}
+/* .container-info{
+
+} */
+ .juntar{
+    display: flex;
+    flex-direction: column;
+ }
+ .acomodar{
+    padding: 10px;
+ }
+
+ *,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.container-total{
+  padding: 0 16px;
+}
+
+.container-izquierda,
+.container-derecha,
+.container-arriba,
+.container-abajo{
+  width: 100%;
+  max-width: 584px;
+}
+
+.container-izquierda{
+  height: auto;
+  min-height: 800px;
+}
+
+.container-derecha{
+  height: auto;
+  min-height: 800px;
+}
+
+.container-arriba{
+  height: auto;
+  min-height: 531px;
+}
+
+.container-abajo{
+  height: auto;
+  min-height: 232px;
+}
+
+.submissionfield,
+.submissionfieldLarge,
+.btn{
+  width: 100%;
+  max-width: 520.03px;
+}
+
+.submissionfieldLarge{
+  max-width: 520px;
+}
+
+@media (max-width: 992px){
+  .container-total{
+    gap: 24px;
+  }
+
+  .container-izquierda,
+  .container-derecha,
+  .container-arriba,
+  .container-abajo{
+    max-width: 720px;
+  }
+}
+
+@media (max-width: 576px){
+  .container-total{
+    margin-top: 20px;
+    gap: 18px;
+    padding: 0 12px;
+  }
+
+  .container-izquierda,
+  .container-arriba,
+  .container-abajo{
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .subtitulo,
+  .subtituloa{
+    font-size: 20px;
+  }
+
+  .subtituloAyuda{
+    font-size: 20px;
+  }
+
+  .infoTexto{
+    margin-left: 0;
+    margin-top: 6px;
+  }
+
+  .info{
+    gap: 10px;
+  }
+  .logoMini{
+    height: 40px;
+    width: 40px;
+  }
+}
