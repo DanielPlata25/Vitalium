@@ -84,6 +84,13 @@ nav {
   font-size: 1.5rem;
   cursor: pointer
 }
+.nav-container img {
+            width: 25%;
+            height: auto;
+            display: block;
+            align-self: center; 
+            object-fit: contain; 
+}
 
 @media(max-width: 768px){
   .menu-btn{
@@ -562,6 +569,32 @@ footer div h4 {
 .footer-links li a:hover {
   color: var(--acent-green);
 }
+.footer-logo-img {
+    max-width: 100%; 
+    height: auto;
+    margin-bottom: 15px;
+    
+    transition: transform 0.3s;
+}
+.legal-notice {
+    max-width: 700px;
+    margin: 0 auto 15px;
+    padding: 12px;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+}
+.notice-text {
+    color: #d46f6f;
+    font-size: 0.7rem;
+    line-height: 1.5;
+    margin: 0;
+}
+.footer-copy {
+    color: #d46f6f;
+    font-size: 0.7rem;
+    margin-top: 10px;
+}
+
 
 @media (max-width: 768px) {
   footer {
