@@ -74,6 +74,19 @@ nav {
   font-size: 1.5rem;
   margin: 0;
 }
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 95px; 
+    width: auto;  
+    max-width: 200px; 
+    object-fit: contain; 
+    
+}
 
 /*! boton hamburguesa responsive*/
 .menu-btn {
@@ -84,11 +97,21 @@ nav {
   font-size: 1.5rem;
   cursor: pointer
 }
+@media (min-width: 769px) {
+    .nav-links {
+        display: flex !important; /* Siempre visible en desktop */
+    }
+    
+    .menu-btn {
+        display: none; /* Ocultar botón en desktop */
+    }
+}
 
 @media(max-width: 768px){
   .menu-btn{
     display: block;
     order: 3;
+    display: block;
   }
   .cart-login{
     order: 2;
@@ -104,10 +127,12 @@ nav {
     padding: 1rem 0;
     clip-path: circle(0px at 90% -10%);
     pointer-events: none;
+    
   }
   .nav-links.active {
     clip-path: circle(1000px at 90% -10%);
     pointer-events: all;
+    display: flex;
   }
 
   .nav-links li {
@@ -517,63 +542,132 @@ nav {
 
 /*! Footer*/
 
-footer {
-  display: flex;
-  gap: 40px;
-  flex-wrap: wrap;
-
-
-  padding: 40px 70px;
-
-  background-color: var(--dark-green);
-  color: var(--acent-green);
+.footer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    background-color:#2D5A27;
+    color: #fff;
+    padding: 50px 30px 0;
+    margin-top: 50px;
 }
 
-footer div{
-  flex: 3;
-  min-width: 200px;
-
-}
-
-footer div h4 {
-  color: white;
-  padding-bottom: 5px;
-  margin-bottom: 15px;
+/* Estilos para las columnas */
+.footer-col h4 {
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
 }
 
 .footer-links {
-  list-style: none;
-  gap: 8px;
-  margin-bottom: 10px;
-  padding: 0;
-
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .footer-links li {
-  padding: 5px 0;
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
-.footer-links li a {
-  text-decoration: none;
-  color: #70AD47;
+.footer-links a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
-.footer-links li a:hover {
-  color: var(--acent-green);
+.footer-links a:hover {
+    color: #88887d;
+}
+
+/* Logo y descripción */
+.footer-logo {
+    height: 120px;
+    width: auto;
+    margin-bottom: 15px;
+}
+
+.footer-description {
+    color: #ccc;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* ===== COPYRIGHT - TOTALMENTE CENTRADO ===== */
+.footer-bottom {
+    grid-column: 1 / -1; /* Ocupa todo el ancho */
+    margin-top: 50px;
+    padding: 25px 0 30px;
+    border-top: 2px solid #77756e5b; /* Línea amarilla visible */
+    width: 100%;
+}
+
+.footer-bottom-content {
+    display: flex;
+    flex-direction: column; /* Apila verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center;
+    text-align: center;
+    gap: 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.footer-bottom p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+.footer-legal-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.footer-legal-links a {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color 0.3s ease;
+}
+
+.footer-legal-links a:hover {
+    color: #ffc107;
+}
+
+.separator {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.8rem;
+}
+
+
+@media (max-width: 992px) {
+    .footer {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (max-width: 768px) {
-  footer {
-    padding: 40px 20px;
-    flex-direction:column;
-    text-align: center;
-  }
-
-  footer div{
-    min-width: 100%;
-  }
-
+    .footer {
+        grid-template-columns: 1fr;
+        padding: 40px 20px 0;
+    }
+    
+    .footer-bottom {
+        margin-top: 40px;
+        padding: 20px 0 25px;
+    }
+    
+    .footer-legal-links {
+        gap: 10px;
+    }
+    
+    .footer-legal-links a {
+        font-size: 0.75rem;
+    }
 }
 
 /* ========================================
