@@ -10,71 +10,99 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto+Mono:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="./css/StylesNavBar.css">
+  <link rel="stylesheet" href="./css/index.css">
   <title>Navbar Responsivo</title>
 </head>
 
 <body>
-    <nav>
-        <div class="nav-container">
-
-            <p>Vittalium</p>
-            
-            <button class="menu-btn" id="menuBtn">☰</button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="catalogo-producto.html">Producto</a></li>
-                <li><a href="nosotros.html">Nosotros</a></li>
-                <li><a href="contactanos.html">Contacto</a></li>
-            </ul>
-        
-            <div class="cart-login">
-                <button>Login</button>
-                <Button>Carrito</Button>
-            </div>
-        </div>    
-    </nav>
+  <header id="navbar-container">
+    <!-- El navbar se carga aquí automáticamente -->
+  </header>
 
   <!--! Main -->
-  <main class="content">
-    <div class="">
-      <h2></h2>
+
+
+  <section class="title">
+    <div class="title-content">
+      <h1>Vittalium</h1>
+      <p>Tu Salud es Nuestra Prioridad</p>
+      <button class="btn-products"><a href="#products">Ver Productos</a></button>
     </div>
-  </main>
+  </section>
+
+  <section class="info">
+    <div class="info-card">
+      <div class="info-icon"><i class="fi fi-rr-leaf"></i></div>
+      <h4>100% Natural</h4>
+      <p>Ingredientes naturales de la más alta calidad</p>
+    </div>
+    <div class="info-card">
+      <div class="info-icon"><i class="fi fi-rr-diploma"></i></div>
+      <h4>Certificado</h4>
+      <p>Productos certificados y probados científicamente</p>
+    </div>
+    <div class="info-card">
+      <div class="info-icon"><i class="fi fi-rr-truck-side"></i></div>
+      <h4>Envío Gratis</h4>
+      <p>En compras mayores a $50</p>
+    </div>
+    <div class="info-card">
+      <div class="info-icon"><i class="fi fi-rr-heart"></i></div>
+      <h4>Garantía</h4>
+      <p>30 días de garantía de satisfacción</p>
+    </div>
+  </section>
+
+  <section class="products">
+    <h2>Productos Destacados</h2>
+    <div class="product-list">
+      <div class="product-card">
+        <img src="img/producto_prueba.png" alt="Multivitamínico Premium">
+        <h4 class="product-title">Multivitamínico Premium</h4>
+        <p class="product-description">Complejo vitamínico completo para tu salud diaria</p>
+        <div class="price-btn">
+          <p class="product-price">$29.99</p>
+          <button class="btn"><a href="#">Agregar</a></button>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="img/producto_prueba.png" alt="Multivitamínico Premium">
+        <h4 class="product-title">Multivitamínico Premium</h4>
+        <p class="product-description">Complejo vitamínico completo para tu salud diaria</p>
+        <div class="price-btn">
+          <p class="product-price">$29.99</p>
+          <button class="btn"><a href="#">Agregar</a></button>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="img/producto_prueba.png" alt="Multivitamínico Premium">
+        <h4 class="product-title">Multivitamínico Premium</h4>
+        <p class="product-description">Complejo vitamínico completo para tu salud diaria</p>
+        <div class="price-btn">
+          <p class="product-price">$29.99</p>
+          <button class="btn"><a href="#">Agregar</a></button>
+        </div>
+      </div>
+    </div>
+    <button class="btn-all"><a href="#">Ver todos los productos</a></button>
+  </section>
+
+  <section class="joinUs">
+    <h2>¿Listo para Mejorar tu Salud?</h2>
+    <p>Únete a miles de clientes satisfechos que confían en Vittalium</p>
+    <button class="btn-join"><a href="#">Comprar Ahora</a></button>
+  </section>
+
   <!--! Footer -->
 
- <footer>
-        <div>
-            <p>Suplementos alimenticios de la más alta calidad para tu bienestar</p>
-        </div>
-        <div>
-            <h4>Enlaces Rápidos</h4>
-            <ul class="footer-links">
-                <li><a href="/index.html">Inicio</a></li>
-                <li><a href="#">Producto</a></li>
-                <li><a href="/nosotros.html">Nosotros</a></li>
-                <li><a href="#">Contacto</a></li>
-            </ul>
-        </div>
-        <div>
-            <h4>Enlaces Rápidos</h4>
-            <ul class="footer-links">
-                <li><a href="#">Telefono</a></li>
-                <li><a href="#">Correo</a></li>
-                <li><a href="#">Direccion</a></li>
-            </ul>
-        </div>
-        <div>
-            <h4>Siguenos</h4>
-            <ul class="footer-links">
-                <li><a href="#">Facebook</a></li>
-                <li><a href="#">Insta</a></li>
-                <li><a href="#">X</a></li>
-            </ul>
-        </div>
-    </footer>
-    <script src="script.js"></script>
+  <!-- Footer Container -->
+  <div id="footer-container">
+    <!-- El footer se carga aquí automáticamente -->
+  </div>
 
-
+  <!-- Script para cargar componentes -->
+  <script src="./js/components.js"></script>
+  <script src="./js/navbar.js"></script>
 </body>
 
 </html>
