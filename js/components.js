@@ -34,10 +34,63 @@ function inicializarMenu() {
         return;
     }
     
-    menuBtn.addEventListener('click', () => {
+    // Variable para controlar el timeout del scroll
+    let scrollTimeout;
+    
+    // Toggle del menú al hacer click
+    menuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         navLinks.classList.toggle('active');
         menuBtn.classList.toggle('active');
+        
+        // Cambiar el icono
+        menuBtn.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
     });
     
-    console.log('✅ Menú hamburguesa inicializado');
+    // Cerrar menú al hacer scroll
+    window.addEventListener('scroll', () => {
+        // Limpiar timeout anterior
+        clearTimeout(scrollTimeout);
+        
+        // Ejecutar después de que el usuario deje de hacer scroll
+        scrollTimeout = setTimeout(() => {
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                menuBtn.classList.remove('active');
+                menuBtn.textContent = '☰'; // Restaurar icono
+            }
+        }, 50); // Pequeño retraso para mejor rendimiento
+    });
+    
+    //  Cerrar menú al hacer click en un enlace
+    const navItems = document.querySelectorAll('.nav-links a');
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            menuBtn.classList.remove('active');
+            menuBtn.textContent = '☰';
+        });
+    });
+    
+    //  Cerrar menú al hacer click fuera
+    document.addEventListener('click', (e) => {
+        const isClickInside = menuBtn.contains(e.target) || navLinks.contains(e.target);
+        
+        if (!isClickInside && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            menuBtn.classList.remove('active');
+            menuBtn.textContent = '☰';
+        }
+    });
+    
+    //  Cerrar menú al redimensionar la ventana (para responsive)
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            menuBtn.classList.remove('active');
+            menuBtn.textContent = '☰';
+        }
+    });
+    
+    console.log('✅ Menú hamburguesa inicializado con todas las funcionalidades');
 }
