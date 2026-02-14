@@ -1,0 +1,36 @@
+.title-carro{
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    padding: 20px 20px;
+    font-size:xx-large;
+    color: rgb(59, 109, 52);
+    padding-left: 20%;
+}
+
+.volver {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+    gap: 1px;
+    color: rgb(98, 159, 90);
+    font-family: Arial, sans-serif;
+    font-size: 19px;
+    cursor: pointer;
+    width: 100%;
+    padding-left: 20%;
+    margin-top: 5%;
+}
+
+.flecha {
+    width: 30px;          /* tamaño de la flecha */
+    height: 20px;
+}
+
+.volver a {
+    text-decoration: none;        /* Quita el subrayado */
+    color: inherit;               /* Mantiene el color original */
+}
+
+.volver a :hover {
+    text-decoration: none;        /* Quita el subrayado también al pasar el mouse */
+}
