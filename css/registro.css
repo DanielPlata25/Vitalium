@@ -22,6 +22,35 @@
     --font-global: 'Inter', sans-serif;
 }
 
+/*Ajustes NavBar*/
+/*!NO MOVER*/
+#navbar-container, 
+#footer-container {
+    width: 100% !important;
+    flex-shrink: 0 !important; /* ESTO evita que desaparezcan al haber mucho contenido */
+    display: block;
+}
+
+#navbar-container {
+  min-height: 60px; /* Ajusta según el alto de tu logo */
+}
+
+html {
+    margin: 0;
+    padding: 0;
+  height: auto; /* Permite que el documento crezca */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+  min-height: 100vh; /* Altura mínima de la pantalla */
+    margin: 0;
+    padding: 0;
+  overflow-y: auto !important; /* FUERZA el scroll vertical */
+  overflow-x: hidden; /* Evita que se mueva hacia los lados */
+} /*!Terminan ajustes navbar*/
+
 body {
     font-family: var(--font-global);
     background-color: var(--gris-fondo);
@@ -29,13 +58,16 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 40px 20px;
+    padding: 0;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 /* Contenedor principal */
 .registro-container {
     width: 100%;
     max-width: 500px;
+    
 }
 
 /* Card principal */
@@ -45,6 +77,7 @@ body {
     padding: 48px 40px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.1);
     margin-bottom: 30px;
+
 }
 
 /* Header */
