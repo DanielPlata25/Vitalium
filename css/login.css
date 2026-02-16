@@ -18,20 +18,62 @@
     --border-color: #e5e7eb;
 }
 
+/**Ajustes NavBar*/
+/*!NO MOVER*/
+#navbar-container, 
+#footer-container {
+    width: 100% !important;
+  flex-shrink: 0 !important; /* ESTO evita que desaparezcan al haber mucho contenido */
+    display: block;
+}
+
+#navbar-container {
+  min-height: 60px; /* Ajusta según el alto de tu logo */
+}
+
+html {
+    margin: 0;
+    padding: 0;
+  height: auto; /* Permite que el documento crezca */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+  min-height: 100vh; /* Altura mínima de la pantalla */
+    margin: 0;
+    padding: 0;
+  overflow-y: auto !important; /* FUERZA el scroll vertical */
+  overflow-x: hidden; /* Evita que se mueva hacia los lados */
+}
+
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
     background-color: var(--gris-claro);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: stretch; /* Esto obliga a los hijos a estirarse al ancho total */
     min-height: 100vh;
-    padding: 20px;
+    padding: 0;
+    margin: 0;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 /* Contenedor principal */
 .login-container {
-    width: 100%;
-    max-width: 450px;
+    display: flex;
+  justify-content: center; /* Centra la card horizontalmente */
+  align-items: center;     /* Centra la card verticalmente si hay espacio */
+    padding: 50px 0;
+    align-items: center;
+}
+
+/* Aquí limitamos el tamaño de la tarjeta para que se vea bien */
+.login-container > div { 
+  width: 100%;
+  max-width: 400px; /* Ajusta este valor según tu gusto */
 }
 
 /* Card del login */
@@ -39,6 +81,9 @@ body {
     background-color: var(--blanco);
     border-radius: 16px;
     padding: 48px 40px;
+    align-self: center; /*centra card*/
+    margin: 40px 0; /* Dale aire arriba y abajo para que no toque el navbar/footer */
+    max-width: 450px; /* Para que no se estire demasiado en pantallas grandes */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
