@@ -227,15 +227,45 @@ function inicializarBotonesAgregar() {
             const nombreProducto = e.currentTarget.getAttribute('data-producto');
             const precio = e.currentTarget.getAttribute('data-precio');
             
-            console.log(`Agregado al carrito: ${nombreProducto} - $${precio}`);
+            //console.log(`Agregado al carrito: ${nombreProducto} - $${precio}`);
             
             // Aquí conectarías con tu carrito
             // agregarAlCarrito(nombreProducto, precio);
+            const infoProducto = productos.find(p => p.name === nombreProducto);
+            
+            // Llamamos a la función que conecta con el carrito
+            agregarAlCarrito({
+                name: nombreProducto,
+                price: precio,
+                img: infoProducto.img, // Usamos la imagen que ya tienes en tu JSON
+                quantity: 1
+            });
             
             // Mostrar feedback visual
             alert(`✅ ${nombreProducto} agregado al carrito`);
         });
     });
+}
+
+function agregarAlCarrito(productoNuevo) {
+    // 1. Intentamos traer lo que ya existe en el carrito, si no, creamos un array vacío
+    let carrito = JSON.parse(localStorage.getItem('vittalium_cart')) || [];
+
+    // 2. Revisamos si el producto ya está en el carrito para no repetirlo
+    const existe = carrito.find(item => item.name === productoNuevo.name);
+
+    if (existe) {
+        // Si ya existe, solo aumentamos la cantidad
+        existe.quantity += 1;
+    } else {
+        // Si es nuevo, lo empujamos al array
+        carrito.push(productoNuevo);
+    }
+
+    // 3. Guardamos el carrito actualizado de vuelta en el LocalStorage
+    localStorage.setItem('vittalium_cart', JSON.stringify(carrito));
+    
+    console.log("Carrito actualizado:", productoNuevo.nombreProducto);
 }
 
 // Cargar productos cuando el DOM esté listo
