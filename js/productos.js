@@ -226,20 +226,24 @@ function inicializarBotonesAgregar() {
         boton.addEventListener('click', (e) => {
             const nombreProducto = e.currentTarget.getAttribute('data-producto');
             const precio = e.currentTarget.getAttribute('data-precio');
-            
             //console.log(`Agregado al carrito: ${nombreProducto} - $${precio}`);
             
+            //se busca el objeto exacto en el aray 'productos'
+            const productoEncontrado = productos.find(p => p.name === nombreProducto);
+
+            if (productoEncontrado) {
+                // 3. Creamos el objeto para el carrito usando tus nombres exactos
+                const productoParaCarrito = {
+                    name: productoEncontrado.name,
+                    price: productoEncontrado.price,
+                    img: productoEncontrado.img,
+                    quantity: 1
+                };
+                
+                agregarAlCarrito(productoParaCarrito);
+            }
             // Aquí conectarías con tu carrito
             // agregarAlCarrito(nombreProducto, precio);
-            const infoProducto = productos.find(p => p.name === nombreProducto);
-            
-            // Llamamos a la función que conecta con el carrito
-            agregarAlCarrito({
-                name: nombreProducto,
-                price: precio,
-                img: infoProducto.img, // Usamos la imagen que ya tienes en tu JSON
-                quantity: 1
-            });
             
             // Mostrar feedback visual
             alert(`✅ ${nombreProducto} agregado al carrito`);
