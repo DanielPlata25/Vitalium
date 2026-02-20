@@ -246,7 +246,7 @@ function inicializarBotonesAgregar() {
             // agregarAlCarrito(nombreProducto, precio);
             
             // Mostrar feedback visual
-            alert(`✅ ${nombreProducto} agregado al carrito`);
+            //alert(`✅ ${nombreProducto} agregado al carrito`);
         });
     });
 }
@@ -269,6 +269,10 @@ function agregarAlCarrito(productoNuevo) {
     // 3. Guardamos el carrito actualizado de vuelta en el LocalStorage
     localStorage.setItem('vittalium_cart', JSON.stringify(carrito));
     
+    
+    //actualiza el contador del carro
+    actualizarContadorCarrito()
+    
     console.log("Carrito actualizado:", productoNuevo.nombreProducto);
 }
 
@@ -287,3 +291,22 @@ document.addEventListener('DOMContentLoaded', () => {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { productos, renderizarProductos, filtrarProductos };
 }
+
+function actualizarContadorCarrito() {
+    const badge = document.getElementById('cart-count');
+    if (!badge) return;
+
+    const datosMem = localStorage.getItem('vittalium_cart');
+    const carrito = JSON.parse(datosMem) || [];
+
+    // Sumamos todas las cantidades de los productos
+    const totalItems = carrito.reduce((acc, item) => acc + item.quantity, 0);
+
+    badge.textContent = totalItems;
+
+    // Opcional: Ocultar el badge si el carrito está vacío
+    badge.style.display = totalItems > 0 ? 'flex' : 'none';
+}
+
+// Ejecutar al cargar la página para que el número persista al navegar
+document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);
