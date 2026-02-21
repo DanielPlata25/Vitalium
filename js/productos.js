@@ -269,9 +269,10 @@ function agregarAlCarrito(productoNuevo) {
     // 3. Guardamos el carrito actualizado de vuelta en el LocalStorage
     localStorage.setItem('vittalium_cart', JSON.stringify(carrito));
     
-    
-    //actualiza el contador del carro
-    actualizarContadorCarrito()
+    // Llamamos a la función que vive en components.js para que el badge se mueva
+    if (typeof actualizarContadorCarrito === 'function') {
+        actualizarContadorCarrito();
+    }
     
     console.log("Carrito actualizado:", productoNuevo.nombreProducto);
 }

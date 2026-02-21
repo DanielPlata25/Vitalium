@@ -54,13 +54,29 @@ function actualizarCantidad(index, cambio) {
 
     localStorage.setItem('vittalium_cart', JSON.stringify(carrito));
     renderizarContenidoCarrito(); // Re-renderiza todo
+
+     if (window.actualizarContadorCarrito){
+        window.actualizarContadorCarrito();
+    }
 }
 
 function eliminarDelCarrito(index) {
-    let carrito = JSON.parse(localStorage.getItem('vittalium_cart'));
+    // 1. Cargar los datos actuales
+    let carrito = JSON.parse(localStorage.getItem('vittalium_cart')) || [];
+
+    // 2. Eliminar el producto específico del arreglo
     carrito.splice(index, 1);
+
+    // 3. Guardar el carrito actualizado en el "cerebro" (Storage)
     localStorage.setItem('vittalium_cart', JSON.stringify(carrito));
+
+    // 4. Volver a dibujar la lista del carrito (lo que ves en pantalla)
     renderizarContenidoCarrito();
+
+    // 5. ¡ESTA ES LA CLAVE! Actualizar el numerito del icono arriba
+    if (window.actualizarContadorCarrito) {
+        window.actualizarContadorCarrito();
+    }
 }
 
 function actualizarResumen(subtotal) {
