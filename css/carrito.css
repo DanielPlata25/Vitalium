@@ -105,16 +105,23 @@
     font-weight:500;
 }
 
-.detalles-pago #subtotal-val{
-    align-self: center;
-    
-    
-}
-
 .detalles-pago #envio-val{
-    color: #629f5a;
-
+    color:#3b6d34;
+    float: right;
+    
 }
+
+.detalles-pago #subtotal-val {
+    float: right;
+}
+
+.detalles-pago #total-val {
+    float: right;
+    color: #629f5a;
+    text-size-adjust: 10;
+}
+
+
 
 
 /* Responsive: Si la pantalla es chica, se pone uno abajo de otro */
