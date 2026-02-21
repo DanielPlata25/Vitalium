@@ -106,7 +106,7 @@
 }
 
 .detalles-pago #envio-val{
-    color:#3b6d34;
+    color:#385934;
     float: right;
     
 }
@@ -179,10 +179,19 @@
     position:initial;
     top: 10px;
     right: 10px;
+    float: right;
 }
 
 /* Opcional: que el bote se haga un poquito más grande al pasar el mouse */
 .btn-eliminar:hover {
     transform: scale(1.1);
+}
+
+.precio-unitario{
+    float: left;
+
+}
+.precio-total{
+
 }
 
