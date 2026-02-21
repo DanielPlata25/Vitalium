@@ -1,6 +1,7 @@
 .title-carro{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:Helvetica;
     display: flex;
+
     padding: 20px 20px;
     font-size:xx-large;
     color: rgb(59, 109, 52);
@@ -96,9 +97,23 @@
     border-radius: 12px;
     border: 1px solid #eee;
     height: fit-content;
+    line-height: 2.5;
+    text-align: left;
 }
 .resumen-pago h3{
     color:#3b6d34;
+    font-weight:500;
+}
+
+.detalles-pago #subtotal-val{
+    align-self: center;
+    
+    
+}
+
+.detalles-pago #envio-val{
+    color: #629f5a;
+
 }
 
 
