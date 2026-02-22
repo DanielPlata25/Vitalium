@@ -175,6 +175,113 @@ font-size: 16px;
 flex: none;
 order: 1;
 flex-grow: 0;
-
+display: flex;
+  align-items: center;
+  justify-content: center;
+gap: 5px;
     
+}
+
+.producto1{
+
+    width: 384px;
+    height: 680px;
+    border-radius:0px;
+}
+.producto2{
+
+    width: 384px;
+    height: 680px;
+    border-radius:0px;
+}
+.producto3{
+
+    width: 384px;
+    height: 680px;
+    border-radius:0px;
+}
+.productoImagen{
+    width: 384px;
+    height: 256px;
+    border-top-left-radius: 16px;
+border-top-right-radius: 16px;
+}
+
+
+.clase{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 149px !important;
+    height: 24px !important;
+    font-size: 12px;
+    color: #2D5A27;
+    border-radius: 99px;
+    background-color: #aad08e59;
+}
+.mitadAbajo{
+    padding: 20px;
+    border-bottom-left-radius: 16px; 
+border-bottom-right-radius: 16px;
+    background-color: white;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    gap: 10px;
+    flex-direction: column;
+}
+.nombreProducto{
+    color: #2D5A27;
+    font-size: 20px;
+    font-weight: 500;
+}
+.descripcion{
+    margin-top: 40px;
+    color: #2D3436;
+    font-size: 14px;
+}
+.beneficios{
+     
+    color: #2D3436;
+    font-size: 12px;
+}
+.precio{
+    color: #70AD47;
+    font-size: 24px;
+    font-weight: bold;
+}
+.agregar{
+ color: white;
+
+
+width: 336.03px;
+height: 43.98px;
+left: 0px;
+top: 0px;
+
+background: #70AD47;
+border-radius: 8px;
+ display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+}
+.productosRecomendados{
+    display: flex;
+    gap: 30px;
+     justify-content: start;
+    align-items: space-between;
+    width: 1219px;
+    height: 680px;
+}
+
+.carrito{
+    width: 16px;
+    height: 16px;
+}
+
+.icon{
+width: 20px;
+height: 20px;
 }
