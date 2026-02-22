@@ -8,6 +8,14 @@ const botonAtras = document.getElementById("siguiente");
 function actualizarPregunta() {
 switch(numeroDePregunta) {
      case 0:
+      document.querySelector(".recomendaciones").remove();
+      document.querySelector(".correcto").remove();
+      document.querySelector(".texto").remove();
+      document.querySelector(".resumen").remove();
+
+
+
+
      document.querySelector(".chiquito").textContent = "Pregunta 1 de 6";
       document.querySelector(".barra").src="/img/barra1.png"
       document.querySelector(".chiquito2").textContent = "17%";
@@ -53,9 +61,34 @@ switch(numeroDePregunta) {
           document.querySelector(".pregunta").textContent = "¿Sientes molestias articulares, rigidez o recuperación lenta después de entrenar?";
  break;
      case 6:
+                 document.querySelector(".container-abajo").style.height = "733px";
+
+         document.querySelector(".resumen").style.display = "flex";
+  document.querySelector(".recomendaciones").style.display = "flex";
+    document.querySelector(".acomodar").style.display = "flex";
+  document.querySelector(".final").style.display = "block";
+
+  document.querySelector(".correcto").style.display = "block";
+  document.querySelector(".texto").style.display = "flex";
      document.querySelector(".correcto").src="/img/correcto.png"
        document.querySelector(".equilibrio").remove();
-       document.querySelector(".pregunta").textContent = "¡Cuestionario Completado!";
+              document.querySelector(".pregunta").remove();
+
+       document.querySelector(".final").textContent = "¡Cuestionario Completado!";
+              document.querySelector(".texto").textContent = "Hemos analizado tus respuestas y preparado recomendaciones personalizadas para ti.";
+document.querySelector(".resumenTitulo").textContent =  "Resumen de tus respuestas:";
+ document.querySelector(".resumenTexto1").textContent =  "¿Te han indicado que tienes sobrepeso, glucosa elevada, colesterol alto o presión alta?";
+ 
+ document.querySelector(".resumenTexto2").textContent =  "¿Presentas inflamación abdominal, estreñimiento o digestión pesada con frecuencia?";
+ 
+ document.querySelector(".resumenTexto3").textContent =  "¿Sientes fatiga frecuente o bajo nivel de energía durante el día?";
+ 
+ document.querySelector(".resumenTexto4").textContent =  "¿Tu nivel de estrés es alto o duermes menos de 6–7 horas regularmente?";
+ 
+ document.querySelector(".resumenTexto5").textContent =  "¿Entrenas al menos 3 veces por semana o realizas actividad física intensa?";
+ document.querySelector(".resumenTexto6").textContent =  "¿Sientes molestias articulares, rigidez o recuperación lenta después de entrenar?";
+
+
          document.querySelector(".si").remove();     
          document.querySelector(".no").remove();     
            document.querySelector(".siguiente").remove();
