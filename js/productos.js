@@ -226,16 +226,55 @@ function inicializarBotonesAgregar() {
         boton.addEventListener('click', (e) => {
             const nombreProducto = e.currentTarget.getAttribute('data-producto');
             const precio = e.currentTarget.getAttribute('data-precio');
+            //console.log(`Agregado al carrito: ${nombreProducto} - $${precio}`);
             
-            console.log(`Agregado al carrito: ${nombreProducto} - $${precio}`);
-            
+            //se busca el objeto exacto en el aray 'productos'
+            const productoEncontrado = productos.find(p => p.name === nombreProducto);
+
+            if (productoEncontrado) {
+                // 3. Creamos el objeto para el carrito usando tus nombres exactos
+                const productoParaCarrito = {
+                    name: productoEncontrado.name,
+                    price: productoEncontrado.price,
+                    img: productoEncontrado.img,
+                    quantity: 1
+                };
+                
+                agregarAlCarrito(productoParaCarrito);
+            }
             // Aquí conectarías con tu carrito
             // agregarAlCarrito(nombreProducto, precio);
             
             // Mostrar feedback visual
-            alert(`✅ ${nombreProducto} agregado al carrito`);
+            //alert(`✅ ${nombreProducto} agregado al carrito`);
         });
     });
+}
+
+function agregarAlCarrito(productoNuevo) {
+    // 1. Intentamos traer lo que ya existe en el carrito, si no, creamos un array vacío
+    let carrito = JSON.parse(localStorage.getItem('vittalium_cart')) || [];
+
+    // 2. Revisamos si el producto ya está en el carrito para no repetirlo
+    const existe = carrito.find(item => item.name === productoNuevo.name);
+
+    if (existe) {
+        // Si ya existe, solo aumentamos la cantidad
+        existe.quantity += 1;
+    } else {
+        // Si es nuevo, lo empujamos al array
+        carrito.push(productoNuevo);
+    }
+
+    // 3. Guardamos el carrito actualizado de vuelta en el LocalStorage
+    localStorage.setItem('vittalium_cart', JSON.stringify(carrito));
+    
+    // Llamamos a la función que vive en components.js para que el badge se mueva
+    if (typeof actualizarContadorCarrito === 'function') {
+        actualizarContadorCarrito();
+    }
+    
+    console.log("Carrito actualizado:", productoNuevo.nombreProducto);
 }
 
 // Cargar productos cuando el DOM esté listo
@@ -253,3 +292,22 @@ document.addEventListener('DOMContentLoaded', () => {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { productos, renderizarProductos, filtrarProductos };
 }
+
+function actualizarContadorCarrito() {
+    const badge = document.getElementById('cart-count');
+    if (!badge) return;
+
+    const datosMem = localStorage.getItem('vittalium_cart');
+    const carrito = JSON.parse(datosMem) || [];
+
+    // Sumamos todas las cantidades de los productos
+    const totalItems = carrito.reduce((acc, item) => acc + item.quantity, 0);
+
+    badge.textContent = totalItems;
+
+    // Opcional: Ocultar el badge si el carrito está vacío
+    badge.style.display = totalItems > 0 ? 'flex' : 'none';
+}
+
+// Ejecutar al cargar la página para que el número persista al navegar
+document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);

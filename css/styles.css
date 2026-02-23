@@ -211,6 +211,12 @@ body {
 
 }
 
+.cart-icon, .cart-login :hover {
+  display: flex;
+  justify-content: space-between; /* Esto distribuye los iconos según las columnas */
+  gap: 20px; /* El espacio exacto que miden las franjas moradas */
+}
+
 
 /*! Main*/
 .title-nosotros {
