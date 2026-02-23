@@ -8,10 +8,10 @@ const botonAtras = document.getElementById("siguiente");
 function actualizarPregunta() {
 switch(numeroDePregunta) {
      case 0:
-      document.querySelector(".recomendaciones").remove();
-      document.querySelector(".correcto").remove();
-      document.querySelector(".texto").remove();
-      document.querySelector(".resumen").remove();
+      document.querySelector(".recomendaciones")?.remove();
+      document.querySelector(".correcto")?.remove();
+      document.querySelector(".texto")?.remove();
+      document.querySelector(".resumen")?.remove();
 
 
 
@@ -71,8 +71,8 @@ switch(numeroDePregunta) {
   document.querySelector(".correcto").style.display = "block";
   document.querySelector(".texto").style.display = "flex";
      document.querySelector(".correcto").src="/img/correcto.png"
-       document.querySelector(".equilibrio").remove();
-              document.querySelector(".pregunta").remove();
+       document.querySelector(".equilibrio")?.remove();
+              document.querySelector(".pregunta")?.remove();
 
        document.querySelector(".final").textContent = "¡Cuestionario Completado!";
               document.querySelector(".texto").textContent = "Hemos analizado tus respuestas y preparado recomendaciones personalizadas para ti.";
@@ -89,30 +89,45 @@ document.querySelector(".resumenTitulo").textContent =  "Resumen de tus respuest
  document.querySelector(".resumenTexto6").textContent =  "¿Sientes molestias articulares, rigidez o recuperación lenta después de entrenar?";
 
 
-         document.querySelector(".si").remove();     
-         document.querySelector(".no").remove();     
-           document.querySelector(".siguiente").remove();
+         document.querySelector(".si")?.remove();     
+         document.querySelector(".no")?.remove();     
+           document.querySelector(".siguiente")?.remove();
 
 
     break;   
 }}
 function avanzar() {
    
-    numeroDePregunta++;
-    console.log(numeroDePregunta);
-    actualizarPregunta();
+   if (numeroDePregunta >= 6) return; 
+  numeroDePregunta++;
+  console.log(numeroDePregunta);
+  actualizarPregunta();
   
 }
 function retroceder() {
    
-    numeroDePregunta--;
-    console.log(numeroDePregunta);
-    actualizarPregunta();
+    if (numeroDePregunta <= 0) return; 
+  numeroDePregunta--;
+  console.log(numeroDePregunta);
+  actualizarPregunta();
   
 }
 
 
-botonSi.addEventListener("click", avanzar);
-botonNo.addEventListener("click", avanzar);
-botonAtras.addEventListener("click", retroceder);
+let bloqueado = false;
+
+function ejecutarSeguro(callback) {
+  if (bloqueado) return;
+  bloqueado = true;
+
+  callback();
+
+  setTimeout(() => {
+    bloqueado = false;
+  }, 120); 
+}
+
+botonSi.addEventListener("click", () => ejecutarSeguro(avanzar));
+botonNo.addEventListener("click", () => ejecutarSeguro(avanzar));
+botonAtras.addEventListener("click", () => ejecutarSeguro(retroceder));
 
