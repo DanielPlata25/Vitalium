@@ -3,10 +3,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlay = document.getElementById("surveyOverlay");
     const btnClose = document.getElementById("btnClose");
 
-    setTimeout(function () {
-        overlay.classList.add("show");
-        document.body.classList.add("modal-abierto");
-    }, 1000);
+    const shownOverlay = sessionStorage.getItem("shownOverlay");
+    if (!shownOverlay) {
+        setTimeout(function () {
+            overlay.classList.add("show");
+            document.body.classList.add("modal-abierto");
+            sessionStorage.setItem("shownOverlay", "true");
+        }, 1000);
+    }
 
     btnClose.addEventListener("click", function () {
         overlay.classList.remove("show");

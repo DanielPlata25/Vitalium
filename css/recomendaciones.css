@@ -1,0 +1,287 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+  body {
+    background-color: #F2F2F2;
+  margin: 0;
+  min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+.container-total{
+     display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+   gap: 30px; 
+    
+    
+ 
+}
+
+
+.volver{
+    color: #70AD47;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.recomendaciones{
+    box-sizing: border-box;
+    padding-left: 48px;
+      background: linear-gradient(to bottom, #2D5A27, #70AD47);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+   align-items: start;
+    width: 1216px;
+    height: 251px;
+    border-radius: 16px;
+      
+}
+.personalizadas{
+    color: white;
+    font-size: 48px;
+    font-weight: 500;
+
+
+}
+.correcto{
+    height: 40px;
+    width: 40px;
+}
+
+.basado{
+    color: white;
+    font-size: 20px;
+}
+
+.mantenimiento{
+color: white;
+width: 198.84px;
+height: 39.98px;
+
+font-size: 16px;
+background: rgba(255, 255, 255, 0.2);
+border-radius: 3.71704e+07px;
+
+}
+.recomendacionesArriba{
+    gap: 10px;
+    display: flex;
+    align-items: center;
+   flex-direction: row;
+   
+}
+
+
+
+
+.porque{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+      box-sizing: border-box;
+    padding-left: 40px;
+    padding-top: 20px;
+    width: 1216px;
+    height: 110px;
+    background-color: #aad08e3a;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #4c9742;
+     border-radius: 16px;
+        
+}
+
+.products{
+    color: #2D5A27;
+    font-weight: bold;
+    font-size: 18px;
+   
+
+}
+
+
+.xq{
+gap: 10px;
+    display: flex;
+    align-items: center;
+   flex-direction: row;
+   margin-bottom: 0px;
+   
+}
+
+.seleccionado{
+   margin-top: -20px;
+    color: #2D3436;
+    font-size: 16px;
+    margin-bottom: 12px;
+      line-height: 1.2; 
+}
+
+.correcto2{
+    
+    height: 24px;
+    width: 24px;
+}
+
+.productosRecomendados{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+   align-items: start;
+    gap: 10px;
+}
+.repetir{
+    border-radius: 16px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: #FFFFFF;
+          box-sizing: border-box;
+    padding-left: 48px;
+        padding-right: 48px;
+
+    width: 1216px;
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.prefer{
+    color: #2D5A27;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.volver{
+    color: #2D3436;
+    font-size: 14px;
+}
+
+.repetirBoton{
+    /* Button */
+
+width: 223.94px;
+height: 47.98px;
+
+background: #2D5A27;
+border-radius: 8px;
+color: white;
+font-size: 16px;
+/* Dentro del diseño automático */
+flex: none;
+order: 1;
+flex-grow: 0;
+display: flex;
+  align-items: center;
+  justify-content: center;
+gap: 5px;
+    
+}
+
+.producto1{
+
+    width: 384px;
+    height: 680px;
+    border-radius:0px;
+}
+.producto2{
+
+    width: 384px;
+    height: 680px;
+    border-radius:0px;
+}
+.producto3{
+
+    width: 384px;
+    height: 680px;
+    border-radius:0px;
+}
+.productoImagen{
+    width: 384px;
+    height: 256px;
+    border-top-left-radius: 16px;
+border-top-right-radius: 16px;
+}
+
+
+.clase{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 149px !important;
+    height: 24px !important;
+    font-size: 12px;
+    color: #2D5A27;
+    border-radius: 99px;
+    background-color: #aad08e59;
+}
+.mitadAbajo{
+    padding: 20px;
+    border-bottom-left-radius: 16px; 
+border-bottom-right-radius: 16px;
+    background-color: white;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    gap: 10px;
+    flex-direction: column;
+}
+.nombreProducto{
+    color: #2D5A27;
+    font-size: 20px;
+    font-weight: 500;
+}
+.descripcion{
+    margin-top: 40px;
+    color: #2D3436;
+    font-size: 14px;
+}
+.beneficios{
+     
+    color: #2D3436;
+    font-size: 12px;
+}
+.precio{
+    color: #70AD47;
+    font-size: 24px;
+    font-weight: bold;
+}
+.agregar{
+ color: white;
+
+
+width: 336.03px;
+height: 43.98px;
+left: 0px;
+top: 0px;
+
+background: #70AD47;
+border-radius: 8px;
+ display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+}
+.productosRecomendados{
+    display: flex;
+    gap: 30px;
+     justify-content: start;
+    align-items: space-between;
+    width: 1219px;
+    height: 680px;
+}
+
+.carrito{
+    width: 16px;
+    height: 16px;
+}
+
+.icon{
+width: 20px;
+height: 20px;
+}
