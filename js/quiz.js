@@ -8,10 +8,10 @@ const botonAtras = document.getElementById("siguiente");
 function actualizarPregunta() {
 switch(numeroDePregunta) {
      case 0:
-      document.querySelector(".recomendaciones")?.remove();
-      document.querySelector(".correcto")?.remove();
-      document.querySelector(".texto")?.remove();
-      document.querySelector(".resumen")?.remove();
+  document.querySelector(".recomendaciones").style.display = "none";
+  document.querySelector(".correcto").style.display = "none";
+  document.querySelector(".texto").style.display = "none";
+  document.querySelector(".resumen").style.display = "none";
 
 
 
@@ -98,7 +98,7 @@ document.querySelector(".resumenTitulo").textContent =  "Resumen de tus respuest
 }}
 function avanzar() {
    
-   if (numeroDePregunta >= 6) return; 
+   
   numeroDePregunta++;
   console.log(numeroDePregunta);
   actualizarPregunta();
