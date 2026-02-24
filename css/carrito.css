@@ -172,16 +172,16 @@
 .btn-eliminar {
     background: none;      /* Quita el fondo gris */
     border: none;          /* Quita el borde */
-    padding: 0 !important;            /* Quita el espacio interno */
     cursor: pointer;       /* Hace que aparezca la manita al pasar el mouse */
     display: flex;         /* Ayuda a centrar el icono */
     align-items:flex-end;
     transition: transform 0.2s; /* Opcional: para un efecto suave */
     width: 20px;
-    position:initial;
     top: 10px;
+    overflow: hidden;
     right: 10px;
-    float: right;
+    
+
 }
 
 /* Opcional: que el bote se haga un poquito más grande al pasar el mouse */
@@ -190,10 +190,12 @@
 }
 
 .precio-unitario{
-    float: left;
+    color: #629f5a;
+    font-size: xx-large;
 
 }
 .precio-total{
-
+            /* Distancia desde la derecha */
+    
 }
 
