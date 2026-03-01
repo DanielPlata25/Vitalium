@@ -42,7 +42,30 @@ if (formRegistro) {
         const passwordConfirm = document.getElementById('password-confirm').value;
         const terminos = document.querySelector('input[name="terminos"]').checked;
         const newsletter = document.querySelector('input[name="newsletter"]').checked;
-        
+
+        //guardar multiples usuarios local storage
+        //lista de users ya registrados
+        const userRegistred = JSON.parse(localStorage.getItem('usersGuardados')) || [];
+
+        //validamos que el correo no este registrado
+        const existemail = userRegistred.find(u => u.email === email);
+        if(existemail){
+            alert('Este correo ya esta registrado!');
+            return;
+        }
+
+        const nuevoUser = {
+            nombre,
+            apellido,
+            email,
+            telefono,
+            password,
+            newsletter
+        }
+        userRegistred.push(nuevoUser);
+        localStorage.setItem('usersGuardados',JSON.stringify(userRegistred));
+
+    
         if (password !== passwordConfirm) {
             alert('Las contraseñas no coinciden');
             return;
@@ -67,7 +90,8 @@ if (formRegistro) {
             newsletter
         };
         
-        console.log('Datos del nuevo usuario:', usuario);
+        // Guardamos el objeto convirtiéndolo en String
+        localStorage.setItem('datosUsuario', JSON.stringify(usuario));
 
         alert(`¡Bienvenido ${nombre}! Tu cuenta ha sido creada exitosamente.`);
         
@@ -121,3 +145,24 @@ if (btnFacebook) {
         alert('Funcionalidad de registro con Facebook en desarrollo');
     });
 }
+
+//**login
+const loginUsuario = (evento) => {
+    evento.preventDefault();
+
+    const emailLogin = document.getElementById('emailLogin').value.trim();
+    const passLogin = document.getElementById('passLogin').value;
+
+    // 1. Jalamos la lista de usuarios
+    const listaUsuarios = JSON.parse(localStorage.getItem('usersGuardados')) || [];
+
+    // 2. Buscamos al usuario que coincida con email Y password
+    const usuarioValido = listaUsuarios.find(u => u.email === emailLogin && u.password === passLogin);
+
+    if (usuarioValido) {
+        alert(`Hola de nuevo, ${usuarioValido.nombre}`);
+        // Redirigir por ejemplo: window.location.href = 'perfil.html';
+    } else {
+        alert("Correo o contraseña incorrectos.");
+    }
+};
