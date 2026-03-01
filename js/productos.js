@@ -171,7 +171,7 @@ function renderizarProductos(productosAMostrar = productos) {
     const grid = document.querySelector('.productos-grid');
     
     if (!grid) {
-        console.error('No se encontró el contenedor de productos');
+        //console.error('No se encontró el contenedor de productos');
         return;
     }
     
