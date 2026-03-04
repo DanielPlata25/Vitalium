@@ -1,7 +1,7 @@
 const respuestasGuardadas = Number(JSON.parse(localStorage.getItem("respuestas")));
 console.log(respuestasGuardadas);
 
-// ========= 0 a 2 =========
+// ========= 0 a 2 mantenimiento  =========
 if (respuestasGuardadas >= 0 && respuestasGuardadas <= 2) {
 
   // ===== PRODUCTO 1 =====
