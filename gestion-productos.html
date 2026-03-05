@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/gestion-productos.css">
+    <title>Gestion de Productos</title>
+</head>
+
+<body>
+    <main>
+        <div class="volver">
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" class="flecha">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                </svg>
+                <a href="./catalogo-producto.html"> Regresar a Dashboard</a>
+            </span>
+        </div>
+
+        <div class="title-btn">
+            <h1>Gestión de Productos</h1>
+            <button class="btn-agregar">Agregar Producto</button>
+        </div>
+
+        <!-- Tabla de productos -->
+        <div class="table-container">
+            <table class="productos-table">
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Descuento</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-productos-body">
+                    <!-- Los productos se cargarán dinámicamente con JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+    <script src="./js/gestion-productos.js"></script>
+</body>
+
+</html>
