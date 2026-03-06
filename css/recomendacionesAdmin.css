@@ -24,7 +24,7 @@
 
         /* ── LAYOUT GENERAL ── */
         .container_general {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px 24px 40px;
             display: flex;
@@ -223,6 +223,62 @@
             margin-bottom: 10px;
         }
 
+
+.tooltip{
+flex: none;}
+
+.insertar-grid:hover{
+    cursor: pointer;
+    background-color: #0000000c;
+}
+
+.insertar-grid-nombre{
+    font-size: 14px;
+    color: #2D3436;
+}
+
+
+.insertar-grid-detalles{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+   justify-content: flex-start;
+            align-items: flex-start;
+}
+
+.insertar-grid-precio{
+    margin-top: 5px;
+    color: #70AD47;
+    font-size: 12px;
+    display: flex;
+justify-content: flex-start;
+            align-items: flex-start;
+}
+
+
+.insertar-grid-categoria{
+    /* span */
+
+box-sizing: border-box;
+display: flex;
+justify-content: center;
+            align-items: center;
+
+
+width: 122.63px;
+height: 22.19px;
+left: 0px;
+top: 23.99px;
+
+background: #F3E8FF;
+color: #6E11B0;
+
+font-size: 12px;
+border: 1.10776px solid #DAB2FF;
+border-radius: 3.71704e+07px;
+
+
+}
         .container_AbajoIzquierdaCategoriasNombre {
             display: flex;
             flex-direction: column;
@@ -246,10 +302,25 @@
             background-color: #f3f4f6;
         }
 
+
+ .categoria-item2:hover {
+            background-color: #f3f4f6;
+            
+        }
+
+
         .categoria-item.active {
             background-color: #1a5c2a;
             color: #ffffff;
         }
+        
+        .categoria-item2.active {
+            border-radius: 100000px !important;
+            background-color: #1a5c2b13;
+            color: #ffffff ;
+        }
+        
+    
 
         .categoria-item.active .cat-badge {
             background-color: rgba(255,255,255,0.25);
@@ -410,6 +481,11 @@ border-radius: 8px;
             margin-bottom: 14px;
         }
       
+.productosAsignados{
+      display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
 
         /* ── PRODUCTOS ASIGNADOS ── */
         .container_ProductosAsignados {
@@ -421,6 +497,8 @@ border-radius: 8px;
             flex-direction: column;
             height: 370.75px;
         }
+
+
 
         .container_ProductosAsignados h3 {
             font-size: 14px;
@@ -444,6 +522,7 @@ border-radius: 8px;
             border: 1px solid #e5e7eb;
             border-radius: 12px;
             padding: 18px 20px;
+            
         }
 
         .container_Resumen h3 {
@@ -454,9 +533,12 @@ border-radius: 8px;
         }
 
         .resumen-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
+            
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 6px;
+    font-size: 13px;
+
         }
 
         .resumen-table thead tr {
@@ -681,6 +763,12 @@ border-radius: 8px;
     width: 16px;
     height: 16px;
 }
+
+.borrar:hover{
+    cursor: pointer;
+    background-color: #0000000c;
+}
+
 .precios{
     margin-top: 15px;
     display: flex;
@@ -688,3 +776,62 @@ border-radius: 8px;
     justify-content: space-between;
       width: 100%;
 }
+.categoriaResumenPadre{
+    display: flex;
+    flex-direction: row;
+}
+.categoriaResumen{
+    /* span */
+
+/* Control Glucémico */
+display: flex;
+justify-content: center;
+            align-items: center;
+            
+
+width: 114px;
+height: 20px;
+left: 8px;
+top: 0.88px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 10px;
+line-height: 16px;
+/* idéntico a la altura del cuadro o 133% */
+
+color: #4A5565 !important;
+background-color: #4a55653a;
+border-radius: 30px;
+
+}
+.editar{
+    color: #70AD47 !important;
+}
+.editar:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.productos{
+   display: flex;
+justify-content: center;
+            align-items: center;
+
+/* span */
+
+width: 26.64px;
+height: 23.99px;
+
+
+background: rgba(169, 208, 142, 0.4);
+border-radius: 3.71704e+07px;
+color: #2D5A27;
+}
+
+  .categoria-item.active {
+            background-color: #1a5c2a;
+            color: #ffffff;
+        }
+        

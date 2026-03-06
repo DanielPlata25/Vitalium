@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,14 +9,12 @@
 <body>
    <div class="container_general">
 
-        <!-- BREADCRUMB -->
         <div class="container_volver">
             <a href="#">Dashboard</a>
             <span>/</span>
             <span class="breadcrumb-current">Recomendaciones del Cuestionario</span>
         </div>
 
-        <!-- HEADER -->
         <div class="container_Recomendaciones_Total">
             <div class="container_RecomendacionesIzquierda">
                 <div class="Container_ImagenPortapapeles"></div>
@@ -31,7 +29,6 @@
             </div>
         </div>
 
-        <!-- CÓMO FUNCIONA -->
         <div class="container_ComoFuncionaTotal">
             <div class="containerImagenI"></div>
             <div class="containerTextoCF">
@@ -42,10 +39,8 @@
             </div>
         </div>
 
-        <!-- ABAJO: SIDEBAR + PANEL -->
         <div class="container_AbajoTotal">
 
-            <!-- SIDEBAR CATEGORÍAS -->
             <div class="container_AbajoIzquieda">
                 <div class="container_AbajoIzquierdaCategorias">Categorías</div>
                 <div class="container_AbajoIzquierdaCategoriasNombre">
@@ -95,10 +90,8 @@
                 </div>
             </div>
 
-            <!-- PANEL DERECHO -->
             <div class="Container_AbajoDerecha">
 
-                <!-- Nombre categoría activa + botón -->
                 <div class="container_Clase">
                     <div class="container_Clases">
                         <div class="container_ClaseImagen" id="imagenChiquita">⚖️</div>
@@ -111,25 +104,23 @@
                       <button class="cancelar" id="btnCancelar">X Cancelar</button>
                 </div>
 
-                <!-- Productos asignados (el backend inyectará las tarjetas aquí) -->
 
                 <div class="container_ProductosAsignados1" id="panelAgregar">
                     <h3>+ Seleccionar productos para agregar</h3>
                       <input type="text" placeholder="Buscar por nombre o categoría..." class="buscador">
                     <div class="insertar-grid" id="insertar-grid">
-                        <div class="insertar-grid-imagen"> <img src="" alt="" class="imagenGrid"></div>
+                        <div class="insertar-grid-imagen"> <img src="img/digestionPlaceholder.png" alt="" class="imagenGrid"></div>
                         <div class="insertar-grid-detalles">
-                            <div class="insertar-grid-nombre"></div>
-                            <div class="insertar-grid-categoria"></div>
-                            <div class="insertar-grid-precio"></div>
+                            <div class="insertar-grid-nombre">Vittalium Digestión Plus</div>
+                            <div class="insertar-grid-categoria">Bienestar Interior</div>
+                            <div class="insertar-grid-precio">$29.99</div>
                         </div>
-                        <!-- Los productos serán renderizados por Spring Boot -->
                     </div>
                 </div>
 
                 <div class="container_ProductosAsignados">
-                    <h3>Productos asignados a "Equilibrio Vital"</h3>
-                    
+                    <h3 id="productosAsignados">Productos asignados a "Equilibrio Vital"</h3>
+                    <div class="productosAsignados">
                         <div class="producto1"> 
                 <div class="imagen1"> <img src="/img/producto.png" alt="" class="productoImagen"  id="productoImagen1"></div>
                 <div class="mitadAbajo">
@@ -139,11 +130,41 @@
                     <div class="precio"><span>$29.99</span></div>
                     <img src="/img/borrar.png" alt="borrar" class="borrar" id="borrar1"></div>
               
-                        <!-- Los productos serán renderizados por Spring Boot -->
                     </div>
-                </div>    </div> 
+                </div>   
+               <div class="producto1"> 
+                <div class="imagen1"> <img src="/img/producto.png" alt="" class="productoImagen"  id="productoImagen1"></div>
+                <div class="mitadAbajo">
+                    <div class="clase" id="nombreClase1"><span>Mantenimiento General</span></div>
+                    <div class="nombreProducto" id="nombreProducto1"><span>Vittalium Multivitamínico Premium</span></div>
+                    <div class="precios">
+                    <div class="precio"><span>$29.99</span></div>
+                    <img src="/img/borrar.png" alt="borrar" class="borrar" id="borrar1"></div>
+              
+                    </div>
+                </div> 
+ <div class="producto1"> 
+                <div class="imagen1"> <img src="/img/producto.png" alt="" class="productoImagen"  id="productoImagen1"></div>
+                <div class="mitadAbajo">
+                    <div class="clase" id="nombreClase1"><span>Mantenimiento General</span></div>
+                    <div class="nombreProducto" id="nombreProducto1"><span>Vittalium Multivitamínico Premium</span></div>
+                    <div class="precios">
+                    <div class="precio"><span>$29.99</span></div>
+                    <img src="/img/borrar.png" alt="borrar" class="borrar" id="borrar1"></div>
+              
+                    </div>
+                </div> 
 
-                <!-- Resumen de todas las categorías -->
+
+
+
+            </div> 
+
+
+
+
+                </div>
+
                 <div class="container_Resumen">
                     <h3>Resumen de todas las categorías</h3>
                     <table class="resumen-table">
@@ -156,7 +177,97 @@
                             </tr>
                         </thead>
                         <tbody id="resumen-tbody">
+                            
+                            <tr  class="categoria-item2 active" data-categoria="equilibrio-vital">
+                              
+                        <td >Equilibrio Vital</td>
+                        <td> <span  class="productos"> 2</span> </td>
+                        <td class="categoriaResumenPadre"><span class="categoriaResumen"> Control Glucémico</span>
+                        <span class="categoriaResumen"> Cardio Balance</span>
+                        </td> 
+                        <td class="editar"> Editar</td> </tr>
+
+                       
+                           <tr class="categoria-item2" data-categoria="bienestar-interior">
+                     
+
+                        <td>Bienestar Interior</td>
+                        <td> <span  class="productos"> 2</span> </td>
+                        <td class="categoriaResumenPadre"><span class="categoriaResumen"> Control Glucémico</span>
+                        <span class="categoriaResumen"> Cardio Balance</span>
+                        </td>
+                        <td class="editar"> Editar</td>
+                     </tr>
+                                           
+   
+                        <tr class="categoria-item2" data-categoria="control-energia">
+                             
+                        <td>Control Energia</td>
+                        <td> <span  class="productos"> 2</span> </td>
+                        <td class="categoriaResumenPadre"><span class="categoriaResumen"> Control Glucémico</span>
+                        <span class="categoriaResumen"> Cardio Balance</span>
+                        </td>
+                        <td class="editar"> Editar</td>
+                    
+                </tr> 
+
+
+
+
+
+                                            
+                           <tr class="categoria-item2" data-categoria="control-estres">
+                            
+                        <td>Control Estrés</td>
+                        <td> <span  class="productos"> 2</span> </td>
+                        <td class="categoriaResumenPadre"><span class="categoriaResumen"> Control Glucémico</span>
+                        <span class="categoriaResumen"> Cardio Balance</span>
+                        </td>
+                        <td class="editar"> Editar</td> 
+               
+                    </tr> 
+                           
                         
+
+                           <tr class="categoria-item2" data-categoria="rendimiento">
+                            
+                                            
+                        <td>Rendimiento</td>
+                        <td> <span  class="productos"> 2</span> </td>
+                        <td class="categoriaResumenPadre"><span class="categoriaResumen"> Control Glucémico</span>
+                        <span class="categoriaResumen"> Cardio Balance</span>
+                        </td>
+                        <td class="editar"> Editar</td> </tr>  
+
+
+
+                                           
+
+                           <tr class="categoria-item2" data-categoria="movimiento-articular">
+                             
+                        <td>Movimiento Articular</td>
+                        <td> <span  class="productos"> 2</span> </td>
+                        <td class="categoriaResumenPadre"><span class="categoriaResumen"> Control Glucémico</span>
+                        <span class="categoriaResumen"> Cardio Balance</span>
+                        </td>
+                        <td class="editar"> Editar</td> </tr> 
+
+
+
+
+
+                   
+
+
+
+                           <tr class="categoria-item2" data-categoria="mantenimiento-general">
+                            
+                        <td>Mantenimiento general</td>
+                        <td> <span  class="productos"> 2</span> </td>
+                        <td class="categoriaResumenPadre"><span class="categoriaResumen"> Control Glucémico</span>
+                        <span class="categoriaResumen"> Cardio Balance</span>
+                        </td>
+                        <td class="editar"> Editar</td> </tr>  
                         </tbody>
                     </table>
                 </div>
@@ -164,7 +275,6 @@
             </div>
         </div>
 
-        <!-- LINK VOLVER -->
         <div class="link-volver">
             <a href="#">Volver al Dashboard</a>
         </div>

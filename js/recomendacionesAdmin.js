@@ -1,10 +1,27 @@
+       
+       
        const btnAgregar  = document.getElementById('btnAgregar');
         const btnCancelar = document.getElementById('btnCancelar');
         document.getElementById('btnCancelar').style.display = 'none'; 
-             document.getElementById('panelAgregar').style.display = 'none';// Oculta el botón de cancelar al cargar la página
+             document.getElementById('panelAgregar').style.display = 'none';
 
 
        const categorias = document.querySelectorAll(".categoria-item");
+       const categoriasTabla = document.querySelectorAll(".categoria-item2");
+
+categoriasTabla.forEach(item => {
+  item.addEventListener("click", () => {
+    categoriasTabla.forEach(i => i.classList.remove("active"));
+    item.classList.add("active");
+
+
+ 
+
+});
+  });
+
+      
+    
 
 categorias.forEach(item => {
   item.addEventListener("click", () => {
@@ -16,6 +33,7 @@ categorias.forEach(item => {
 
  
   document.getElementById("tituloCategoria").textContent = nombre;
+  document.getElementById("productosAsignados").textContent = `Productos asignados a "${nombre}"`;
   document.getElementById("subtituloCategoria").textContent = `${cantidad} productos asignados`;
   document.getElementById("imagenChiquita").textContent = icono;
 });
@@ -29,13 +47,13 @@ categorias.forEach(item => {
             btnCancelar.classList.add('visible');
             btnAgregar.style.display = 'none';
                document.getElementById('btnCancelar').style.display = 'flex';
-               document.getElementById('panelAgregar').style.display = 'flex';// Muestra el botón de cancelar al hacer clic en agregar
+               document.getElementById('panelAgregar').style.display = 'flex';
         });
 
         btnCancelar.addEventListener('click', function () {
             btnCancelar.classList.remove('visible');
             btnAgregar.style.display = '';
                     document.getElementById('btnCancelar').style.display = 'none'; 
-                     document.getElementById('panelAgregar').style.display = 'none';// Oculta el botón de cancelar al cargar la página
+                     document.getElementById('panelAgregar').style.display = 'none';
 
              });

@@ -1,6 +1,6 @@
 
 let respuestas = [];
-let suma =0;
+let total =0;
 let numeroDePregunta = 0;
 const botonRecomendacion = document.getElementById("recomendacion");
 const botonSi = document.getElementById("si");
@@ -129,6 +129,9 @@ document.querySelector(".resumenTitulo").textContent =  "Resumen de tus respuest
  document.querySelector(".resumenTexto5").textContent =  "¿Entrenas al menos 3 veces por semana o realizas actividad física intensa?";
  document.querySelector(".resumenTexto6").textContent =  "¿Sientes molestias articulares, rigidez o recuperación lenta después de entrenar?";
 
+for(let i = 0; i < respuestas.length; i++) 
+    total+=respuestas[i];
+console.log(total);
 
          document.querySelector(".si")?.remove();     
          document.querySelector(".no")?.remove();     
@@ -160,12 +163,12 @@ function retroceder() {
   actualizarPregunta();
 }
 
-for (let numero of respuestas) {
-  suma += numero;
-}
+
+
 
 function guardarDatos() {
-  localStorage.setItem("respuestas", JSON.stringify(suma));
+  
+  localStorage.setItem("respuestas", JSON.stringify(total));
 
 }
 
