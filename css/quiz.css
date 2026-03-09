@@ -247,6 +247,85 @@ padding-left: 24px;
     font-weight: 500;
 }
 
+.imagenCorrecto1{
+    width: 20px;
+    height: 20px;
+}
+.imagenCorrecto2{
+    width: 20px;
+    height: 20px;
+}
+
+.imagenCorrecto3{
+    width: 20px;
+    height: 20px;
+}
+
+.imagenCorrecto4{
+    width: 20px;
+    height: 20px;
+}
+
+.imagenCorrecto5{
+    width: 20px;
+    height: 20px;
+}
+
+.imagenCorrecto6{
+    width: 20px;
+    height: 20px;
+}
+
+
+.imagenCorrecto1{
+    width: 20px;
+    height: 20px;
+}
+
+.imagenCorrecto1{
+    width: 20px;
+    height: 20px;
+}
+
+.imagenCorrecto1{
+    width: 20px;
+    height: 20px;
+}
+
+
+.resumen1{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.resumen2{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+.resumen3{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+.resumen4{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+.resumen5{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+.resumen6{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+
 .final,
 .acomodar,
 .resumen,
