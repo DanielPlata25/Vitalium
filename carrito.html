@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Tu carrito | Vittalium </title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/productos.css">
+    <link rel="stylesheet" href="css/carrito.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./logo.png">
+
+</head>
+<body>
+    <!-- Navbar Container -->
+    <header id="navbar-container">
+        <!-- El navbar se carga aquí automáticamente -->
+    </header> 
+    <div class="volver">
+    <span>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="flecha">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+    </svg>
+    <a href="./catalogo-producto.html"> Continuar Comprando</a>
+    </span>
+</div>
+    <h2 class="title-carro">Carrito de Compras</h2>
+
+    <main class="main-content-carrito">
+    <section class="items-lista" id="items-lista">
+        <p class="mensaje-carga">Cargando tus productos...</p>
+        
+    </section>
+
+    <aside class="resumen-pago">
+        <h3>Resumen del Pedido</h3>
+        <div class="detalles-pago">
+        <p>Subtotal: <span id="subtotal-val">$0.00</span></p>
+        <p>Envío: <span id="envio-val">GRATIS</span></p>
+        <hr>
+        <p class="total-grande">Total: <span id="total-val">$0.00</span></p>
+        </div>
+        <button class="btn-proceder">Proceder al Pago</button>
+        <div class="pago-seguro">
+        <p>🔒 Pago 100% seguro y protegido</p>
+        <p> ✔️ Envío gratis en compras +$50</p>
+        <p> ✔️ Garantía de devolución 30 días</p>
+        <p> ✔️ Pago seguro encriptado</p>
+        </div>
+        
+    </aside>
+</main>
+
+    
+    <!-- Footer Container -->
+    <div id="footer-container">
+        <!-- El footer se carga aquí automáticamente -->
+    </div>
+
+    <!-- Script para cargar componentes -->
+    <script src="./js/components.js"></script>
+    <script src="./js/navbar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/cart-logic.js"></script>
+    <script src="./js/carrito.js"></script>
+
+</body>
+</html>
