@@ -1,13 +1,8 @@
-let usuarios = [
-  { id:1, nombre: "Juan Pérez", email: "juan.perez@email.com", tel: "+52 555 123 4567", fecha: "14/8/2025", pedidos: 12, total: 1456.80, estado: "Activo" },
-  { id:2, nombre: "María García", email: "maria.garcia@email.com", tel: "+52 555 234 5678", fecha: "21/9/2025", pedidos: 8, total: 892.50, estado: "Activo"},
-  { id:3, nombre: "Carlos López", email: "carlos.lopez@email.com", tel: "+52 555 345 6789", fecha: "9/10/2025", pedidos: 15, total: 2234.00, estado: "Activo" },
-  { id:4, nombre: "Ana Martínez", email: "ana.martinez@email.com", tel: "+52 555 456 7890", fecha: "4/11/2025", pedidos: 5, total: 567.25, estado: "Inactivo" },
-  { id:5, nombre: "Pedro Sánchez", email: "pedro.sanchez@email.com", tel: "+52 555 567 8901", fecha: "11/1/2026", pedidos: 3, total: 234.90,estado: "Activo" }
-];
+//un array para anadir los usuarios
+let usuarios = [];
 
 
-//En este parte se crea una funcion para mostrar los detalles al seleccionar al usuario
+//Funcion para mostrar los detalles al seleccionar al usuario
 function mostrarDetalles(idRecibido) {
   const usuarioEncontrado = usuarios.find(u => u.id === idRecibido);
   
@@ -86,7 +81,7 @@ function cargarTabla() {
 
 }
 
-//Barra filtrar activo e inactivo
+//Barra y funcion para filtrar activo e inactivo
 
 function filtrarUsuarios() {
   const filtroEstado = document.getElementById('filtroEstado').value;
@@ -147,6 +142,9 @@ document.addEventListener('DOMContentLoaded', function() {
     timeoutId = setTimeout(filtrarUsuarios, 300);
   });
 });
+
+
+// funcion para que se puedan ver los pedidos del usurio
 
 function generarPedidosRecientes(usuario) {
     
