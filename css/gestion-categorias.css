@@ -1,0 +1,20 @@
+
+.text-dark-green { color: var(--dark-green); }
+
+.btn-success { background-color: var(--primary-green) !important; border: none; }
+
+.btn-outline-primary {
+    color: var(--dark-green);
+    border-color: var(--dark-green);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--dark-green);
+    color: white;
+}
+
+.admin-card {
+    background: white;
+    border-radius: 15px;
+
+}
