@@ -12,7 +12,7 @@ const productos = [
         oldPrice: 1900.00,
         stock: 50,
         discount: null,
-        category: 'vitaminas'
+        category: 'Control & Balance'
     },
     {
         name: 'Heliocare 360° Oral',
@@ -22,7 +22,7 @@ const productos = [
         oldPrice: 900.00,
         stock: 30,
         discount: null,
-        category: 'proteinas'
+        category: 'Equilibrio Vital'
     },
     {
         name: 'Pearls IC',
@@ -32,7 +32,7 @@ const productos = [
         oldPrice: null,
         stock: 45,
         discount: null,
-        category: 'naturales'
+        category: 'Bienestar Interior'
     },
     {
         name: 'Giranda',
@@ -42,7 +42,7 @@ const productos = [
         oldPrice: 920.00,
         stock: 25,
         discount: null,
-        category: 'naturales'
+        category: 'Bienestar Interior'
     },
     {
         name: 'Hialoflex',
@@ -52,7 +52,7 @@ const productos = [
         oldPrice: 1500.99,
         stock: 60,
         discount: null,
-        category: 'vitaminas'
+        category: 'Rendimiento y Movimiento'
     },
     {
         name: '80 Billion Probiotics',
@@ -62,7 +62,7 @@ const productos = [
         oldPrice: null,
         stock: 40,
         discount: null,
-        category: 'proteinas'
+        category: 'Bienestar Interior'
     },
     {
         name: 'B Life Citrate Mag',
@@ -72,7 +72,7 @@ const productos = [
         oldPrice: 800.00,
         stock: 35,
         discount: null,
-        category: 'proteinas'
+        category: 'Control & Balance'
     },
     {
         name: 'Idylla',
@@ -82,7 +82,7 @@ const productos = [
         oldPrice: null,
         stock: 55,
         discount: null,
-        category: 'vitaminas'
+        category: 'Bienestar Interior'
     },
     {
         name: 'Talaric',
@@ -92,7 +92,7 @@ const productos = [
         oldPrice: 400.00,
         stock: 28,
         discount: null,
-        category: 'naturales'
+        category: 'Rendimiento y Movimiento'
     },
     {
         name: 'Krill Antarta',
@@ -102,7 +102,7 @@ const productos = [
         oldPrice: null,
         stock: 22,
         discount: null,
-        category: 'proteinas'
+        category: 'Equilibrio Vital'
     },
     {
         name: 'B Life U Tonic',
@@ -112,7 +112,7 @@ const productos = [
         oldPrice: null,
         stock: 70,
         discount: null,
-        category: 'vitaminas'
+        category: 'Bienestar Interior'
     },
     {
         name: 'Stop&Go',
@@ -122,7 +122,7 @@ const productos = [
         oldPrice: 400.00,
         stock: 42,
         discount: null,
-        category: 'naturales'
+        category: 'Control & Balance'
     },
     {
         name: 'Probvioptal',
@@ -132,7 +132,7 @@ const productos = [
         oldPrice: 500.00,
         stock: 30,
         discount: null,
-        category: 'naturales'
+        category: 'Bienestar Interior'
     },
     {
         name: 'Pronat Proteína',
@@ -142,7 +142,7 @@ const productos = [
         oldPrice: null,
         stock: 54,
         discount: null,
-        category: 'naturales'
+        category: 'Rendimiento y Movimiento'
     },
     {
         name: 'Magzen',
@@ -152,7 +152,7 @@ const productos = [
         oldPrice: 520.00,
         stock: 18,
         discount: null,
-        category: 'naturales'
+        category: 'Control & Balance'
     },
     {
         name: 'Dieflex',
@@ -162,7 +162,7 @@ const productos = [
         oldPrice: null,
         stock: 24,
         discount: null,
-        category: 'naturales'
+        category: 'Rendimiento y Movimiento'
     },
     {
         name: 'Dielagen',
@@ -172,7 +172,7 @@ const productos = [
         oldPrice: 850.99,
         stock: 29,
         discount: null,
-        category: 'naturales'
+        category: 'Rendimiento y Movimiento'
     },
     {
         name: 'Memozan',
@@ -182,7 +182,7 @@ const productos = [
         oldPrice: 700.99,
         stock: 35,
         discount: null,
-        category: 'naturales'
+        category: 'Control & Balance'
     },
     {
         name: 'Lactopram',
@@ -192,7 +192,7 @@ const productos = [
         oldPrice: null,
         stock: 42,
         discount: null,
-        category: 'naturales'
+        category: 'Bienestar Interior'
     },
     {
         name: 'Nocele',
@@ -202,7 +202,7 @@ const productos = [
         oldPrice: 700.00,
         stock: 28,
         discount: null,
-        category: 'naturales'
+        category: 'Bienestar Interior'
     },
     {
         name: 'Paz-Ob',
@@ -212,7 +212,7 @@ const productos = [
         oldPrice: 650.00,
         stock: 17,
         discount: null,
-        category: 'naturales'
+        category: 'Bienestar Interior'
     },
     {
         name: 'Previta-Mom',
@@ -222,7 +222,7 @@ const productos = [
         oldPrice: null,
         stock: 36,
         discount: null,
-        category: 'naturales'
+        category: 'Bienestar Interior'
     },
     {
         name: 'Probiolog GG',
@@ -232,7 +232,7 @@ const productos = [
         oldPrice: null,
         stock: 48,
         discount: null,
-        category: 'naturales'
+        category: 'Bienestar Interior'
     },
     {
         name: 'Hemamina',
@@ -242,7 +242,7 @@ const productos = [
         oldPrice: 600.00,
         stock: 20,
         discount: null,
-        category: 'naturales'
+        category: 'Equilibrio Vital'
     },
     {
         name: 'Ferrexel',
@@ -252,7 +252,7 @@ const productos = [
         oldPrice: null,
         stock: 42,
         discount: null,
-        category: 'naturales'
+        category: 'Equilibrio Vital'
     },
     {
         name: 'Biometrix Q-10',
@@ -262,7 +262,7 @@ const productos = [
         oldPrice: 300.00,
         stock: 50,
         discount: null,
-        category: 'naturales'
+        category: 'Control & Balance'
     },
     {
         name: 'Biometrix Perf. A-OX',
@@ -272,7 +272,7 @@ const productos = [
         oldPrice: null,
         stock: 30,
         discount: null,
-        category: 'naturales'
+        category: 'Control & Balance'
     },
     {
         name: 'Biometrix Performance',
@@ -282,7 +282,7 @@ const productos = [
         oldPrice: 600.99,
         stock: 38,
         discount: null,
-        category: 'naturales'
+        category: 'Control & Balance'
     },
     {
         name: 'Hunter XNL',
@@ -292,7 +292,7 @@ const productos = [
         oldPrice: 200.00,
         stock: 45,
         discount: null,
-        category: 'naturales'
+        category: 'Hunter XNL'
     },
     {
         name: 'Benel-G',
@@ -302,7 +302,7 @@ const productos = [
         oldPrice: 630.00,
         stock: 26,
         discount: null,
-        category: 'naturales'
+        category: 'Equilibrio Vital'
     },
     {
         name: 'Granagard',
@@ -312,7 +312,7 @@ const productos = [
         oldPrice: null,
         stock: 34,
         discount: null,
-        category: 'naturales'
+        category: 'Equilibrio Vital'
     },
     {
         name: 'Emergen-C',
@@ -322,7 +322,7 @@ const productos = [
         oldPrice: null,
         stock: 40,
         discount: null,
-        category: 'naturales'
+        category: 'Equilibrio Vital'
     },
     {
         name: 'Punic',
@@ -332,7 +332,7 @@ const productos = [
         oldPrice: null,
         stock: 60,
         discount: null,
-        category: 'naturales'
+        category: 'Equilibrio Vital'
     },
     {
         name: 'Elevit 3-Luteína',
@@ -342,7 +342,7 @@ const productos = [
         oldPrice: null,
         stock: 26,
         discount: null,
-        category: 'naturales'
+        category: 'Equilibrio Vital'
     },
 
 
