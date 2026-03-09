@@ -181,7 +181,13 @@ display: flex;
 gap: 5px;
     
 }
-
+.volver{
+    color: #70AD47;
+}
+.volver:hover{
+    color: #2D5A27;
+    cursor: pointer;
+}
 .producto1{
 
     width: 384px;
@@ -284,4 +290,9 @@ border-radius: 8px;
 .icon{
 width: 20px;
 height: 20px;
+}
+
+.repetirBoton:hover {
+    background-color: #2D3436;
+    cursor: pointer;
 }
