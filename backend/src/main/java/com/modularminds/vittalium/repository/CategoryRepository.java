@@ -1,6 +1,6 @@
 package com.modularminds.vittalium.repository;
 
-import com.modularminds.vittalium.config.Category;
+import com.modularminds.vittalium.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

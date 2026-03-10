@@ -1,14 +1,9 @@
-// CONFIGURACIÓN API
 const API_URL = "http://localhost:8080/api/product";
+const API_CATEGORIAS = "http://localhost:8080/api/categorias/activas";
 
 let productos = [];
-
 // MAPEO BACKEND -> FRONTEND
-const categoriaMap = {
-    1: 'vitaminas',
-    2: 'proteinas',
-    3: 'naturales'
-};
+let categoriaMap = {};
 
 function convertirAFrontend(p) {
     return {
@@ -20,13 +15,44 @@ function convertirAFrontend(p) {
         oldPrice: p.oldPrice ? parseFloat(p.oldPrice) : null,
         stock: p.stock,
         discount: p.discount,
-        category: categoriaMap[p.idCategory] || 'vitaminas'
+        category: categoriaMap[p.idCategory] || 'sin-categoria'
     };
+}
+
+// CARGAR CATEGORÍAS Y FILTROS DINÁMICOS
+async function cargarFiltrosCategorias() {
+    try {
+        const response = await fetch(API_CATEGORIAS);
+        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+        const categorias = await response.json();
+
+        categorias.forEach(cat => {
+            categoriaMap[cat.idCategory] = normalizarTexto(cat.categoryName);
+        });
+
+        const contenedorFiltros = document.querySelector('.filtros');
+        if (!contenedorFiltros) return;
+
+        contenedorFiltros.innerHTML = `<button class="filtro-btn active">Todos</button>`;
+
+        categorias.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.className = 'filtro-btn';
+            btn.textContent = cat.categoryName;
+            contenedorFiltros.appendChild(btn);
+        });
+
+    } catch (error) {
+        console.error("Error al cargar categorías:", error);
+        categoriaMap = { 1: 'vitaminas', 2: 'proteinas', 3: 'naturales' };
+    }
 }
 
 // CARGAR PRODUCTOS DESDE EL BACKEND
 async function cargarProductos() {
     try {
+        await cargarFiltrosCategorias();
+
         const response = await fetch(API_URL);
         if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
         const data = await response.json();
@@ -88,9 +114,7 @@ function crearProductoCard(producto) {
     `;
 }
 
-// ========================================
 // RENDERIZAR PRODUCTOS
-// ========================================
 function renderizarProductos(productosAMostrar = productos) {
     const grid = document.querySelector('.productos-grid');
 
@@ -137,15 +161,13 @@ function inicializarFiltros() {
         boton.addEventListener('click', () => {
             botonesFiltro.forEach(b => b.classList.remove('active'));
             boton.classList.add('active');
-
-            // normalizarTexto convierte "Proteínas" → "proteinas" para que coincida con category
             const categoria = normalizarTexto(boton.textContent.trim());
             filtrarProductos(categoria);
         });
     });
 }
 
-// CARRITO (localStorage — temporal hasta integrar tabla cart)
+// CARRITO
 function inicializarBotonesAgregar() {
     const botones = document.querySelectorAll('.btn-agregar');
 
@@ -155,13 +177,12 @@ function inicializarBotonesAgregar() {
             const productoEncontrado = productos.find(p => p.name === nombreProducto);
 
             if (productoEncontrado) {
-                const productoParaCarrito = {
+                agregarAlCarrito({
                     name: productoEncontrado.name,
                     price: productoEncontrado.price,
                     img: productoEncontrado.img,
                     quantity: 1
-                };
-                agregarAlCarrito(productoParaCarrito);
+                });
             }
         });
     });
@@ -203,7 +224,6 @@ document.addEventListener('DOMContentLoaded', () => {
     actualizarContadorCarrito();
 });
 
-// Exportar para uso en otros archivos (opcional)
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { productos, renderizarProductos, filtrarProductos };
 }

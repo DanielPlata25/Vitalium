@@ -1,6 +1,6 @@
 package com.modularminds.vittalium.service;
 
-import com.modularminds.vittalium.config.Category;
+import com.modularminds.vittalium.model.Category;
 
 import java.util.List;
 import java.util.Optional;

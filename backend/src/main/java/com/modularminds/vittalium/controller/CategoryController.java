@@ -1,6 +1,6 @@
 package com.modularminds.vittalium.controller;
 
-import com.modularminds.vittalium.config.Category;
+import com.modularminds.vittalium.model.Category;
 import com.modularminds.vittalium.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,7 @@ public class CategoryController {
     public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
         return categoryService.getCategoryById(id)
                 .map(ResponseEntity::ok)
-                .orElseThrow(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.notFound().build());
     }
 
     //GET obtiene solo categorías activas
@@ -42,7 +42,7 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
         try {
-            Category newCategory = CategoryService.createCategory(category);
+            Category newCategory = categoryService.createCategory(category);
             return ResponseEntity.status(HttpStatus.CREATED).body(newCategory);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
@@ -56,7 +56,31 @@ public class CategoryController {
             @RequestBody Category category) {
         try {
             Category updateCategory = categoryService.updateCategory(id, category);
-            return ResponseEntity.ok(updateCategory)
+            return ResponseEntity.ok(updateCategory);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    //DELETE elimina categoría
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+        try {
+            categoryService.deleteCategory(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    //PATCH activa/desactiva categorías
+    @PatchMapping("/{id}/toggle-status")
+    public ResponseEntity<Category> toggleCategoryStatus(@PathVariable Long id) {
+        try {
+            Category category = categoryService.toggleCategoryStatus(id);
+            return ResponseEntity.ok(category);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 }
