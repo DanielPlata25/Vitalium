@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Productos | Vittalium</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/productos.css" />
+    <link rel="stylesheet" href="css/carrito.css" />
+    <link rel="stylesheet" href="./css/paginaProducto.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./logo.png" />
+  </head>
+  <body>
+    <!-- Navbar Container -->
+    <header id="navbar-container">
+      <!-- El navbar se carga aquí automáticamente -->
+    </header>
+
+    <main class="product-container">
+      <section class="product-main">
+        <div class="product-image">
+          <img src="tu-imagen.jpg" alt="Proteína Whey" />
+        </div>
+
+        <div class="product-info">
+          <span class="category-tag" id="category-tag">Categoria</span>
+          <h1 class="name" id="name">Nombre del producto</h1>
+
+          <div class="price" id="price">$42.49</div>
+          <p class="stock" id="stock">En stock (30 disponibles)</p>
+
+                <div class="quantity-area">
+                    <div class="quantity-selector">
+                        <button id="decrement">−</button>
+                        <input type="text" id="quantity" value="1" readonly>
+                        <button id="increment">+</button>
+                    </div>
+            <button class="btn-add">Agregar al Carrito</button>
+          </div>
+
+          <div class="shipping-info">
+            <p>Garantía de satisfacción 30 días</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="product-details">
+        <div class="description-column">
+          <h3>Descripción</h3>
+          <p class="description" id="description">
+            Descripcion del producto
+          </p>
+
+        </div>
+
+        <aside class="sidebar-info">
+          <div class="help-box">
+            <h4>¿Necesitas Ayuda?</h4>
+            <a href="./contactanos.html"><button class="btn-contact">Contáctanos</button></a>
+          </div>
+
+        </aside>
+      </section>
+    </main>
+
+    <!-- Footer Container -->
+    <div id="footer-container">
+      <!-- El footer se carga aquí automáticamente -->
+    </div>
+
+    <!-- Script para cargar componentes -->
+    <script src="./js/components.js"></script>
+    <script src="./js/navbar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/cart-logic.js"></script>
+    <script src="./js/carrito.js"></script>
+  </body>
+</html>
