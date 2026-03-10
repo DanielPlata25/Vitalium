@@ -4,7 +4,7 @@ let productos = [];
 
 function convertirUrlDrive(url) {
     if (!url) return url;
-    if (url.includes('thumbnail?id=')) return url;
+    if (url.includes("thumbnail?id=")) return url;
     const match = url.match(/\/d\/([-\w]{25,})/);
     if (match) return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w800`;
     return url;
@@ -22,27 +22,27 @@ function convertirABackend(producto) {
         discount: producto.discount ? parseInt(producto.discount) : null,
         imageUrl: convertirUrlDrive(producto.img),
         idCategory: convertirCategoriaAId(producto.category),
-        isActive: true
+        isActive: true,
     };
 }
 
 function convertirCategoriaAId(categoryName) {
-    const categorias = { 'vitaminas': 1, 'proteinas': 2, 'naturales': 3 };
+    const categorias = { vitaminas: 1, proteinas: 2, naturales: 3 };
     return categorias[categoryName.toLowerCase()] || 1;
 }
 
 function convertirAFrontend(p) {
-    const categorias = { 1: 'vitaminas', 2: 'proteinas', 3: 'naturales' };
+    const categorias = { 1: "vitaminas", 2: "proteinas", 3: "naturales" };
     return {
         id: p.idProduct,
         name: p.productName,
-        img: p.imageUrl || './img/producto_prueba.png',
+        img: p.imageUrl || "./img/producto_prueba.png",
         description: p.description,
         price: p.price,
         oldPrice: p.oldPrice,
         stock: p.stock,
         discount: p.discount,
-        category: categorias[p.idCategory] || 'vitaminas'
+        category: categorias[p.idCategory] || "vitaminas",
     };
 }
 
@@ -52,10 +52,18 @@ async function cargarProductosDelBackend() {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
         productos = data.map(convertirAFrontend);
+
+        // 🔍 NUEVO: Ordenar productos de A a Z y actualizar filtrados
+        productos = productos.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+        productosFiltrados = [...productos];
+        paginaActual = 1;
+
         renderizarTablaProductos();
+        actualizarBotones();
     } catch (error) {
         console.error("Error al cargar productos:", error);
         productos = [];
+        productosFiltrados = [];
         renderizarTablaProductos();
     }
 }
@@ -64,7 +72,7 @@ async function crearProductoAPI(producto) {
     const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(convertirABackend(producto))
+        body: JSON.stringify(convertirABackend(producto)),
     });
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     return await response.json();
@@ -74,7 +82,7 @@ async function actualizarProductoAPI(id, producto) {
     const response = await fetch(`${API_URL}/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(convertirABackend(producto))
+        body: JSON.stringify(convertirABackend(producto)),
     });
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     return await response.json();
@@ -97,8 +105,71 @@ document.addEventListener("DOMContentLoaded", async function () {
     const btnAgregar = document.querySelector(".btn-agregar");
     const formulario = document.querySelector("#productoForm");
 
+    // 🔍 NUEVO: Referencias a elementos de búsqueda y paginación
+    const buscador = document.getElementById("buscador");
+    const prevPageBtn = document.getElementById("prevPage");
+    const nextPageBtn = document.getElementById("nextPage");
+
     btnAgregar.addEventListener("click", () => abrirModalParaCrear(modalOverlay, formulario));
     modalOverlay.querySelector(".btn-cancelar").addEventListener("click", () => cerrarModal(modalOverlay, formulario));
+
+    // 🔍 NUEVO: Búsqueda en tiempo real (coincidencias al principio)
+    if (buscador) {
+        buscador.addEventListener("input", function (e) {
+            const terminoBusqueda = e.target.value.toLowerCase().trim();
+
+            if (terminoBusqueda === "") {
+                productosFiltrados = [...productos];
+            } else {
+                // Buscar solo palabras que EMPIECEN con el término
+                productosFiltrados = productos.filter((producto) => producto.name.toLowerCase().startsWith(terminoBusqueda));
+            }
+
+            paginaActual = 1;
+            renderizarTablaProductos();
+            actualizarBotones();
+
+            // Scroll suave al inicio de la tabla
+            const tablaContainer = document.querySelector(".table-container");
+            if (tablaContainer) {
+                tablaContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+        });
+    }
+
+    // 🔍 NUEVO: Eventos de paginación
+    if (prevPageBtn) {
+        prevPageBtn.addEventListener("click", () => {
+            if (paginaActual > 1) {
+                paginaActual--;
+                renderizarTablaProductos();
+                actualizarBotones();
+
+                // Scroll suave al inicio de la tabla
+                const tablaContainer = document.querySelector(".table-container");
+                if (tablaContainer) {
+                    tablaContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                }
+            }
+        });
+    }
+
+    if (nextPageBtn) {
+        nextPageBtn.addEventListener("click", () => {
+            const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina);
+            if (paginaActual < totalPaginas) {
+                paginaActual++;
+                renderizarTablaProductos();
+                actualizarBotones();
+
+                // Scroll suave al inicio de la tabla
+                const tablaContainer = document.querySelector(".table-container");
+                if (tablaContainer) {
+                    tablaContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                }
+            }
+        });
+    }
 
     modalOverlay.addEventListener("click", (e) => {
         if (e.target === modalOverlay) cerrarModal(modalOverlay, formulario);
@@ -126,7 +197,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             oldPrice: datosProducto.oldPrice ? parseFloat(datosProducto.oldPrice) : null,
             stock: parseInt(datosProducto.stock),
             discount: datosProducto.discount ? parseInt(datosProducto.discount) : null,
-            category: datosProducto.category
+            category: datosProducto.category,
         };
 
         const modoEdicion = formulario.dataset.modo === "editar";
@@ -143,6 +214,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
             cerrarModal(modalOverlay, formulario);
             await cargarProductosDelBackend();
+
+            // Scroll suave al inicio de la tabla
+            const tablaContainer = document.querySelector(".table-container");
+            if (tablaContainer) {
+                tablaContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
         } catch (error) {
             console.error("Error en submit:", error);
             alert("Ocurrió un error. Revisa la consola.");
@@ -168,6 +245,12 @@ document.addEventListener("DOMContentLoaded", async function () {
                 cerrarModalEliminar(document.querySelector(".modal-eliminar-overlay"));
                 window.productoAEliminar = null;
                 await cargarProductosDelBackend();
+
+                // Scroll suave al inicio de la tabla
+                const tablaContainer = document.querySelector(".table-container");
+                if (tablaContainer) {
+                    tablaContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                }
             }
         }
 
@@ -269,8 +352,19 @@ function renderizarTablaProductos() {
 
     if (productos.length === 0) {
         tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No hay productos. Agrega uno nuevo.</td></tr>';
+
+        // Actualizar información de paginación
+        const currentPageSpan = document.getElementById("currentPage");
+        const totalPagesSpan = document.getElementById("totalPages");
+        if (currentPageSpan) currentPageSpan.textContent = paginaActual;
+        if (totalPagesSpan) totalPagesSpan.textContent = "1";
         return;
     }
+
+    // Calcular índices para paginación
+    const inicio = (paginaActual - 1) * productosPorPagina;
+    const fin = inicio + productosPorPagina;
+    const productosPagina = productosFiltrados.slice(inicio, fin);
 
     productos.forEach((producto) => {
         const row = document.createElement("tr");
@@ -289,6 +383,14 @@ function renderizarTablaProductos() {
         tbody.appendChild(row);
     });
 
+    // Actualizar información de paginación
+    const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina);
+    const currentPageSpan = document.getElementById("currentPage");
+    const totalPagesSpan = document.getElementById("totalPages");
+
+    if (currentPageSpan) currentPageSpan.textContent = paginaActual;
+    if (totalPagesSpan) totalPagesSpan.textContent = totalPaginas || 1;
+
     document.querySelectorAll(".btn-editar").forEach((boton) => {
         boton.addEventListener("click", (e) => abrirModalParaEditar(parseInt(e.target.dataset.id)));
     });
@@ -303,6 +405,16 @@ function renderizarTablaProductos() {
             }
         });
     });
+}
+
+// 🔍 NUEVA: Función para actualizar el estado de los botones de paginación (nombre solicitado)
+function actualizarBotones() {
+    const prevPageBtn = document.getElementById("prevPage");
+    const nextPageBtn = document.getElementById("nextPage");
+    const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina);
+
+    if (prevPageBtn) prevPageBtn.disabled = paginaActual === 1;
+    if (nextPageBtn) nextPageBtn.disabled = paginaActual === totalPaginas || totalPaginas === 0;
 }
 
 function abrirModalParaCrear(modalOverlay, formulario) {
@@ -331,8 +443,8 @@ function abrirModalParaEditar(productoId) {
     document.getElementById("categoria").value = producto.category;
     document.getElementById("price").value = producto.price;
     document.getElementById("stock").value = producto.stock;
-    document.getElementById("discount").value = producto.discount || '';
-    document.getElementById("oldPrice").value = producto.oldPrice || '';
+    document.getElementById("discount").value = producto.discount || "";
+    document.getElementById("oldPrice").value = producto.oldPrice || "";
     document.getElementById("img").value = producto.img;
     document.getElementById("description").value = producto.description;
 
