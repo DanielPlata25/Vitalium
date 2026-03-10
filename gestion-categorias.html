@@ -48,6 +48,25 @@
     <div class="mb-4">
       <input type="text" id="buscadorCategorias" class="form-control shadow-sm" placeholder="Buscar categoría...">
     </div>
+
+    <!-- 🔍 NUEVO: Controles de paginación -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="text-muted">
+        Mostrando <span id="mostrandoDesde">0</span> - <span id="mostrandoHasta">0</span> de <span
+          id="totalCategorias">0</span> categorías
+      </div>
+      <div class="pagination-controls">
+        <button class="btn btn-outline-success btn-sm me-2" id="prevPageCategorias" disabled>
+          <i class="fas fa-chevron-left"></i> Anterior
+        </button>
+        <span class="mx-2">
+          Página <span id="currentPageCategorias">1</span> de <span id="totalPagesCategorias">1</span>
+        </span>
+        <button class="btn btn-outline-success btn-sm ms-2" id="nextPageCategorias">
+          Siguiente <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
     <!--?------------------------------TABLA DE INFORMACIÓN DE CATEGORIAS--------------------------------------------------->
     <div class="admin-card shadow-sm p-4 bg-white" style="border-radius: 15px;">
       <h4 class="mb-4 text-dark-green">Resumen de categorías</h4>
