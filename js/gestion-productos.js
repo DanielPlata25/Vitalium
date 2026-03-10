@@ -1,6 +1,9 @@
 const API_URL = "http://localhost:8080/api/product";
 
 let productos = [];
+let productosFiltrados = [];
+let paginaActual = 1;
+const productosPorPagina = 10;
 
 function convertirUrlDrive(url) {
     if (!url) return url;
@@ -52,8 +55,6 @@ async function cargarProductosDelBackend() {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
         productos = data.map(convertirAFrontend);
-
-        // 🔍 NUEVO: Ordenar productos de A a Z y actualizar filtrados
         productos = productos.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
         productosFiltrados = [...productos];
         paginaActual = 1;
@@ -105,7 +106,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     const btnAgregar = document.querySelector(".btn-agregar");
     const formulario = document.querySelector("#productoForm");
 
-    // 🔍 NUEVO: Referencias a elementos de búsqueda y paginación
     const buscador = document.getElementById("buscador");
     const prevPageBtn = document.getElementById("prevPage");
     const nextPageBtn = document.getElementById("nextPage");
@@ -113,7 +113,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     btnAgregar.addEventListener("click", () => abrirModalParaCrear(modalOverlay, formulario));
     modalOverlay.querySelector(".btn-cancelar").addEventListener("click", () => cerrarModal(modalOverlay, formulario));
 
-    // 🔍 NUEVO: Búsqueda en tiempo real (coincidencias al principio)
     if (buscador) {
         buscador.addEventListener("input", function (e) {
             const terminoBusqueda = e.target.value.toLowerCase().trim();
@@ -129,7 +128,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             renderizarTablaProductos();
             actualizarBotones();
 
-            // Scroll suave al inicio de la tabla
             const tablaContainer = document.querySelector(".table-container");
             if (tablaContainer) {
                 tablaContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -137,7 +135,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
     }
 
-    // 🔍 NUEVO: Eventos de paginación
     if (prevPageBtn) {
         prevPageBtn.addEventListener("click", () => {
             if (paginaActual > 1) {
@@ -145,7 +142,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 renderizarTablaProductos();
                 actualizarBotones();
 
-                // Scroll suave al inicio de la tabla
                 const tablaContainer = document.querySelector(".table-container");
                 if (tablaContainer) {
                     tablaContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -162,7 +158,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 renderizarTablaProductos();
                 actualizarBotones();
 
-                // Scroll suave al inicio de la tabla
                 const tablaContainer = document.querySelector(".table-container");
                 if (tablaContainer) {
                     tablaContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -215,7 +210,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             cerrarModal(modalOverlay, formulario);
             await cargarProductosDelBackend();
 
-            // Scroll suave al inicio de la tabla
             const tablaContainer = document.querySelector(".table-container");
             if (tablaContainer) {
                 tablaContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -246,7 +240,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 window.productoAEliminar = null;
                 await cargarProductosDelBackend();
 
-                // Scroll suave al inicio de la tabla
                 const tablaContainer = document.querySelector(".table-container");
                 if (tablaContainer) {
                     tablaContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -350,7 +343,7 @@ function renderizarTablaProductos() {
 
     tbody.innerHTML = "";
 
-    if (productos.length === 0) {
+    if (productosFiltrados.length === 0) {
         tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No hay productos. Agrega uno nuevo.</td></tr>';
 
         // Actualizar información de paginación
@@ -366,7 +359,7 @@ function renderizarTablaProductos() {
     const fin = inicio + productosPorPagina;
     const productosPagina = productosFiltrados.slice(inicio, fin);
 
-    productos.forEach((producto) => {
+    productosPagina.forEach((producto) => {
         const row = document.createElement("tr");
         row.innerHTML = `
             <td><img src="${producto.img}" alt="${producto.name}" class="producto-imagen-tabla" onerror="this.onerror=null; this.src='https://placehold.co/80x80?text=Sin+imagen'"></td>
@@ -407,7 +400,6 @@ function renderizarTablaProductos() {
     });
 }
 
-// 🔍 NUEVA: Función para actualizar el estado de los botones de paginación (nombre solicitado)
 function actualizarBotones() {
     const prevPageBtn = document.getElementById("prevPage");
     const nextPageBtn = document.getElementById("nextPage");
