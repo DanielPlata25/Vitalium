@@ -41,8 +41,8 @@ async function cargarCategorias() {
         categorias = categorias.sort((a, b) => a.nombre.toLowerCase().localeCompare(b.nombre.toLowerCase()));
         paginaActual = 1;
 
-        renderizarTabla(categorias); // 🔍 MODIFICADO: pasamos categorias directamente
-        actualizarBotones(); // 🔍 NUEVO: actualizar estado de botones
+        renderizarTabla(categorias);
+        actualizarBotones();
     } catch (error) {
         console.error("Error al cargar categorías:", error);
         categorias = [];
@@ -121,7 +121,6 @@ function renderizarTabla(lista) {
         tbody.appendChild(row);
     });
 
-    // Actualizar información de paginación con la lista completa
     actualizarInfoPaginacion(lista);
 
     // Event listeners
@@ -142,7 +141,6 @@ function renderizarTabla(lista) {
     });
 }
 
-// 🔍 NUEVA: Función para actualizar información de paginación
 function actualizarInfoPaginacion(lista) {
     const totalCategorias = lista.length;
     const totalPaginas = Math.ceil(totalCategorias / categoriasPorPagina);
@@ -166,7 +164,6 @@ function actualizarInfoPaginacion(lista) {
     if (totalPagesSpan) totalPagesSpan.textContent = totalPaginas || 1;
 }
 
-// 🔍 NUEVA: Función para actualizar el estado de los botones de paginación
 function actualizarBotones() {
     const prevPageBtn = document.getElementById("prevPageCategorias");
     const nextPageBtn = document.getElementById("nextPageCategorias");
@@ -256,7 +253,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     await cargarCategorias();
     inicializarBuscador();
 
-    // 🔍 NUEVO: Eventos de paginación
     const prevPageBtn = document.getElementById("prevPageCategorias");
     const nextPageBtn = document.getElementById("nextPageCategorias");
 
@@ -264,10 +260,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         prevPageBtn.addEventListener("click", () => {
             if (paginaActual > 1) {
                 paginaActual--;
-                renderizarTabla(categorias); // Pasamos el array original
+                renderizarTabla(categorias);
                 actualizarBotones();
 
-                // Scroll suave al inicio de la tabla
                 const tablaContainer = document.querySelector(".admin-card");
                 if (tablaContainer) {
                     tablaContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -281,10 +276,9 @@ document.addEventListener("DOMContentLoaded", async function () {
             const totalPaginas = Math.ceil(categorias.length / categoriasPorPagina);
             if (paginaActual < totalPaginas) {
                 paginaActual++;
-                renderizarTabla(categorias); // Pasamos el array original
+                renderizarTabla(categorias);
                 actualizarBotones();
 
-                // Scroll suave al inicio de la tabla
                 const tablaContainer = document.querySelector(".admin-card");
                 if (tablaContainer) {
                     tablaContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -293,10 +287,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
     }
 
-    // Botón nueva categoría
     document.getElementById("btnNuevaCategoria").addEventListener("click", abrirModalCrear);
 
-    // Guardar (crear o editar)
     document.getElementById("btnGuardarCategoria").addEventListener("click", async function () {
         const nombre = document.getElementById("categoriaNombre").value.trim();
         const descripcion = document.getElementById("categoriaDescripcion").value.trim();
