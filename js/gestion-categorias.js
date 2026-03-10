@@ -5,6 +5,9 @@ let categoriaAEliminar = null;
 let modalBS = null;
 let eliminarModalBS = null;
 
+let paginaActual = 1;
+const categoriasPorPagina = 5; // 5 por página para categorías
+
 // ========================================
 // MAPEO BACKEND → FRONTEND
 // ========================================
@@ -12,8 +15,8 @@ function convertirAFrontend(c) {
     return {
         id: c.idCategory,
         nombre: c.categoryName,
-        descripcion: c.description || '',
-        activa: c.isActive
+        descripcion: c.description || "",
+        activa: c.isActive,
     };
 }
 
@@ -21,7 +24,7 @@ function convertirABackend(categoria) {
     return {
         categoryName: categoria.nombre,
         description: categoria.descripcion,
-        isActive: categoria.activa ?? true
+        isActive: categoria.activa ?? true,
     };
 }
 
@@ -34,7 +37,12 @@ async function cargarCategorias() {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
         categorias = data.map(convertirAFrontend);
+        // 🔍 NUEVO: Ordenar categorías de A a Z
+        categorias = categorias.sort((a, b) => a.nombre.toLowerCase().localeCompare(b.nombre.toLowerCase()));
+        paginaActual = 1;
+
         renderizarTabla(categorias);
+        actualizarBotones();
     } catch (error) {
         console.error("Error al cargar categorías:", error);
         categorias = [];
@@ -46,7 +54,7 @@ async function crearCategoriaAPI(categoria) {
     const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(convertirABackend(categoria))
+        body: JSON.stringify(convertirABackend(categoria)),
     });
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     return await response.json();
@@ -56,7 +64,7 @@ async function actualizarCategoriaAPI(id, categoria) {
     const response = await fetch(`${API_URL}/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(convertirABackend(categoria))
+        body: JSON.stringify(convertirABackend(categoria)),
     });
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     return await response.json();
@@ -87,20 +95,25 @@ function renderizarTabla(lista) {
         return;
     }
 
-    lista.forEach(categoria => {
+    // Calcular índices para paginación usando la lista recibida
+    const inicio = (paginaActual - 1) * categoriasPorPagina;
+    const fin = inicio + categoriasPorPagina;
+    const categoriasPagina = lista.slice(inicio, fin);
+
+    categoriasPagina.forEach((categoria) => {
         const row = document.createElement("tr");
         row.innerHTML = `
             <td class="fw-bold">${categoria.nombre}</td>
-            <td>${categoria.descripcion || '-'}</td>
+            <td>${categoria.descripcion || "-"}</td>
             <td>
-                <span class="badge ${categoria.activa ? 'bg-success' : 'bg-secondary'}">
-                    ${categoria.activa ? 'Activa' : 'Inactiva'}
+                <span class="badge ${categoria.activa ? "bg-success" : "bg-secondary"}">
+                    ${categoria.activa ? "Activa" : "Inactiva"}
                 </span>
             </td>
             <td>
                 <button class="btn btn-sm btn-outline-primary me-1 btn-editar" data-id="${categoria.id}">Editar</button>
-                <button class="btn btn-sm ${categoria.activa ? 'btn-outline-warning' : 'btn-outline-success'} me-1 btn-toggle" data-id="${categoria.id}">
-                    ${categoria.activa ? 'Desactivar' : 'Activar'}
+                <button class="btn btn-sm ${categoria.activa ? "btn-outline-warning" : "btn-outline-success"} me-1 btn-toggle" data-id="${categoria.id}">
+                    ${categoria.activa ? "Desactivar" : "Activar"}
                 </button>
                 <button class="btn btn-sm btn-outline-danger btn-eliminar" data-id="${categoria.id}" data-nombre="${categoria.nombre}">Eliminar</button>
             </td>
@@ -108,22 +121,56 @@ function renderizarTabla(lista) {
         tbody.appendChild(row);
     });
 
+    actualizarInfoPaginacion(lista);
+
     // Event listeners
-    document.querySelectorAll(".btn-editar").forEach(btn => {
+    document.querySelectorAll(".btn-editar").forEach((btn) => {
         btn.addEventListener("click", (e) => abrirModalEditar(parseInt(e.target.dataset.id)));
     });
 
-    document.querySelectorAll(".btn-toggle").forEach(btn => {
+    document.querySelectorAll(".btn-toggle").forEach((btn) => {
         btn.addEventListener("click", (e) => toggleCategoria(parseInt(e.target.dataset.id)));
     });
 
-    document.querySelectorAll(".btn-eliminar").forEach(btn => {
+    document.querySelectorAll(".btn-eliminar").forEach((btn) => {
         btn.addEventListener("click", (e) => {
             categoriaAEliminar = parseInt(e.target.dataset.id);
             document.getElementById("nombreCategoriaEliminar").textContent = e.target.dataset.nombre;
             eliminarModalBS.show();
         });
     });
+}
+
+function actualizarInfoPaginacion(lista) {
+    const totalCategorias = lista.length;
+    const totalPaginas = Math.ceil(totalCategorias / categoriasPorPagina);
+    const inicio = totalCategorias === 0 ? 0 : (paginaActual - 1) * categoriasPorPagina + 1;
+    const fin = Math.min(paginaActual * categoriasPorPagina, totalCategorias);
+
+    // Actualizar texto informativo
+    const mostrandoDesde = document.getElementById("mostrandoDesde");
+    const mostrandoHasta = document.getElementById("mostrandoHasta");
+    const totalCategoriasSpan = document.getElementById("totalCategorias");
+
+    if (mostrandoDesde) mostrandoDesde.textContent = inicio;
+    if (mostrandoHasta) mostrandoHasta.textContent = fin;
+    if (totalCategoriasSpan) totalCategoriasSpan.textContent = totalCategorias;
+
+    // Actualizar números de página
+    const currentPageSpan = document.getElementById("currentPageCategorias");
+    const totalPagesSpan = document.getElementById("totalPagesCategorias");
+
+    if (currentPageSpan) currentPageSpan.textContent = paginaActual;
+    if (totalPagesSpan) totalPagesSpan.textContent = totalPaginas || 1;
+}
+
+function actualizarBotones() {
+    const prevPageBtn = document.getElementById("prevPageCategorias");
+    const nextPageBtn = document.getElementById("nextPageCategorias");
+    const totalPaginas = Math.ceil(categorias.length / categoriasPorPagina);
+
+    if (prevPageBtn) prevPageBtn.disabled = paginaActual === 1;
+    if (nextPageBtn) nextPageBtn.disabled = paginaActual === totalPaginas || totalPaginas === 0;
 }
 
 // ========================================
@@ -141,7 +188,7 @@ function abrirModalCrear() {
 // MODAL EDITAR
 // ========================================
 function abrirModalEditar(id) {
-    const categoria = categorias.find(c => c.id === id);
+    const categoria = categorias.find((c) => c.id === id);
     if (!categoria) return;
 
     document.getElementById("categoriaModalTitulo").textContent = "Editar Categoría";
@@ -173,12 +220,26 @@ function inicializarBuscador() {
     if (!buscador) return;
 
     buscador.addEventListener("input", (e) => {
-        const texto = e.target.value.toLowerCase();
-        const filtradas = categorias.filter(c =>
-            c.nombre.toLowerCase().includes(texto) ||
-            c.descripcion.toLowerCase().includes(texto)
-        );
-        renderizarTabla(filtradas);
+        const texto = e.target.value.toLowerCase().trim();
+
+        let categoriasFiltradas;
+
+        if (texto === "") {
+            categoriasFiltradas = [...categorias];
+        } else {
+            // Buscar palabras que EMPIECEN con el término (en nombre o descripción)
+            categoriasFiltradas = categorias.filter((c) => c.nombre.toLowerCase().startsWith(texto) || c.descripcion.toLowerCase().startsWith(texto));
+        }
+
+        paginaActual = 1;
+        renderizarTabla(categoriasFiltradas);
+        actualizarBotones();
+
+        // Scroll suave al inicio de la tabla
+        const tablaContainer = document.querySelector(".admin-card");
+        if (tablaContainer) {
+            tablaContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
     });
 }
 
@@ -192,10 +253,42 @@ document.addEventListener("DOMContentLoaded", async function () {
     await cargarCategorias();
     inicializarBuscador();
 
-    // Botón nueva categoría
+    const prevPageBtn = document.getElementById("prevPageCategorias");
+    const nextPageBtn = document.getElementById("nextPageCategorias");
+
+    if (prevPageBtn) {
+        prevPageBtn.addEventListener("click", () => {
+            if (paginaActual > 1) {
+                paginaActual--;
+                renderizarTabla(categorias);
+                actualizarBotones();
+
+                const tablaContainer = document.querySelector(".admin-card");
+                if (tablaContainer) {
+                    tablaContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                }
+            }
+        });
+    }
+
+    if (nextPageBtn) {
+        nextPageBtn.addEventListener("click", () => {
+            const totalPaginas = Math.ceil(categorias.length / categoriasPorPagina);
+            if (paginaActual < totalPaginas) {
+                paginaActual++;
+                renderizarTabla(categorias);
+                actualizarBotones();
+
+                const tablaContainer = document.querySelector(".admin-card");
+                if (tablaContainer) {
+                    tablaContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                }
+            }
+        });
+    }
+
     document.getElementById("btnNuevaCategoria").addEventListener("click", abrirModalCrear);
 
-    // Guardar (crear o editar)
     document.getElementById("btnGuardarCategoria").addEventListener("click", async function () {
         const nombre = document.getElementById("categoriaNombre").value.trim();
         const descripcion = document.getElementById("categoriaDescripcion").value.trim();
