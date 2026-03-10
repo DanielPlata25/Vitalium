@@ -1,4 +1,4 @@
-package com.modularminds.vittalium.config;
+package com.modularminds.vittalium.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

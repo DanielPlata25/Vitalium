@@ -1,6 +1,6 @@
 package com.modularminds.vittalium.service;
 
-import com.modularminds.vittalium.config.Category;
+import com.modularminds.vittalium.model.Category;
 import com.modularminds.vittalium.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
