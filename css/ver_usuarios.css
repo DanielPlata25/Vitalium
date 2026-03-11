@@ -1,0 +1,346 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Variables de color del diseño */
+:root {
+    --verde-principal: #2D5A27;
+    --verde-boton: #70AD47;
+    --verde-claro: #A9D08E;
+    --gris-fondo: #f5f5f5;
+    --gris-texto: #6c757d;
+    --negro-texto: #2d3436;
+    --blanco: #ffffff;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    background-color: var(--gris-fondo);
+    color: var(--negro-texto);
+}
+
+/* Pagina ver usuarios */
+.title-gestion {
+      font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    font-family:Helvetica;
+    display: flex;
+
+    padding: 20px 20px;
+    font-size:xx-large;
+    color: rgb(59, 109, 52);
+    padding-left: 20%;
+}
+
+.subtitle-gestion {
+      font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    font-family:Helvetica;
+    display: flex;
+
+    
+    font-size:xx-large;
+    color: rgb(59, 109, 52);
+}
+
+.volver {
+    display: flex;
+    align-items: center;
+    padding-left: 0%;
+    margin-top: 1%;
+    margin-bottom: 10px;
+}
+
+.volver span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--verde-principal);
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.flecha {
+    width: 20px;
+    height: 20px;
+    stroke: var(--verde-principal);
+}
+
+.volver a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.volver a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.volver span:hover {
+    color: var(--verde-principal);  /* Mantiene el mismo verde */
+}
+
+.card, .table-card {
+    background-color: var(--blanco);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.card:hover, .table-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+}
+
+.bg-dark-green {
+    background-color: var(--verde-principal) !important;
+}
+
+.table thead th {
+    padding: 15px;
+    font-weight: 500;
+    border: none;
+    color: white;
+}
+
+.table tbody td {
+    padding: 15px;
+    vertical-align: middle;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Badges */
+.badge-active {
+    background-color: #A9D08E;
+    color: var(--verde-principal);
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-inactive {
+    background-color: #ff3d3d;
+    color: #721c24;
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-pedidos {
+    background-color: var(--verde-boton);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* Precio */
+.text-price {
+    color: var(--verde-boton);
+    font-weight: 700;
+    font-size: 18px;
+}
+
+
+
+.btn-view:hover {
+    background-color: var(--verde-principal);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px #2D5A27;
+}
+
+.btn-view i {
+    color: white;
+}
+
+#btn-exportar-csv {
+    color: #ffffff;
+    background-color: var(--verde-principal);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+#btn-exportar-csv:hover {
+    background-color: #5a8b5e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(90, 139, 94, 0.3);
+}
+
+/* Filtros */
+.form-control, .form-select {
+    border-radius: 20px !important;
+    border: 1px solid #e0e0e0;
+    padding: 10px 16px;
+    font-size: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--verde-boton);
+    box-shadow: 0 0 0 3px #5a8b5e;
+    outline: none;
+}
+
+/* Tarjeta de detalles */
+.details-card {
+    background: var(--blanco);
+    padding: 25px;
+    border-radius: 12px;
+    height: 100%;
+}
+
+.details-title {
+    color: var(--verde-principal);
+    font-weight: 600;
+    font-size: 24px;
+    margin-bottom: 25px;
+    letter-spacing: -0.5px;
+}
+
+.detail-label {
+    color: var(--gris-texto);
+    font-size: 13px;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.detail-value {
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: var(--negro-texto);
+}
+
+/* Stats box */
+.stat-box {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 25px 0;
+}
+
+.stat-number {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--verde-principal);
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--gris-texto);
+    font-weight: 500;
+}
+
+/* Pedido reciente */
+.order-item {
+    border-left: 4px solid var(--verde-boton);
+    padding: 16px;
+    background-color: #f8f9fa;
+    margin-top: 15px;
+    border-radius: 0 8px 8px 0;
+}
+
+.badge.bg-success {
+    background-color: var(--verde-boton) !important;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+@media (max-width: 768px) {
+    .title-gestion {
+        font-size: 24px;
+    }
+    
+    .col-md-6, .col-md-4 {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .details-card {
+        padding: 20px;
+    }
+    
+    .stat-number {
+        font-size: 24px;
+    }
+}
+
+
+
+/* Para la tarjeta de detalles */
+.details-card {
+    background: var(--blanco);
+    padding: 25px;
+    border-radius: 12px;
+    height: 100%;
+    max-height: 600px;  /* Altura máxima */
+    overflow-y: auto;    /* Scroll vertical cuando sea necesario */
+}
+
+/* Personalizar la barra de scroll */
+.details-card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.details-card::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.details-card::-webkit-scrollbar-thumb {
+    background: var(--verde-claro);
+    border-radius: 10px;
+}
+
+.details-card::-webkit-scrollbar-thumb:hover {
+    background: var(--verde-boton);
+}
+
+/* lista de pedidos */
+.pedidos-lista {
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.btn-view {
+    background-color: var(--verde-boton) !important;  /* Fuerza el color verde */
+    color: white !important;
+    border: none !important;
+}
+
+#buscador{
+    padding-left: 5%;
+}
+
+.text-success{
+    color:#2D5A27
+}
+
+.text-success{
+    color:#2D5A27
+}
