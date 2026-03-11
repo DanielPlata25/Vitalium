@@ -13,4 +13,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     //verifica si un customer con ese user
     Boolean existsByIdUser(Long idUser);
+
+    //eliminar customer por id_user
+    void deleteByIdUser(Long idUser);
 }

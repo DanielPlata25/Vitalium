@@ -1,3 +1,4 @@
+redirigirSiLogueado();
 document.addEventListener('DOMContentLoaded', function () {
     const formLogin = document.getElementById('form-login');
 

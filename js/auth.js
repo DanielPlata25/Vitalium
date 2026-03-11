@@ -1,8 +1,6 @@
 const AUTH_URL = "http://localhost:8080/api/auth";
 
-// ========================================
 // GUARDAR Y OBTENER SESIÓN
-// ========================================
 function guardarSesion(data) {
     localStorage.setItem('vittalium_token', data.token);
     localStorage.setItem('vittalium_user', JSON.stringify({
@@ -38,24 +36,29 @@ function esAdmin() {
     return user && user.rolId === 1;
 }
 
-// ========================================
 // PROTEGER RUTAS DE ADMIN
-// ========================================
 function protegerRutaAdmin() {
-    if (!estaLogueado() || !esAdmin()) {
+    if (!estaLogueado()) {
+        alert('⛔ Debes iniciar sesión para acceder a esta página');
         window.location.href = './login.html';
+        return;
+    }
+    
+    if (!esAdmin()) {
+        alert('⛔ Acceso denegado. Solo administradores pueden acceder a esta página.');
+        window.location.href = './index.html';
+        return;
     }
 }
 
 function protegerRutaUsuario() {
     if (!estaLogueado()) {
+        alert('⛔ Debes iniciar sesión para acceder a esta página');
         window.location.href = './login.html';
     }
 }
 
-// ========================================
 // API CALLS
-// ========================================
 async function loginAPI(email, password) {
     const response = await fetch(`${AUTH_URL}/login`, {
         method: "POST",
@@ -93,9 +96,29 @@ async function registroAPI(nombre, apellido, email, telefono, password) {
     return data;
 }
 
-// ========================================
+// OBTENER DATOS DEL USUARIO (para compatibilidad)
+function getUserData() {
+    const user = obtenerSesion();
+    const token = obtenerToken();
+    
+    if (!user) return null;
+    
+    return {
+        token: token,
+        userId: user.userId,
+        email: user.email,
+        role: user.rolId,
+        customerId: user.customerId,
+        name: user.customerName
+    };
+}
+
+// Alias para compatibilidad
+function logout() {
+    cerrarSesion();
+}
+
 // ACTUALIZAR NAVBAR SEGÚN SESIÓN
-// ========================================
 function actualizarNavbarSesion() {
     const user = obtenerSesion();
     const btnIniciarSesion = document.querySelector('.btn-iniciar-sesion');
@@ -113,6 +136,18 @@ function actualizarNavbarSesion() {
         if (btnIniciarSesion) btnIniciarSesion.style.display = 'inline-block';
         if (btnCerrarSesion) btnCerrarSesion.style.display = 'none';
         if (nombreUsuario) nombreUsuario.textContent = '';
+    }
+}
+
+// REDIRECCIÓN AUTOMÁTICA SI YA ESTÁ LOGUEADO
+function redirigirSiLogueado() {
+    if (estaLogueado()) {
+        const user = obtenerSesion();
+        if (user.rolId === 1) {
+            window.location.href = './admin-dashboard.html';
+        } else {
+            window.location.href = './index.html';
+        }
     }
 }
 
