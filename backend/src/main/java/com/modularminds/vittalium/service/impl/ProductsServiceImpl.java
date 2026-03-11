@@ -1,7 +1,8 @@
-package com.modularminds.vittalium.service;
+package com.modularminds.vittalium.service.impl;
 
 import com.modularminds.vittalium.model.Products;
 import com.modularminds.vittalium.repository.ProductsRepository;
+import com.modularminds.vittalium.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
