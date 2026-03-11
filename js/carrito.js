@@ -73,7 +73,7 @@ function eliminarDelCarrito(index) {
     // 4. Volver a dibujar la lista del carrito (lo que ves en pantalla)
     renderizarContenidoCarrito();
 
-    // 5. ¡ESTA ES LA CLAVE! Actualizar el numerito del icono arriba
+    // 5. Actualizar el numerito del icono arriba
     if (window.actualizarContadorCarrito) {
         window.actualizarContadorCarrito();
     }
