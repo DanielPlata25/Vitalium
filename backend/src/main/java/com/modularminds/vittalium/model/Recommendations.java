@@ -29,11 +29,8 @@ public class Recommendations {
     @Column(name = "points", nullable = false)
     private Integer points = 0;
 
-    @Column(name = "id_category", nullable = false)
-    private Long idCategory;
-
-    @Column(name = "is_active")
-    private Boolean isActive = true;
+    @Column(name = "id_product", nullable = false)
+    private Long idProduct;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
