@@ -1,9 +1,12 @@
+//protegerRutaAdmin();
 const API_URL = "http://localhost:8080/api/product";
+const API_CATEGORIAS_URL = "http://localhost:8080/api/categorias";
 
 let productos = [];
 let productosFiltrados = [];
 let paginaActual = 1;
 const productosPorPagina = 10;
+let categoriasCache = []; // ← CACHE DE CATEGORÍAS
 
 function convertirUrlDrive(url) {
     if (!url) return url;
@@ -13,8 +16,66 @@ function convertirUrlDrive(url) {
     return url;
 }
 
+async function cargarCategoriasDelBackend() {
+    try {
+        const response = await fetch(`${API_CATEGORIAS_URL}/activas`);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const categorias = await response.json();
+        categoriasCache = categorias; // ← GUARDAR EN CACHE
+        return categorias;
+    } catch (error) {
+        console.error("Error al cargar categorías:", error);
+        return [];
+    }
+}
+
+async function actualizarSelectCategorias() {
+    const categorias = await cargarCategoriasDelBackend();
+    const selectCategoria = document.getElementById("categoria");
+    
+    if (!selectCategoria) return;
+    
+    // Limpiar opciones existentes (excepto la primera que es el placeholder)
+    selectCategoria.innerHTML = '<option value="" disabled selected>Seleccionar</option>';
+    
+    // Agregar categorías desde el backend
+    categorias.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat.categoryName.toLowerCase();
+        option.textContent = cat.categoryName;
+        selectCategoria.appendChild(option);
+    });
+}
+
+function convertirCategoriaAId(categoryName) {
+    const categoria = categoriasCache.find(
+        cat => cat.categoryName.toLowerCase() === categoryName.toLowerCase()
+    );
+    return categoria ? categoria.idCategory : 1; // Default a 1 si no encuentra
+}
+
+function convertirAFrontend(p) {
+    // Buscar nombre de categoría desde el cache
+    const categoria = categoriasCache.find(cat => cat.idCategory === p.idCategory);
+    const categoryName = categoria ? categoria.categoryName.toLowerCase() : 'sin categoría';
+    
+    return {
+        id: p.idProduct,
+        name: p.productName,
+        img: p.imageUrl || "./img/producto_prueba.png",
+        description: p.description,
+        price: p.price,
+        oldPrice: p.oldPrice,
+        stock: p.stock,
+        discount: p.discount,
+        category: categoryName,
+    };
+}
+
 function convertirABackend(producto) {
-    if (!producto.category) throw new Error("Category is required");
+    if (!producto.category) {
+        throw new Error("Category is required");
+    }
 
     return {
         productName: producto.name,
@@ -29,28 +90,11 @@ function convertirABackend(producto) {
     };
 }
 
-function convertirCategoriaAId(categoryName) {
-    const categorias = { vitaminas: 1, proteinas: 2, naturales: 3 };
-    return categorias[categoryName.toLowerCase()] || 1;
-}
-
-function convertirAFrontend(p) {
-    const categorias = { 1: "vitaminas", 2: "proteinas", 3: "naturales" };
-    return {
-        id: p.idProduct,
-        name: p.productName,
-        img: p.imageUrl || "./img/producto_prueba.png",
-        description: p.description,
-        price: p.price,
-        oldPrice: p.oldPrice,
-        stock: p.stock,
-        discount: p.discount,
-        category: categorias[p.idCategory] || "vitaminas",
-    };
-}
-
 async function cargarProductosDelBackend() {
     try {
+        // Cargar categorías primero
+        await cargarCategoriasDelBackend();
+        
         const response = await fetch(API_URL);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
@@ -120,7 +164,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             if (terminoBusqueda === "") {
                 productosFiltrados = [...productos];
             } else {
-                // Buscar solo palabras que EMPIECEN con el término
                 productosFiltrados = productos.filter((producto) => producto.name.toLowerCase().startsWith(terminoBusqueda));
             }
 
@@ -273,9 +316,7 @@ function crearModalProducto() {
                         <label for="categoria">Categoría *</label>
                         <select id="categoria" name="category" required>
                             <option value="" disabled selected>Seleccionar</option>
-                            <option value="vitaminas">Vitaminas</option>
-                            <option value="proteinas">Proteínas</option>
-                            <option value="naturales">Naturales</option>
+                            <!-- Las categorías se cargarán dinámicamente -->
                         </select>
                     </div>
                     <div class="form-group">
@@ -319,6 +360,9 @@ function crearModalProducto() {
         </div>
     `;
     document.body.appendChild(modalOverlay);
+    
+    // IMPORTANTE: Cargar categorías después de crear el modal
+    actualizarSelectCategorias();
 }
 
 function crearModalEliminar() {
@@ -346,7 +390,6 @@ function renderizarTablaProductos() {
     if (productosFiltrados.length === 0) {
         tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No hay productos. Agrega uno nuevo.</td></tr>';
 
-        // Actualizar información de paginación
         const currentPageSpan = document.getElementById("currentPage");
         const totalPagesSpan = document.getElementById("totalPages");
         if (currentPageSpan) currentPageSpan.textContent = paginaActual;
@@ -354,7 +397,6 @@ function renderizarTablaProductos() {
         return;
     }
 
-    // Calcular índices para paginación
     const inicio = (paginaActual - 1) * productosPorPagina;
     const fin = inicio + productosPorPagina;
     const productosPagina = productosFiltrados.slice(inicio, fin);
@@ -376,7 +418,6 @@ function renderizarTablaProductos() {
         tbody.appendChild(row);
     });
 
-    // Actualizar información de paginación
     const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina);
     const currentPageSpan = document.getElementById("currentPage");
     const totalPagesSpan = document.getElementById("totalPages");
@@ -415,6 +456,10 @@ function abrirModalParaCrear(modalOverlay, formulario) {
     formulario.reset();
     formulario.dataset.modo = "crear";
     delete formulario.dataset.productoId;
+    
+    // Actualizar categorías antes de abrir
+    actualizarSelectCategorias();
+    
     modalOverlay.style.display = "flex";
     document.body.style.overflow = "hidden";
 }
@@ -431,14 +476,17 @@ function abrirModalParaEditar(productoId) {
     formulario.dataset.modo = "editar";
     formulario.dataset.productoId = productoId;
 
-    document.getElementById("product_name").value = producto.name;
-    document.getElementById("categoria").value = producto.category;
-    document.getElementById("price").value = producto.price;
-    document.getElementById("stock").value = producto.stock;
-    document.getElementById("discount").value = producto.discount || "";
-    document.getElementById("oldPrice").value = producto.oldPrice || "";
-    document.getElementById("img").value = producto.img;
-    document.getElementById("description").value = producto.description;
+    // Actualizar categorías antes de llenar el formulario
+    actualizarSelectCategorias().then(() => {
+        document.getElementById("product_name").value = producto.name;
+        document.getElementById("categoria").value = producto.category;
+        document.getElementById("price").value = producto.price;
+        document.getElementById("stock").value = producto.stock;
+        document.getElementById("discount").value = producto.discount || "";
+        document.getElementById("oldPrice").value = producto.oldPrice || "";
+        document.getElementById("img").value = producto.img;
+        document.getElementById("description").value = producto.description;
+    });
 
     modalOverlay.style.display = "flex";
     document.body.style.overflow = "hidden";

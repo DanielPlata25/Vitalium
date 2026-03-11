@@ -1,4 +1,4 @@
-
+protegerRutaAdmin();
 document.addEventListener('DOMContentLoaded', () => {
     
     // ? ---------------PEDIDOS RECIENTES--------------------
