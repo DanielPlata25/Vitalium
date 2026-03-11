@@ -1,7 +1,8 @@
-package com.modularminds.vittalium.service;
+package com.modularminds.vittalium.service.impl;
 
 import com.modularminds.vittalium.model.Category;
 import com.modularminds.vittalium.repository.CategoryRepository;
+import com.modularminds.vittalium.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
