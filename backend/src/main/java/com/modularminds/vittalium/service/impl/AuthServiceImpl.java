@@ -34,6 +34,25 @@ public class AuthServiceImpl implements AuthService {
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    private String capitalizarNombre(String nombre) {
+        if (nombre == null || nombre.isEmpty()) return nombre;
+
+        // Convertir todo a minúsculas y capitalizar primera letra de cada palabra
+        String[] palabras = nombre.toLowerCase().split(" ");
+        StringBuilder resultado = new StringBuilder();
+
+        for (String palabra : palabras) {
+            if (palabra.length() > 0) {
+                resultado.append(Character.toUpperCase(palabra.charAt(0)))
+                        .append(palabra.substring(1))
+                        .append(" ");
+            }
+        }
+
+        return resultado.toString().trim();
+    }
+
+
     @Override
     @Transactional
     public AuthResponseDTO register(RegisterDTO registerDTO) {
@@ -200,7 +219,7 @@ public class AuthServiceImpl implements AuthService {
         // Crear Customer con el nombre de Google
         // El teléfono lo dejamos vacío para que lo complete después
         Customer newCustomer = new Customer();
-        newCustomer.setName(name);  // Usamos el nombre de Google
+        newCustomer.setName(capitalizarNombre(name));  // Usamos el nombre de Google
         newCustomer.setPhone("");   // Teléfono vacío - el usuario lo completará después
         newCustomer.setIdUser(savedUser.getIdUser());
         Customer savedCustomer = customerRepository.save(newCustomer);
