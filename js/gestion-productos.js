@@ -1,4 +1,4 @@
-//protegerRutaAdmin();
+protegerRutaAdmin();
 const API_URL = "http://localhost:8080/api/product";
 const API_CATEGORIAS_URL = "http://localhost:8080/api/categorias";
 

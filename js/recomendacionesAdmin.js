@@ -1,3 +1,5 @@
+protegerRutaAdmin();
+recomendacionesAdmin.html
 const btnAgregar = document.getElementById("btnAgregar");
 const btnCancelar = document.getElementById("btnCancelar");
 const panelAgregar = document.getElementById("panelAgregar");
