@@ -21,6 +21,30 @@ body {
 }
 
 /*! Navbar*/
+/* Efecto de iluminación al pasar el cursor */
+.nav-link.btn-outline-custom-green:hover,
+.btn-outline-light:hover {
+    background-color: var(--primary-green) !important;
+    color: white !important;
+    border-color: var(--primary-green) !important;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Para que los botones se vean alineados como querías */
+.navbar-nav .btn-outline-custom-green {
+    margin: 0 5px; /* Espaciado lateral entre botones */
+    border: 1px solid transparent; /* Transparente por defecto */
+    color: white;
+}
+.btn-outline-custom-green {
+    border: 1px solid transparent;
+    color: white;
+}
+.btn-outline-custom-green:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-color: white;
+}
 .bg-custom-green {
     background-color: #2D5A27; /* Verde oscuro principal */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
