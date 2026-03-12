@@ -13,17 +13,22 @@ toggleButtons.forEach((button) => {
   });
 });
 
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const password = passwordInput.value.trim();
   const confirmPassword = confirmPasswordInput.value.trim();
 
-  // El email del usuario ya debió quedar guardado desde el paso anterior
   const recoveryEmail = localStorage.getItem("recoveryEmail");
+  const codeVerified = localStorage.getItem("codeVerified");
 
   if (!recoveryEmail) {
     alert("No se encontró el usuario para actualizar la contraseña.");
+    return;
+  }
+
+  if (codeVerified !== "true") {
+    alert("Primero debes verificar el código.");
     return;
   }
 
@@ -37,24 +42,33 @@ form.addEventListener("submit", (e) => {
     return;
   }
 
-  // Simulación frontend: actualizar contraseña en localStorage
-  const users = JSON.parse(localStorage.getItem("users")) || [];
+  try {
+    const response = await fetch("http://localhost:8080/api/users/update-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: recoveryEmail,
+        newPassword: password
+      })
+    });
 
-  const userIndex = users.findIndex((user) => user.email === recoveryEmail);
+    const data = await response.json();
 
-  if (userIndex === -1) {
-    alert("No se encontró una cuenta asociada a ese correo.");
-    return;
+    if (!response.ok) {
+      alert(data.error || data.message || "No se pudo actualizar la contraseña.");
+      return;
+    }
+
+    localStorage.removeItem("recoveryEmail");
+    localStorage.removeItem("recoveryCode");
+    localStorage.removeItem("codeVerified");
+
+    alert(data.message || "Contraseña actualizada correctamente.");
+    window.location.href = "./login.html";
+  } catch (error) {
+    console.error("Error al actualizar contraseña:", error);
+    alert("Ocurrió un error al conectar con el servidor.");
   }
-
-  users[userIndex].password = password;
-  localStorage.setItem("users", JSON.stringify(users));
-
-  // Limpiar datos temporales del proceso de recuperación
-  localStorage.removeItem("recoveryEmail");
-  localStorage.removeItem("recoveryCode");
-  localStorage.removeItem("codeVerified");
-
-  alert("Contraseña actualizada correctamente.");
-  window.location.href = "./login.html";
 });
