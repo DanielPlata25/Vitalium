@@ -388,3 +388,19 @@ body {
   background-color: #2D5A27;
   color: white;
 }
+
+.btn-crear-cuenta{
+     display: inline-block;
+  background-color: #70AD47;
+  color: white;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: 0.3s ease; 
+}
+
+.btn-crear-cuenta:hover{
+  background-color: #2D5A27;
+  color: white;
+}
