@@ -14,6 +14,8 @@ public interface UserService {
     Optional<User> getUserByEmail(String email);
 
     User changeUserRole(Long userId, Long newRolId);
+    
+    void updatePasswordByEmail(String email, String newPassword);
 
     void deleteUser(Long userId);
 
