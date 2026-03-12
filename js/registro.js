@@ -1,9 +1,8 @@
-// ========================================
-// FORMULARIO DE REGISTRO
-// ========================================
+// registro.js
 
-const formRegistro = document.getElementById('form-registro');
-
+// ========================================
+// TOGGLE MOSTRAR/OCULTAR CONTRASEÑA
+// ========================================
 const togglePasswordButtons = document.querySelectorAll('.toggle-password');
 
 togglePasswordButtons.forEach(button => {
@@ -30,50 +29,9 @@ togglePasswordButtons.forEach(button => {
     });
 });
 
-if (formRegistro) {
-    formRegistro.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const nombre = document.getElementById('nombre').value.trim();
-        const apellido = document.getElementById('apellido').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const telefono = document.getElementById('telefono').value.trim();
-        const password = document.getElementById('password').value;
-        const passwordConfirm = document.getElementById('password-confirm').value;
-        const terminos = document.querySelector('input[name="terminos"]').checked;
-        const newsletter = document.querySelector('input[name="newsletter"]').checked;
-        
-        if (password !== passwordConfirm) {
-            alert('Las contraseñas no coinciden');
-            return;
-        }
-        
-        if (password.length < 8) {
-            alert('La contraseña debe tener al menos 8 caracteres');
-            return;
-        }
-        
-        if (!terminos) {
-            alert('Debes aceptar los términos y condiciones');
-            return;
-        }
-        
-        const usuario = {
-            nombre,
-            apellido,
-            email,
-            telefono,
-            password,
-            newsletter
-        };
-        
-        console.log('Datos del nuevo usuario:', usuario);
-
-        alert(`¡Bienvenido ${nombre}! Tu cuenta ha sido creada exitosamente.`);
-        
-    });
-}
-
+// ========================================
+// VALIDACIÓN DE EMAIL EN TIEMPO REAL
+// ========================================
 const emailInput = document.getElementById('email');
 if (emailInput) {
     emailInput.addEventListener('blur', () => {
@@ -88,7 +46,9 @@ if (emailInput) {
     });
 }
 
-//verifica si las contraseñas estan correctas (funcion)
+// ========================================
+// VALIDACIÓN DE CONTRASEÑAS EN TIEMPO REAL
+// ========================================
 const passwordInput = document.getElementById('password');
 const passwordConfirmInput = document.getElementById('password-confirm');
 
@@ -105,6 +65,112 @@ if (passwordConfirmInput) {
     });
 }
 
+// ========================================
+// MANEJO DEL ENVÍO DEL FORMULARIO DE REGISTRO
+// ========================================
+const formRegistro = document.getElementById('form-registro');
+
+if (formRegistro) {
+    formRegistro.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Obtener valores del formulario
+        const nombre = document.getElementById('nombre').value.trim();
+        const apellido = document.getElementById('apellido').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const telefono = document.getElementById('telefono').value.trim();
+        const password = document.getElementById('password').value;
+        const passwordConfirm = document.getElementById('password-confirm').value;
+        const terminos = document.querySelector('input[name="terminos"]').checked;
+        
+        // ========================================
+        // VALIDACIONES
+        // ========================================
+        
+        // Validar que todos los campos estén llenos
+        if (!nombre || !apellido || !email || !telefono || !password || !passwordConfirm) {
+            alert('Por favor, completa todos los campos');
+            return;
+        }
+        
+        // Validar que las contraseñas coincidan
+        if (password !== passwordConfirm) {
+            alert('Las contraseñas no coinciden');
+            return;
+        }
+        
+        // Validar longitud de contraseña
+        if (password.length < 8) {
+            alert('La contraseña debe tener al menos 8 caracteres');
+            return;
+        }
+        
+        // Validar email con expresión regular
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert('Por favor, ingresa un email válido');
+            return;
+        }
+        
+        // Validar que el teléfono solo contenga números
+        if (!/^\d+$/.test(telefono)) {
+            alert('El teléfono debe contener solo números');
+            return;
+        }
+        
+        // Validar que aceptó términos
+        if (!terminos) {
+            alert('Debes aceptar los términos y condiciones');
+            return;
+        }
+        
+        // ========================================
+        // ENVIAR AL BACKEND USANDO registroAPI
+        // ========================================
+        
+        // Referencia al botón para mostrar estado de carga
+        const btnSubmit = formRegistro.querySelector('.btn-login, .btn-crear-cuenta');
+        const textoOriginal = btnSubmit.textContent;
+        
+        // Deshabilitar botón y cambiar texto
+        btnSubmit.textContent = 'Creando cuenta...';
+        btnSubmit.disabled = true;
+        
+        try {
+            console.log('Enviando datos de registro...', { nombre, apellido, email, telefono });
+            
+            // ¡IMPORTANTE! Llamar a la función registroAPI de auth.js
+            const data = await registroAPI(nombre, apellido, email, telefono, password);
+            
+            console.log('Respuesta del servidor:', data);
+            
+            // Si el registro fue exitoso y devuelve token, iniciar sesión automáticamente
+            if (data && data.token) {
+                // Guardar sesión usando la función de auth.js
+                guardarSesion(data);
+                alert(`¡Bienvenido ${nombre}! Tu cuenta ha sido creada exitosamente.`);
+                window.location.href = './index.html';
+            } else {
+                // Si no devuelve token, redirigir al login
+                alert('Registro exitoso. Por favor, inicia sesión.');
+                window.location.href = './login.html';
+            }
+            
+        } catch (error) {
+            // Manejar errores
+            console.error('Error en registro:', error);
+            alert(error.message || 'Error al crear la cuenta. Intenta de nuevo.');
+            
+            // Restaurar botón
+            btnSubmit.textContent = textoOriginal;
+            btnSubmit.disabled = false;
+        }
+    });
+}
+
+// ========================================
+// BOTONES DE REDES SOCIALES (placeholder)
+// ========================================
 const btnGoogle = document.querySelector('.btn-google');
 const btnFacebook = document.querySelector('.btn-facebook');
 
