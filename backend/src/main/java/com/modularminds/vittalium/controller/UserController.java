@@ -82,6 +82,7 @@ public class UserController {
         return ResponseEntity.ok(dto);
     }
 
+
     @PatchMapping("/{userId}/role")
     public ResponseEntity<?> changeUserRole(
             @PathVariable Long userId,
