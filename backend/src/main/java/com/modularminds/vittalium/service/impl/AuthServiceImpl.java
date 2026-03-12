@@ -241,4 +241,108 @@ public class AuthServiceImpl implements AuthService {
                 "Registro con Google exitoso"
         );
     }
+
+    // ====================================
+// NUEVO: FACEBOOK LOGIN
+// ====================================
+
+    @Override
+    @Transactional
+    public AuthResponseDTO processFacebookLogin(String facebookId, String nombre, String email) {
+        // 1️⃣ Buscar por Facebook ID
+        User existingUser = userRepository.findByFacebookSub(facebookId).orElse(null);
+
+        if (existingUser != null) {
+            // Usuario ya existe con Facebook
+            existingUser.setEmail(email); // Actualizar email por si cambió
+            userRepository.save(existingUser);
+
+            // Buscar customer asociado
+            Customer customer = customerRepository.findByIdUser(existingUser.getIdUser())
+                    .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+
+            String token = jwtUtil.generateToken(
+                    existingUser.getIdUser(),
+                    existingUser.getEmail(),
+                    existingUser.getIdRol()
+            );
+
+            return new AuthResponseDTO(
+                    token,
+                    existingUser.getIdUser(),
+                    existingUser.getEmail(),
+                    existingUser.getIdRol(),
+                    customer.getIdCustomer(),
+                    customer.getName(),
+                    "Login con Facebook exitoso"
+            );
+        }
+
+        // 2️⃣ Buscar por email (por si acaso)
+        User userByEmail = userRepository.findByEmail(email).orElse(null);
+
+        if (userByEmail != null) {
+            // Usuario existe localmente - vincular con Facebook
+            userByEmail.setFacebookSub(facebookId);
+            // Mantenemos su password por si quiere seguir usando login local
+            userRepository.save(userByEmail);
+
+            // Buscar customer asociado
+            Customer customer = customerRepository.findByIdUser(userByEmail.getIdUser())
+                    .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+
+            String token = jwtUtil.generateToken(
+                    userByEmail.getIdUser(),
+                    userByEmail.getEmail(),
+                    userByEmail.getIdRol()
+            );
+
+            return new AuthResponseDTO(
+                    token,
+                    userByEmail.getIdUser(),
+                    userByEmail.getEmail(),
+                    userByEmail.getIdRol(),
+                    customer.getIdCustomer(),
+                    customer.getName(),
+                    "Cuenta local vinculada con Facebook"
+            );
+        }
+
+        // 3️⃣ Usuario completamente nuevo
+        // Obtener rol "Cliente"
+        Rol rolCliente = rolRepository.findById(2L)
+                .orElseThrow(() -> new RuntimeException("Rol Cliente no encontrado"));
+
+        // Crear User con datos de Facebook (SIN PASSWORD)
+        User newUser = new User();
+        newUser.setEmail(email);
+        newUser.setFacebookSub(facebookId);
+        newUser.setIdRol(rolCliente.getIdRol());
+        // password se queda NULL para usuarios de Facebook
+        User savedUser = userRepository.save(newUser);
+
+        // Crear Customer con el nombre de Facebook
+        Customer newCustomer = new Customer();
+        newCustomer.setName(capitalizarNombre(nombre));  // Usamos el nombre de Facebook
+        newCustomer.setPhone("");   // Teléfono vacío - el usuario lo completará después
+        newCustomer.setIdUser(savedUser.getIdUser());
+        Customer savedCustomer = customerRepository.save(newCustomer);
+
+        // Generar JWT token
+        String token = jwtUtil.generateToken(
+                savedUser.getIdUser(),
+                savedUser.getEmail(),
+                savedUser.getIdRol()
+        );
+
+        return new AuthResponseDTO(
+                token,
+                savedUser.getIdUser(),
+                savedUser.getEmail(),
+                savedUser.getIdRol(),
+                savedCustomer.getIdCustomer(),
+                savedCustomer.getName(),
+                "Registro con Facebook exitoso"
+        );
+    }
 }

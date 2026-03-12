@@ -29,9 +29,11 @@ public class User {
     @Column(name = "id_rol", nullable = false)
     private Long idRol;
 
-    // 🔴 ÚNICO CAMPO NUEVO
     @Column(name = "google_sub", unique = true, length = 100)
     private String googleSub;  // ID único de Google (NULL para usuarios locales)
+
+    @Column(name = "facebook_sub", unique = true, length = 100)
+    private String facebookSub;  // Para Facebook
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

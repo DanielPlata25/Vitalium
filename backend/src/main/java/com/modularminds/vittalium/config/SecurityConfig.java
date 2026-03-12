@@ -14,8 +14,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/", "/index.html", "/api/auth/google", "/error").permitAll()
+                        .requestMatchers("/", "/index.html", "/api/auth/**", "/error", "/login").permitAll()
                         .anyRequest().authenticated()
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .defaultSuccessUrl("/", true)
                 )
                 .csrf(csrf -> csrf.disable());
 

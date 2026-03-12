@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.modularminds.vittalium.service.GoogleTokenVerifier;  // ← NUEVO
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;  // ← NUEVO
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -79,6 +80,45 @@ public class AuthController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "Error procesando login con Google: " + e.getMessage()));
+        }
+    }
+
+    // 🔴 NUEVO: Login/Registro con Facebook 🔴
+    @PostMapping("/facebook")
+    public ResponseEntity<?> facebookLogin(@RequestBody Map<String, String> request) {
+        try {
+            String accessToken = request.get("accessToken");
+
+            if (accessToken == null || accessToken.isEmpty()) {
+                return ResponseEntity.badRequest().body(Map.of("error", "Token no proporcionado"));
+            }
+
+            // Llamar a Facebook API para obtener los datos del usuario
+            RestTemplate restTemplate = new RestTemplate();
+            String url = "https://graph.facebook.com/me?fields=id,name,email&access_token=" + accessToken;
+
+            ResponseEntity<Map> facebookResponse = restTemplate.getForEntity(url, Map.class);
+            Map<String, Object> facebookData = facebookResponse.getBody();
+
+            if (facebookData == null || facebookData.containsKey("error")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("error", "Token de Facebook inválido"));
+            }
+
+            // Extraer los datos necesarios
+            String facebookId = (String) facebookData.get("id");
+            String nombre = (String) facebookData.get("name");
+            String email = (String) facebookData.get("email");
+
+            // Procesar con AuthService
+            AuthResponseDTO response = authService.processFacebookLogin(facebookId, nombre, email);
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Error procesando login con Facebook: " + e.getMessage()));
         }
     }
 }

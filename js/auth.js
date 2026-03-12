@@ -1,9 +1,15 @@
+// ============================================
+// CONFIGURACIÓN GENERAL
+// ============================================
 const AUTH_URL = "http://localhost:8080/api/auth";
 const GOOGLE_CLIENT_ID = "377149430777-bjvj9pe3p1lcrf1cjnn1if6r2967cmr5.apps.googleusercontent.com";
+const FACEBOOK_APP_ID = "25655861484114587";
 
 const formRegistro = document.getElementById("form-registro");
 
+// ============================================
 // GUARDAR Y OBTENER SESIÓN
+// ============================================
 function guardarSesion(data) {
     localStorage.setItem("vittalium_token", data.token);
     localStorage.setItem(
@@ -42,7 +48,9 @@ function esAdmin() {
     return user && user.rolId === 1;
 }
 
-// PROTEGER RUTAS DE ADMIN
+// ============================================
+// PROTEGER RUTAS
+// ============================================
 function protegerRutaAdmin() {
     if (!estaLogueado()) {
         alert("⛔ Debes iniciar sesión para acceder a esta página");
@@ -64,7 +72,9 @@ function protegerRutaUsuario() {
     }
 }
 
+// ============================================
 // API CALLS
+// ============================================
 async function loginAPI(email, password) {
     const response = await fetch(`${AUTH_URL}/login`, {
         method: "POST",
@@ -102,10 +112,45 @@ async function registroAPI(nombre, apellido, email, telefono, password) {
     return data;
 }
 
-// Inicializar Google cuando carga la página
+// ============================================
+// FUNCIÓN PARA MOSTRAR MENSAJES
+// ============================================
+function mostrarMensaje(texto, tipo) {
+    const mensajeDiv = document.getElementById("login-message");
+    if (!mensajeDiv) return;
+
+    mensajeDiv.style.display = "block";
+    mensajeDiv.textContent = texto;
+    mensajeDiv.className = `alert alert-${tipo === "error" ? "danger" : tipo === "success" ? "success" : "info"}`;
+
+    // Ocultar después de 5 segundos
+    setTimeout(() => {
+        mensajeDiv.style.display = "none";
+    }, 5000);
+}
+
+// ============================================
+// GOOGLE LOGIN - VERSIÓN CORREGIDA
+// ============================================
+
+// Manejador separado para el click de Google
+function googleClickHandler(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("🟢 Click en botón de Google detectado");
+    if (typeof google !== "undefined" && google.accounts) {
+        google.accounts.id.prompt();
+    } else {
+        console.error("❌ Google SDK no disponible");
+        mostrarMensaje("Error: SDK de Google no disponible", "error");
+    }
+}
+
+// Inicializar Google
 window.initGoogleLogin = function () {
-    if (typeof google === "undefined") {
+    if (typeof google === "undefined" || !google.accounts) {
         console.error("❌ Librería de Google no cargada");
+        mostrarMensaje("Error: SDK de Google no cargado", "error");
         return;
     }
 
@@ -116,28 +161,45 @@ window.initGoogleLogin = function () {
         cancel_on_tap_outside: true,
     });
 
-    console.log("✅ Google inicializado");
+    console.log("✅ Google inicializado correctamente");
 
     // Vincular botón existente
     const googleButton = document.querySelector(".btn-google");
     if (googleButton) {
-        googleButton.addEventListener("click", function (e) {
-            e.preventDefault();
-            google.accounts.id.prompt();
-        });
+        // Remover eventos anteriores para evitar duplicados
+        googleButton.removeEventListener("click", googleClickHandler);
+        googleButton.addEventListener("click", googleClickHandler);
         console.log("✅ Botón de Google vinculado");
+    } else {
+        console.log("❌ Botón de Google no encontrado en el DOM");
     }
 };
 
-// Manejar respuesta de Google
+// Manejar respuesta de Google - VERSIÓN CORREGIDA con mostrarMensaje
 async function handleGoogleResponse(response) {
     if (!response.credential) {
         console.error("❌ No se recibió credential");
+        mostrarMensaje("Error: No se recibió token de Google", "error");
         return;
     }
 
+    console.log("🔵 Respuesta de Google recibida");
+
+    // Decodificar token para ver datos (opcional, solo para debug)
     try {
-        const fetchResponse = await fetch("http://localhost:8080/api/auth/google", {
+        const tokenParts = response.credential.split(".");
+        if (tokenParts.length === 3) {
+            const payload = JSON.parse(atob(tokenParts[1]));
+            console.log("👤 Usuario de Google:", payload.email);
+        }
+    } catch (e) {
+        console.log("Error decodificando token:", e);
+    }
+
+    mostrarMensaje("Verificando con Google...", "info");
+
+    try {
+        const fetchResponse = await fetch(`${AUTH_URL}/google`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ token: response.credential }),
@@ -147,17 +209,160 @@ async function handleGoogleResponse(response) {
 
         if (fetchResponse.ok) {
             guardarSesion(data);
-            window.location.href = "index.html";
+            mostrarMensaje("¡Login exitoso! Redirigiendo...", "success");
+
+            // Redirigir según el rol
+            setTimeout(() => {
+                if (data.rolId === 1) {
+                    window.location.href = "./admin-dashboard.html";
+                } else {
+                    window.location.href = "./index.html";
+                }
+            }, 1500);
         } else {
-            alert("Error: " + (data.error || "Error en el servidor"));
+            mostrarMensaje("Error: " + (data.error || "Error en el servidor"), "error");
         }
     } catch (error) {
         console.error("Error:", error);
-        alert("Error de conexión con el servidor");
+        mostrarMensaje("Error de conexión con el servidor", "error");
     }
 }
 
-// OBTENER DATOS DEL USUARIO (para compatibilidad)
+// ============================================
+// FACEBOOK SDK Y FUNCIONES
+// ============================================
+
+// Inicializar Facebook SDK
+window.fbAsyncInit = function () {
+    FB.init({
+        appId: FACEBOOK_APP_ID,
+        cookie: true,
+        xfbml: true,
+        version: "v18.0",
+    });
+
+    console.log("✅ Facebook SDK inicializado");
+
+    // Verificar si ya hay sesión activa en Facebook
+    FB.getLoginStatus(function (response) {
+        console.log("📊 Estado de Facebook:", response.status);
+    });
+};
+
+// Cargar SDK de Facebook
+(function (d, s, id) {
+    var js,
+        fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://connect.facebook.net/es_LA/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+})(document, "script", "facebook-jssdk");
+
+// Función para login con Facebook
+async function loginWithFacebook() {
+    return new Promise((resolve, reject) => {
+        FB.login(
+            function (response) {
+                if (response.authResponse) {
+                    console.log("✅ Usuario autorizó Facebook");
+                    console.log("🔑 Access Token:", response.authResponse.accessToken);
+                    console.log("🆔 User ID:", response.authResponse.userID);
+
+                    // Enviar token a nuestro backend
+                    fetch(`${AUTH_URL}/facebook`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            accessToken: response.authResponse.accessToken,
+                        }),
+                    })
+                        .then((res) => res.json())
+                        .then((data) => {
+                            if (data.token) {
+                                // Guardar sesión
+                                guardarSesion(data);
+                                resolve(data);
+                            } else {
+                                reject(data.error || "Error en el servidor");
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("❌ Error:", error);
+                            reject("Error de conexión con el servidor");
+                        });
+                } else {
+                    console.log("❌ Usuario canceló el login o no autorizó");
+                    reject("No se pudo iniciar sesión con Facebook");
+                }
+            },
+            {
+                scope: "email,public_profile",
+            },
+        );
+    });
+}
+
+// Vincular botón de Facebook
+function vincularBotonFacebook() {
+    const facebookButton = document.querySelector(".btn-facebook");
+
+    if (facebookButton) {
+        console.log("✅ Botón de Facebook encontrado");
+
+        // Remover eventos anteriores para evitar duplicados
+        facebookButton.removeEventListener("click", handleFacebookClick);
+        facebookButton.addEventListener("click", handleFacebookClick);
+
+        console.log("✅ Evento click vinculado al botón de Facebook");
+    } else {
+        console.log("❌ Botón de Facebook no encontrado");
+    }
+}
+
+// Manejador del click en Facebook
+async function handleFacebookClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    console.log("🟢 Click en botón de Facebook detectado");
+
+    // Verificar que FB esté cargado
+    if (typeof FB === "undefined") {
+        console.error("❌ Facebook SDK no cargado");
+        mostrarMensaje("Error: SDK de Facebook no cargado", "error");
+        return;
+    }
+
+    // Mostrar mensaje de carga
+    mostrarMensaje("Iniciando sesión con Facebook...", "info");
+
+    try {
+        const result = await loginWithFacebook();
+        console.log("✅ Login exitoso:", result);
+
+        mostrarMensaje("¡Login exitoso! Redirigiendo...", "success");
+
+        // Redirigir según el rol
+        setTimeout(() => {
+            if (result.rolId === 1) {
+                window.location.href = "./admin-dashboard.html";
+            } else {
+                window.location.href = "./index.html";
+            }
+        }, 1500);
+    } catch (error) {
+        console.error("❌ Error:", error);
+        mostrarMensaje("Error: " + error, "error");
+    }
+}
+
+// ============================================
+// OBTENER DATOS DEL USUARIO
+// ============================================
 function getUserData() {
     const user = obtenerSesion();
     const token = obtenerToken();
@@ -179,7 +384,9 @@ function logout() {
     cerrarSesion();
 }
 
-// ACTUALIZAR NAVBAR SEGÚN SESIÓN
+// ============================================
+// ACTUALIZAR NAVBAR
+// ============================================
 function actualizarNavbarSesion() {
     const user = obtenerSesion();
     const btnIniciarSesion = document.querySelector(".btn-iniciar-sesion");
@@ -200,7 +407,9 @@ function actualizarNavbarSesion() {
     }
 }
 
-// REDIRECCIÓN AUTOMÁTICA SI YA ESTÁ LOGUEADO
+// ============================================
+// REDIRECCIÓN AUTOMÁTICA
+// ============================================
 function redirigirSiLogueado() {
     if (estaLogueado()) {
         const user = obtenerSesion();
@@ -212,6 +421,9 @@ function redirigirSiLogueado() {
     }
 }
 
+// ============================================
+// EVENTO REGISTRO
+// ============================================
 if (formRegistro) {
     formRegistro.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -240,34 +452,46 @@ if (formRegistro) {
             return;
         }
 
-        const usuario = {
-            nombre,
-            apellido,
-            email,
-            telefono,
-            password,
-            newsletter,
-        };
-
         registroAPI(nombre, apellido, email, telefono, password);
-        console.log("Datos del nuevo usuario:", usuario);
+        console.log("Datos del nuevo usuario:", { nombre, apellido, email, telefono, newsletter });
 
         alert(`¡Bienvenido ${nombre}! Tu cuenta ha sido creada exitosamente.`);
     });
 }
+
+// ============================================
+// INICIALIZACIÓN PRINCIPAL
+// ============================================
 document.addEventListener("DOMContentLoaded", function () {
+    console.log("📄 DOM Content Loaded - Inicializando auth");
     actualizarNavbarSesion();
 
-    // Inicializar Google si la librería ya está cargada
-    if (typeof google !== "undefined") {
+    // Inicializar Google
+    if (typeof google !== "undefined" && google.accounts) {
         window.initGoogleLogin();
+    } else {
+        console.log("⏳ Esperando SDK de Google...");
+        // Intentar de nuevo cuando cargue la ventana
+        window.addEventListener("load", function () {
+            if (typeof google !== "undefined" && google.accounts) {
+                window.initGoogleLogin();
+            }
+        });
     }
+
+    // Vincular botón de Facebook
+    vincularBotonFacebook();
 });
 
-// Si la librería de Google carga después, la detectamos
+// Por si Google carga después
 window.addEventListener("load", function () {
-    if (typeof google !== "undefined" && !window.googleInitialized) {
+    console.log("📄 Window Load - Verificando inicialización");
+
+    if (typeof google !== "undefined" && google.accounts && !window.googleInitialized) {
         window.initGoogleLogin();
         window.googleInitialized = true;
     }
+
+    // Re-vincular botón de Facebook por si acaso
+    vincularBotonFacebook();
 });
