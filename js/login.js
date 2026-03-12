@@ -1,5 +1,4 @@
 
-// login.js
 document.getElementById('form-login').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -17,11 +16,11 @@ document.getElementById('form-login').addEventListener('submit', async (e) => {
         if (response.ok) {
             const data = await response.json();
             
-           
-            guardarSesion(data);
             
-           
-            if (data.rolId === 1) {
+            localStorage.setItem('usuario', JSON.stringify(data));
+            
+        
+            if (data.id_rol === 1) {
                 window.location.href = './admin-dashboard.html';
             } else {
                 window.location.href = './index.html';

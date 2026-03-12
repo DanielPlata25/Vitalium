@@ -119,41 +119,22 @@ function logout() {
 }
 
 // ACTUALIZAR NAVBAR SEGÚN SESIÓN
-
 function actualizarNavbarSesion() {
     const user = obtenerSesion();
     const btnIniciarSesion = document.querySelector('.btn-iniciar-sesion');
     const btnCerrarSesion = document.querySelector('.btn-cerrar-sesion');
     const nombreUsuario = document.querySelector('.navbar-usuario-nombre');
-    const cartContainer = document.getElementById('cartContainer');
-    const adminOnlyElements = document.querySelectorAll('.admin-only');
 
     if (user) {
-        // --- LÓGICA DE USUARIO LOGUEADO ---
         if (btnIniciarSesion) btnIniciarSesion.style.display = 'none';
         if (btnCerrarSesion) {
             btnCerrarSesion.style.display = 'inline-block';
-            btnCerrarSesion.removeEventListener('click', cerrarSesion); // Limpiar previos
             btnCerrarSesion.addEventListener('click', cerrarSesion);
         }
         if (nombreUsuario) nombreUsuario.textContent = user.customerName || user.email;
-
-        // Lógica de roles (Carrito vs Admin)
-        if (user.rolId === 1) {
-            // Es Administrador
-            cartContainer.style.display = 'none';
-            adminOnlyElements.forEach(el => el.style.display = 'block');
-        } else {
-            // Es Cliente
-            cartContainer.style.display = 'block';
-            adminOnlyElements.forEach(el => el.style.display = 'none');
-        }
     } else {
-        // --- LÓGICA DE USUARIO NO LOGUEADO (Invitado) ---
         if (btnIniciarSesion) btnIniciarSesion.style.display = 'inline-block';
         if (btnCerrarSesion) btnCerrarSesion.style.display = 'none';
-        if (cartContainer) cartContainer.style.display = 'none';
-        adminOnlyElements.forEach(el => el.style.display = 'none');
         if (nombreUsuario) nombreUsuario.textContent = '';
     }
 }
