@@ -46,7 +46,14 @@ public class UserServiceImpl implements UserService {
         user.setIdRol(newRolId);
         return userRepository.save(user);
     }
+    @Override
+    public void updatePasswordByEmail(String email, String newPassword) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con email: " + email));
 
+        user.setPassword(newPassword);
+        userRepository.save(user);
+    }
     @Override
     @Transactional
     public void deleteUser(Long userId) {
