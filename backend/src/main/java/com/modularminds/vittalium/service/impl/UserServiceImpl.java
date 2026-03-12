@@ -6,6 +6,7 @@ import com.modularminds.vittalium.repository.UserRepository;
 import com.modularminds.vittalium.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,11 +14,14 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public List<User> getAllUser() {
@@ -37,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User changeUserRole(Long userId, Long newRolId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(()-> new RuntimeException("Usuario no encontrado con ID" + userId));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID" + userId));
 
         if (newRolId != 1L && newRolId != 2L) {
             throw new RuntimeException("Rol inválido. Debe ser 1 (Admin) o 2 (Cliente)");
@@ -46,14 +50,16 @@ public class UserServiceImpl implements UserService {
         user.setIdRol(newRolId);
         return userRepository.save(user);
     }
+
     @Override
     public void updatePasswordByEmail(String email, String newPassword) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con email: " + email));
 
-        user.setPassword(newPassword);
+        user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
     }
+
     @Override
     @Transactional
     public void deleteUser(Long userId) {
@@ -62,7 +68,6 @@ public class UserServiceImpl implements UserService {
         }
 
         customerRepository.deleteByIdUser(userId);
-
         userRepository.deleteById(userId);
     }
 
