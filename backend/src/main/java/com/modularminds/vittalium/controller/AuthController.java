@@ -83,7 +83,7 @@ public class AuthController {
         }
     }
 
-    // 🔴 NUEVO: Login/Registro con Facebook 🔴
+    // Login/Registro con Facebook
     @PostMapping("/facebook")
     public ResponseEntity<?> facebookLogin(@RequestBody Map<String, String> request) {
         try {

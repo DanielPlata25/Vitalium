@@ -30,7 +30,7 @@ public class User {
     private Long idRol;
 
     @Column(name = "google_sub", unique = true, length = 100)
-    private String googleSub;  // ID único de Google (NULL para usuarios locales)
+    private String googleSub;  //Para google
 
     @Column(name = "facebook_sub", unique = true, length = 100)
     private String facebookSub;  // Para Facebook

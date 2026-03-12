@@ -1,15 +1,12 @@
-// ============================================
 // CONFIGURACIÓN GENERAL
-// ============================================
 const AUTH_URL = "http://localhost:8080/api/auth";
 const GOOGLE_CLIENT_ID = "377149430777-bjvj9pe3p1lcrf1cjnn1if6r2967cmr5.apps.googleusercontent.com";
 const FACEBOOK_APP_ID = "25655861484114587";
 
 const formRegistro = document.getElementById("form-registro");
 
-// ============================================
 // GUARDAR Y OBTENER SESIÓN
-// ============================================
+
 function guardarSesion(data) {
     localStorage.setItem("vittalium_token", data.token);
     localStorage.setItem(
@@ -48,9 +45,8 @@ function esAdmin() {
     return user && user.rolId === 1;
 }
 
-// ============================================
 // PROTEGER RUTAS
-// ============================================
+
 function protegerRutaAdmin() {
     if (!estaLogueado()) {
         alert("⛔ Debes iniciar sesión para acceder a esta página");
@@ -72,9 +68,8 @@ function protegerRutaUsuario() {
     }
 }
 
-// ============================================
 // API CALLS
-// ============================================
+
 async function loginAPI(email, password) {
     const response = await fetch(`${AUTH_URL}/login`, {
         method: "POST",
@@ -112,9 +107,8 @@ async function registroAPI(nombre, apellido, email, telefono, password) {
     return data;
 }
 
-// ============================================
 // FUNCIÓN PARA MOSTRAR MENSAJES
-// ============================================
+
 function mostrarMensaje(texto, tipo) {
     const mensajeDiv = document.getElementById("login-message");
     if (!mensajeDiv) return;
@@ -129,9 +123,7 @@ function mostrarMensaje(texto, tipo) {
     }, 5000);
 }
 
-// ============================================
 // GOOGLE LOGIN - VERSIÓN CORREGIDA
-// ============================================
 
 // Manejador separado para el click de Google
 function googleClickHandler(e) {
@@ -190,7 +182,6 @@ async function handleGoogleResponse(response) {
         const tokenParts = response.credential.split(".");
         if (tokenParts.length === 3) {
             const payload = JSON.parse(atob(tokenParts[1]));
-            console.log("👤 Usuario de Google:", payload.email);
         }
     } catch (e) {
         console.log("Error decodificando token:", e);
@@ -228,9 +219,7 @@ async function handleGoogleResponse(response) {
     }
 }
 
-// ============================================
 // FACEBOOK SDK Y FUNCIONES
-// ============================================
 
 // Inicializar Facebook SDK
 window.fbAsyncInit = function () {
@@ -266,10 +255,6 @@ async function loginWithFacebook() {
         FB.login(
             function (response) {
                 if (response.authResponse) {
-                    console.log("✅ Usuario autorizó Facebook");
-                    console.log("🔑 Access Token:", response.authResponse.accessToken);
-                    console.log("🆔 User ID:", response.authResponse.userID);
-
                     // Enviar token a nuestro backend
                     fetch(`${AUTH_URL}/facebook`, {
                         method: "POST",
@@ -360,9 +345,8 @@ async function handleFacebookClick(e) {
     }
 }
 
-// ============================================
 // OBTENER DATOS DEL USUARIO
-// ============================================
+
 function getUserData() {
     const user = obtenerSesion();
     const token = obtenerToken();
@@ -384,9 +368,8 @@ function logout() {
     cerrarSesion();
 }
 
-// ============================================
 // ACTUALIZAR NAVBAR
-// ============================================
+
 function actualizarNavbarSesion() {
     const user = obtenerSesion();
     const btnIniciarSesion = document.querySelector(".btn-iniciar-sesion");
@@ -407,9 +390,8 @@ function actualizarNavbarSesion() {
     }
 }
 
-// ============================================
 // REDIRECCIÓN AUTOMÁTICA
-// ============================================
+
 function redirigirSiLogueado() {
     if (estaLogueado()) {
         const user = obtenerSesion();
@@ -421,9 +403,8 @@ function redirigirSiLogueado() {
     }
 }
 
-// ============================================
 // EVENTO REGISTRO
-// ============================================
+
 if (formRegistro) {
     formRegistro.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -459,9 +440,8 @@ if (formRegistro) {
     });
 }
 
-// ============================================
 // INICIALIZACIÓN PRINCIPAL
-// ============================================
+
 document.addEventListener("DOMContentLoaded", function () {
     console.log("📄 DOM Content Loaded - Inicializando auth");
     actualizarNavbarSesion();

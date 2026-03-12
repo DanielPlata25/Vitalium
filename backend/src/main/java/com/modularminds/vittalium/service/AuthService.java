@@ -15,9 +15,9 @@ public interface AuthService {
     //Map<String, Object> login(String email, String password);
     AuthResponseDTO login(LoginDTO loginDTO);
 
-    // 🔴 NUEVO: Procesar login con Google
+    //Google
     AuthResponseDTO processGoogleLogin(GoogleIdToken.Payload payload);
 
-    // 🔴 NUEVO: Procesar login con Facebook (AGREGAR ESTO)
+    //Meta
     AuthResponseDTO processFacebookLogin(String facebookId, String nombre, String email);
 }
