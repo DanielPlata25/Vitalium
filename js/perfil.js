@@ -1,5 +1,5 @@
 // script.js
-
+protegerRutaUsuario();
 document.addEventListener('DOMContentLoaded', function() {
     const editBtn = document.getElementById('editBtn');
     const cancelBtn = document.getElementById('cancelBtn');

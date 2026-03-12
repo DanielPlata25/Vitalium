@@ -39,6 +39,7 @@ function esAdmin() {
 // PROTEGER RUTAS DE ADMIN
 function protegerRutaAdmin() {
     if (!estaLogueado()) {
+        
         alert('⛔ Debes iniciar sesión para acceder a esta página');
         window.location.href = './login.html';
         return;

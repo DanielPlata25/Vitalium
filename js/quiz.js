@@ -1,4 +1,4 @@
-
+protegerRutaUsuario();
 let respuestas = [];
 let total =0;
 let numeroDePregunta = 0;
