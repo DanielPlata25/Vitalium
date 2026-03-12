@@ -6,34 +6,18 @@
     <title>Document</title>
     <link rel="stylesheet" href="/css/recomendaciones.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+      <link rel="stylesheet" href="./css/productos.css">
 
   </head>
   <body>
-    <a
-      href="/index.html"
-      class="btn btn-primary position-fixed top-0 start-0 m-3 shadow"
-      style="
-        border-radius: 30px;
-        padding: 8px 20px;
-        background: linear-gradient(135deg, #3bd115 0%, #045204 100%);
-        border: none;
-      "
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-arrow-left me-2"
-        viewBox="0 0 16 16"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
-        />
-      </svg>
-      Volver al Inicio
-    </a>
+
+    <header id="navbar-container"></header>
+
+
+
+  
+
     <div class="container-total">
       <div class="volver">
         <span><a href="/quiz.html">← Volver al cuestionario</a></span>
@@ -42,14 +26,12 @@
       <div class="recomendaciones">
         <div class="recomendacionesArriba">
           <img src="/img/correcto1.png" alt="correcto" class="correcto" />
-          <span class="personalizadas">
-            Tus Recomendaciones Personalizadas</span
-          >
+          <span class="personalizadas">Tus Recomendaciones Personalizadas</span>
         </div>
         <p class="basado">
           Basado en tus respuestas, estos son los productos perfectos para ti
         </p>
-        <button class="mantenimiento">Mantenimiento General</button>
+<button class="mantenimiento" id="nombreRecomendacion">Mantenimiento General</button>
       </div>
 
       <div class="porque">
@@ -60,108 +42,75 @@
         <div class="seleccionado">
           <p>
             Hemos seleccionado 3 productos especializados en la categoría de
-            <strong>Mantenimiento General</strong> para ayudarte a alcanzar tus
+           <strong id="nombreRecomendacionTexto">Mantenimiento General</strong> para ayudarte a alcanzar tus
             objetivos de salud y bienestar.
           </p>
         </div>
       </div>
+
       <div class="productosRecomendados">
         <div class="producto1">
           <div class="imagen1">
-            <img
-              src="/img/producto.png"
-              alt=""
-              class="productoImagen"
-              id="productoImagen1"
-            />
+            <img src="" alt="" class="productoImagen" id="productoImagen1" />
           </div>
           <div class="mitadAbajo">
-            <div class="clase" id="nombreClase1">
-              <span>Mantenimiento General</span>
-            </div>
-            <div class="nombreProducto" id="nombreProducto1">
-              <span>Vittalium Multivitamínico Premium</span>
-            </div>
-            <div class="descripcion" id="descripcionProducto1">
-              <p>Complejo vitamínico completo para salud y bienestar general</p>
-            </div>
+            <div class="clase" id="nombreClase1"><span></span></div>
+            <div class="nombreProducto" id="nombreProducto1"><span></span></div>
+            <div class="descripcion" id="descripcionProducto1"><p></p></div>
             <div class="beneficios">
-              <div class="beneficio1"><p>Salud general</p></div>
-              <div class="beneficio2"><p>Sistema inmune</p></div>
-
-              <div class="beneficio3"><p>Energía diaria</p></div>
+              <div class="beneficio1"><p></p></div>
+              <div class="beneficio2"><p></p></div>
+              <div class="beneficio3"><p></p></div>
             </div>
-            <div class="precio"><span>$29.99</span></div>
+            <div class="precio"><span></span></div>
             <div class="comprar">
-              <button class="agregar">
+              <button class="agregar" type="button">
                 <img src="/img/carrito.png" alt="carrito" class="carrito" />
                 Agregar
               </button>
             </div>
           </div>
         </div>
+
         <div class="producto2">
           <div class="imagen1">
-            <img
-              src="/img/producto.png"
-              alt=""
-              class="productoImagen"
-              id="productoImagen2"
-            />
+            <img src="" alt="" class="productoImagen" id="productoImagen2" />
           </div>
           <div class="mitadAbajo">
-            <div class="clase" id="nombreClase2">
-              <span>Mantenimiento General</span>
-            </div>
-            <div class="nombreProducto" id="nombreProducto2">
-              <span>Vittalium Multivitamínico Premium</span>
-            </div>
-            <div class="descripcion" id="descripcionProducto2">
-              <p>Complejo vitamínico completo para salud y bienestar general</p>
-            </div>
+            <div class="clase" id="nombreClase2"><span></span></div>
+            <div class="nombreProducto" id="nombreProducto2"><span></span></div>
+            <div class="descripcion" id="descripcionProducto2"><p></p></div>
             <div class="beneficios">
-              <div class="beneficio2-1"><p>Salud general</p></div>
-              <div class="beneficio2-2"><p>Sistema inmune</p></div>
-
-              <div class="beneficio2-3"><p>Energía diaria</p></div>
+              <div class="beneficio2-1"><p></p></div>
+              <div class="beneficio2-2"><p></p></div>
+              <div class="beneficio2-3"><p></p></div>
             </div>
-            <div class="precio"><span>$29.99</span></div>
+            <div class="precio"><span></span></div>
             <div class="comprar">
-              <button class="agregar">
+              <button class="agregar" type="button">
                 <img src="/img/carrito.png" alt="carrito" class="carrito" />
                 Agregar
               </button>
             </div>
           </div>
         </div>
+
         <div class="producto3">
           <div class="imagen1">
-            <img
-              src="/img/producto.png"
-              alt=""
-              class="productoImagen"
-              id="productoImagen3"
-            />
+            <img src="" alt="" class="productoImagen" id="productoImagen3" />
           </div>
           <div class="mitadAbajo">
-            <div class="clase" id="nombreClase3">
-              <span>Mantenimiento General</span>
-            </div>
-            <div class="nombreProducto" id="nombreProducto3">
-              <span>Vittalium Multivitamínico Premium</span>
-            </div>
-            <div class="descripcion" id="descripcionProducto3">
-              <p>Complejo vitamínico completo para salud y bienestar general</p>
-            </div>
+            <div class="clase" id="nombreClase3"><span></span></div>
+            <div class="nombreProducto" id="nombreProducto3"><span></span></div>
+            <div class="descripcion" id="descripcionProducto3"><p></p></div>
             <div class="beneficios">
-              <div class="beneficio3-1"><p>Salud general</p></div>
-              <div class="beneficio3-2"><p>Sistema inmune</p></div>
-
-              <div class="beneficio3-3"><p>Energía diaria</p></div>
+              <div class="beneficio3-1"><p></p></div>
+              <div class="beneficio3-2"><p></p></div>
+              <div class="beneficio3-3"><p></p></div>
             </div>
-            <div class="precio"><span>$29.99</span></div>
+            <div class="precio"><span></span></div>
             <div class="comprar">
-              <button class="agregar">
+              <button class="agregar" type="button">
                 <img src="/img/carrito.png" alt="carrito" class="carrito" />
                 Agregar
               </button>
@@ -169,6 +118,7 @@
           </div>
         </div>
       </div>
+
       <div class="repetir">
         <div class="preferencias">
           <p class="prefer">¿Quieres cambiar tus preferencias?</p>
@@ -177,16 +127,23 @@
           </p>
         </div>
         <div class="repetirButton">
-          <button class="repetirBoton">
+          <button class="repetirBoton" type="button">
             <img src="/img/repetirIcon.png" alt="iconRepetir" class="icon" />
             <a href="/quiz.html">Repetir Cuestionario</a>
           </button>
         </div>
-
-        <script src="/js/recomendaciones.js"></script>
-        <script src="./js/auth.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
       </div>
     </div>
+
+
+       <!-- Footer Container -->
+    <div id="footer-container"></div>
+
+    <script src="./js/navbar.js"></script>
+    <script src="./js/components.js"></script>
+
+    <script src="/js/recomendaciones.js"></script>
+        <script src="./js/auth.js"></script>
+
   </body>
 </html>

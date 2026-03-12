@@ -22,4 +22,8 @@ public interface ProductsRepository extends JpaRepository<Products, Long> {
 
     //busca productos con stock mayor a un valor
     List<Products> findByStockGreaterThan(Integer stock);
+
+
+
+    List<Products> findByProductNameContainingIgnoreCaseAndIsActive(String productName, Boolean isActive);
 }

@@ -1,7 +1,9 @@
 package com.modularminds.vittalium.controller;
 
+import com.modularminds.vittalium.dto.ProductSearchResponseDTO;
 import com.modularminds.vittalium.model.Products;
 import com.modularminds.vittalium.service.ProductsService;
+import com.modularminds.vittalium.service.RecommendationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -96,6 +98,17 @@ public class ProductsController {
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @Autowired
+    private RecommendationService recommendationService;
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductSearchResponseDTO>> searchProductsForRecommendation(
+            @RequestParam(required = false, defaultValue = "") String q
+    ) {
+        List<ProductSearchResponseDTO> response = recommendationService.searchProducts(q);
+        return ResponseEntity.ok(response);
     }
 }
 

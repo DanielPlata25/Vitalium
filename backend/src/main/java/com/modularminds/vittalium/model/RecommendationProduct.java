@@ -11,27 +11,25 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "customer")
-public class Customer {
+@Table(name = "recommendation_product")
+public class RecommendationProduct {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_customer")
-    private Long idCustomer;
+    @Column(name = "id_recommendation_product")
+    private Long idRecommendationProduct;
 
-    @Column(name = "name", nullable = false, length = 100)
-    private String name;
+    @Column(name = "id_recommendation", nullable = false)
+    private Long idRecommendation;
 
-    @Column(name = "phone", nullable = false)
-    private String phone;
+    @Column(name = "id_product", nullable = false)
+    private Long idProduct;
 
-    @Column(name = "id_user", nullable = false, unique = true)
-    private Long idUser;
+    @Column(name = "display_order", nullable = false)
+    private Integer displayOrder;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-
-    @Column(name = "quiz_points")
-    private Integer quizPoints;
 
     @PrePersist
     protected void onCreate() {
