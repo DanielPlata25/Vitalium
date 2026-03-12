@@ -10,7 +10,7 @@
     --verde-principal: #2D5A27;
     --verde-boton: #70AD47;
     --verde-claro: #A9D08E;
-    --gris-fondo: #f5f5f5;
+    --gris-fondo: #f5f5f5 ;
     --gris-texto: #6c757d;
     --negro-texto: #2d3436;
     --blanco: #ffffff;
@@ -98,7 +98,7 @@ body {
     width: 100%;
     height: 220px;
     overflow: hidden;
-    background-color: #fafafa;
+    background-color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -333,3 +333,4 @@ body {
     position: relative;
     display: inline-block;
 }
+

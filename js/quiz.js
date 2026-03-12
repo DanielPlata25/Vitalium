@@ -1,5 +1,8 @@
 
+let respuestas = [];
+let total =0;
 let numeroDePregunta = 0;
+const botonRecomendacion = document.getElementById("recomendacion");
 const botonSi = document.getElementById("si");
 const botonNo = document.getElementById("no");
 const botonAtras = document.getElementById("siguiente");
@@ -8,11 +11,10 @@ const botonAtras = document.getElementById("siguiente");
 function actualizarPregunta() {
 switch(numeroDePregunta) {
      case 0:
-  document.querySelector(".recomendaciones").style.display = "none";
-  document.querySelector(".correcto").style.display = "none";
-  document.querySelector(".texto").style.display = "none";
-  document.querySelector(".resumen").style.display = "none";
-
+     document.querySelector(".recomendaciones").style.display = "none";
+document.querySelector(".correcto").style.display = "none";
+document.querySelector(".texto").style.display = "none";
+document.querySelector(".resumen").style.display = "none";
 
 
 
@@ -61,6 +63,45 @@ switch(numeroDePregunta) {
           document.querySelector(".pregunta").textContent = "¿Sientes molestias articulares, rigidez o recuperación lenta después de entrenar?";
  break;
      case 6:
+      if (respuestas[0]==1) {
+             document.querySelector(".imagenCorrecto1").src="/img/correctoChiquito.png"
+
+      }else{
+             document.querySelector(".imagenCorrecto1").src="/img/incorrectoChiquito.png"}
+
+      if (respuestas[1]==1) {
+             document.querySelector(".imagenCorrecto2").src="/img/correctoChiquito.png"
+
+      }
+      else{
+             document.querySelector(".imagenCorrecto2").src="/img/incorrectoChiquito.png"}
+      if (respuestas[2]==1) {
+             document.querySelector(".imagenCorrecto3").src="/img/correctoChiquito.png"
+
+
+      }
+      else{
+             document.querySelector(".imagenCorrecto3").src="/img/incorrectoChiquito.png"}
+      if (respuestas[3]==1) {
+             document.querySelector(".imagenCorrecto4").src="/img/correctoChiquito.png"
+
+      }
+      else{
+             document.querySelector(".imagenCorrecto4").src="/img/incorrectoChiquito.png"}
+      if (respuestas[4]==1) {
+             document.querySelector(".imagenCorrecto5").src="/img/correctoChiquito.png"
+
+
+      }
+      else{
+             document.querySelector(".imagenCorrecto5").src="/img/incorrectoChiquito.png"}
+      if (respuestas[5]==1) {
+             document.querySelector(".imagenCorrecto6").src="/img/correctoChiquito.png"
+
+      }
+      else{
+             document.querySelector(".imagenCorrecto6").src="/img/incorrectoChiquito.png"}
+
                  document.querySelector(".container-abajo").style.height = "733px";
 
          document.querySelector(".resumen").style.display = "flex";
@@ -88,6 +129,9 @@ document.querySelector(".resumenTitulo").textContent =  "Resumen de tus respuest
  document.querySelector(".resumenTexto5").textContent =  "¿Entrenas al menos 3 veces por semana o realizas actividad física intensa?";
  document.querySelector(".resumenTexto6").textContent =  "¿Sientes molestias articulares, rigidez o recuperación lenta después de entrenar?";
 
+for(let i = 0; i < respuestas.length; i++) 
+    total+=respuestas[i];
+console.log(total);
 
          document.querySelector(".si")?.remove();     
          document.querySelector(".no")?.remove();     
@@ -96,23 +140,43 @@ document.querySelector(".resumenTitulo").textContent =  "Resumen de tus respuest
 
     break;   
 }}
+
+function si(){
+  respuestas.push(1);
+}
+function no(){
+  respuestas.push(0);
+}
+
 function avanzar() {
-   
-   
+ 
   numeroDePregunta++;
   console.log(numeroDePregunta);
   actualizarPregunta();
   
 }
 function retroceder() {
-   
-    if (numeroDePregunta <= 0) return; 
+  if (numeroDePregunta <= 0) return; 
   numeroDePregunta--;
+  respuestas.pop();                  
   console.log(numeroDePregunta);
   actualizarPregunta();
-  
 }
 
+
+
+
+function guardarDatos() {
+  
+  localStorage.setItem("respuestas", JSON.stringify(total));
+
+}
+
+
+  function abrirRecomendaciones() {
+            window.location.replace(
+                "/recomendaciones.html");
+        }
 
 let bloqueado = false;
 
@@ -127,7 +191,9 @@ function ejecutarSeguro(callback) {
   }, 120); 
 }
 
-botonSi.addEventListener("click", () => ejecutarSeguro(avanzar));
-botonNo.addEventListener("click", () => ejecutarSeguro(avanzar));
+
+botonRecomendacion.addEventListener("click", () => {guardarDatos(); abrirRecomendaciones();});
+botonSi.addEventListener("click", () => { respuestas.push(1);ejecutarSeguro(avanzar)});
+botonNo.addEventListener("click", () => { respuestas.push(0);ejecutarSeguro(avanzar)});
 botonAtras.addEventListener("click", () => ejecutarSeguro(retroceder));
 

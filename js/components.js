@@ -21,18 +21,19 @@ async function cargarComponente(ruta, contenedorId) {
 
 // Cargar navbar y footer cuando la página esté lista
 document.addEventListener('DOMContentLoaded', async () => {
-    // Cargar navbar
+    // Primero esperamos a que los componentes carguen
     await cargarComponente('./components/navbar.html', 'navbar-container');
-    
-    // Cargar footer
     await cargarComponente('./components/footer.html', 'footer-container');
     
     console.log('✅ Navbar y Footer cargados');
     
-    // 👇 AHORA SÍ inicializar el menú hamburguesa
+    // AHORA llamamos a las funciones que dependen de los elementos del DOM
     inicializarMenu();
+    gestionarSesionNavbar(); 
+    
+    
+    window.actualizarContadorCarrito();
 });
-
 // Dentro de components.js (fuera de cualquier otra función)
 window.actualizarContadorCarrito = function() {
     const badge = document.getElementById('cart-count');
@@ -156,3 +157,31 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('load', window.actualizarContadorCarrito);
+
+//--------------FUNCIÓN PARA GESTIONAR EL INICIO DE SESIÓN------------------------
+function gestionarSesionNavbar() {
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    const btnLogin = document.getElementById('btnLoginNav');
+    const userDropdown = document.getElementById('userDropdown');
+    const adminElements = document.querySelectorAll('.admin-only');
+
+    if (usuario) {
+        // Usuario logueado: ocultamos el botón de login y mostramos el menú
+        if(btnLogin) btnLogin.style.display = 'none';
+        if(userDropdown) userDropdown.style.display = 'block';
+        
+        // Verificamos el id_rol: 1 es Admin, 2 es Cliente
+        if (usuario.id_rol === 1) {
+            // Si es admin, mostramos elementos de gestión
+            adminElements.forEach(el => el.style.display = 'block');
+        } else {
+            // en otro caso los elementos de admin estén ocultos
+            adminElements.forEach(el => el.style.display = 'none');
+        }
+    } else {
+        // Usuario no logueado: aseguramos vista de invitado
+        if(btnLogin) btnLogin.style.display = 'block';
+        if(userDropdown) userDropdown.style.display = 'none';
+        adminElements.forEach(el => el.style.display = 'none');
+    }
+}

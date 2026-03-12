@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/gestion-productos.css">
+    <title>Gestion de Productos</title>
+</head>
+
+<body>
+    <main>
+        
+        <div class="volver">
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" class="flecha">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                </svg>
+                <a href="./admin-dashboard.html"> Regresar a Dashboard</a>
+            </span>
+        </div>
+
+        <div class="title-btn">
+            <h1>Gestión de Productos</h1>
+            <button class="btn-agregar">Agregar Producto</button>
+        </div>
+
+        <!-- Barra de búsqueda -->
+        <div class="search-container">
+            <div class="search-box">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="search-icon">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+                <input type="text" id="buscador" class="search-input" placeholder="Buscar producto por nombre..."
+                    autocomplete="off">
+            </div>
+        </div>
+
+        <!-- Tabla de productos -->
+        <div class="table-container">
+            <table class="productos-table">
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Descuento</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-productos-body">
+                    <!-- Los productos se cargarán dinámicamente con JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Controles de paginación -->
+        <div class="pagination-container">
+            <button class="pagination-btn" id="prevPage" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" class="pagination-icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+                Anterior
+            </button>
+            <div class="pagination-info" id="paginationInfo">
+                Página <span id="currentPage">1</span> de <span id="totalPages">1</span>
+            </div>
+            <button class="pagination-btn" id="nextPage">
+                Siguiente
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" class="pagination-icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+            </button>
+        </div>
+
+    </main>
+    <script src="./js/auth.js"></script>
+    <script src="./js/gestion-productos.js"></script>
+</body>
+
+</html>
