@@ -1,39 +1,36 @@
-redirigirSiLogueado();
-document.addEventListener('DOMContentLoaded', function () {
-    const formLogin = document.getElementById('form-login');
 
-    if (!formLogin) return;
+// login.js
+document.getElementById('form-login').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-    formLogin.addEventListener('submit', async function (e) {
-        e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const btnSubmit = e.target.querySelector('.btn-login'); 
 
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value;
-        const btnSubmit = formLogin.querySelector('.btn-login');
+    try {
+        const response = await fetch('http://localhost:8080/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
 
-        if (!email || !password) {
-            alert("Por favor completa todos los campos");
-            return;
-        }
-
-        btnSubmit.textContent = "Iniciando sesión...";
-        btnSubmit.disabled = true;
-
-        try {
-            const data = await loginAPI(email, password);
+        if (response.ok) {
+            const data = await response.json();
+            
+           
             guardarSesion(data);
-
-            // Redirigir según rol
+            
+           
             if (data.rolId === 1) {
                 window.location.href = './admin-dashboard.html';
             } else {
                 window.location.href = './index.html';
             }
-
-        } catch (error) {
-            alert(error.message || "Credenciales incorrectas");
-            btnSubmit.textContent = "Iniciar Sesión";
-            btnSubmit.disabled = false;
+        } else {
+            alert('Credenciales incorrectas');
         }
-    });
+    } catch (error) {
+        console.error('Error al conectar con Spring:', error);
+        alert('Error al conectar con el servidor');
+    }
 });
