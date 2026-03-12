@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;  // ← NUEVO
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -109,6 +110,116 @@ public class AuthServiceImpl implements AuthService {
                 customer.getIdCustomer(),
                 customer.getName(),
                 "Login exitoso"
+        );
+    }
+
+    // ====================================
+    // NUEVO: GOOGLE LOGIN
+    // ====================================
+
+    @Override
+    @Transactional
+    public AuthResponseDTO processGoogleLogin(GoogleIdToken.Payload payload) {
+        String googleId = payload.getSubject();  // ID único de Google
+        String email = payload.getEmail();
+        String name = (String) payload.get("name");  // Nombre de Google para Customer
+
+        // 1️⃣ Buscar por Google ID (recomendado)
+        User existingUser = userRepository.findByGoogleSub(googleId).orElse(null);
+
+        if (existingUser != null) {
+            // Usuario ya existe con Google
+            // Actualizar email por si cambió en Google
+            existingUser.setEmail(email);
+            userRepository.save(existingUser);
+
+            // Buscar customer asociado
+            Customer customer = customerRepository.findByIdUser(existingUser.getIdUser())
+                    .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+
+            String token = jwtUtil.generateToken(
+                    existingUser.getIdUser(),
+                    existingUser.getEmail(),
+                    existingUser.getIdRol()
+            );
+
+            return new AuthResponseDTO(
+                    token,
+                    existingUser.getIdUser(),
+                    existingUser.getEmail(),
+                    existingUser.getIdRol(),
+                    customer.getIdCustomer(),
+                    customer.getName(),
+                    "Login con Google exitoso"
+            );
+        }
+
+        // 2️⃣ Buscar por email (por si acaso)
+        User userByEmail = userRepository.findByEmail(email).orElse(null);
+
+        if (userByEmail != null) {
+            // Usuario existe localmente - vincular con Google
+            userByEmail.setGoogleSub(googleId);
+            // Mantenemos su password por si quiere seguir usando login local
+            userRepository.save(userByEmail);
+
+            // Buscar customer asociado
+            Customer customer = customerRepository.findByIdUser(userByEmail.getIdUser())
+                    .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+
+            String token = jwtUtil.generateToken(
+                    userByEmail.getIdUser(),
+                    userByEmail.getEmail(),
+                    userByEmail.getIdRol()
+            );
+
+            return new AuthResponseDTO(
+                    token,
+                    userByEmail.getIdUser(),
+                    userByEmail.getEmail(),
+                    userByEmail.getIdRol(),
+                    customer.getIdCustomer(),
+                    customer.getName(),
+                    "Cuenta local vinculada con Google"
+            );
+        }
+
+        // 3️⃣ Usuario completamente nuevo
+        // Obtener rol "Cliente"
+        Rol rolCliente = rolRepository.findById(2L)
+                .orElseThrow(() -> new RuntimeException("Rol Cliente no encontrado"));
+
+        // Crear User con datos de Google (SIN PASSWORD)
+        User newUser = new User();
+        newUser.setEmail(email);
+        newUser.setGoogleSub(googleId);
+        newUser.setIdRol(rolCliente.getIdRol());
+        // password se queda NULL para usuarios de Google
+        User savedUser = userRepository.save(newUser);
+
+        // Crear Customer con el nombre de Google
+        // El teléfono lo dejamos vacío para que lo complete después
+        Customer newCustomer = new Customer();
+        newCustomer.setName(name);  // Usamos el nombre de Google
+        newCustomer.setPhone("");   // Teléfono vacío - el usuario lo completará después
+        newCustomer.setIdUser(savedUser.getIdUser());
+        Customer savedCustomer = customerRepository.save(newCustomer);
+
+        // Generar JWT token
+        String token = jwtUtil.generateToken(
+                savedUser.getIdUser(),
+                savedUser.getEmail(),
+                savedUser.getIdRol()
+        );
+
+        return new AuthResponseDTO(
+                token,
+                savedUser.getIdUser(),
+                savedUser.getEmail(),
+                savedUser.getIdRol(),
+                savedCustomer.getIdCustomer(),
+                savedCustomer.getName(),
+                "Registro con Google exitoso"
         );
     }
 }

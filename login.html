@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="./logo.png">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
 <body>
@@ -109,7 +110,8 @@
                     Facebook
                 </button>
             </div>
-
+            <!-- 🔴 NUEVO: Contenedor para mensajes de error/éxito -->
+            <div id="login-message" style="margin-top: 15px; display: none;"></div>
             <!-- Volver al inicio -->
             <div class="login-footer">
                 <a href="index.html" class="link-home">← Volver al inicio</a>
@@ -127,6 +129,160 @@
     <script src="./js/navbar.js"></script>
     <script src="./js/login.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- 🔴 NUEVO: Script de Google Login (sin modificar tu diseño) -->
+    <script>
+        // ============================================
+        // CONFIGURACIÓN DE GOOGLE LOGIN
+        // ============================================
+        const GOOGLE_CLIENT_ID = '377149430777-bjvj9pe3p1lcrf1cjnn1if6r2967cmr5.apps.googleusercontent.com'; // ← TU CLIENT_ID
+
+        console.log('🚀 Inicializando Google Login...');
+
+        // Inicializar Google cuando carga la página
+        window.onload = function () {
+            console.log('📱 Window loaded');
+
+            if (typeof google === 'undefined') {
+                console.error('❌ Librería de Google no cargada');
+                return;
+            }
+
+            google.accounts.id.initialize({
+                client_id: GOOGLE_CLIENT_ID,
+                callback: handleGoogleResponse,
+                auto_select: false,
+                cancel_on_tap_outside: true
+            });
+
+            console.log('✅ Google inicializado correctamente');
+
+            // Vincular el botón de Google existente
+            vincularBotonGoogle();
+        };
+
+        // Función para vincular el botón de Google
+        function vincularBotonGoogle() {
+            const googleButton = document.querySelector('.btn-google');
+
+            if (googleButton) {
+                console.log('✅ Botón de Google encontrado');
+
+                googleButton.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    console.log('🟢 Click en botón de Google detectado');
+                    google.accounts.id.prompt(); // Mostrar selector de cuentas
+                });
+
+                console.log('✅ Evento click vinculado al botón de Google');
+            } else {
+                console.log('❌ Botón de Google no encontrado');
+            }
+        }
+
+        // Manejar la respuesta de Google
+        // Manejar la respuesta de Google
+        async function handleGoogleResponse(response) {
+            console.log('🔵 Respuesta de Google recibida');
+            console.log('📦 Token completo:', response);
+
+            if (response.credential) {
+                // Mostrar el token en consola
+                console.log('🆔 Token (primeros 100 chars):', response.credential.substring(0, 100));
+
+                // Decodificar el token para ver los datos
+                try {
+                    const tokenParts = response.credential.split('.');
+                    if (tokenParts.length === 3) {
+                        const payload = JSON.parse(atob(tokenParts[1]));
+                        console.log('👤 DATOS DEL USUARIO:');
+                        console.log('   - ID Google:', payload.sub);
+                        console.log('   - Email:', payload.email);
+                        console.log('   - Nombre:', payload.name);
+                        console.log('   - Foto:', payload.picture);
+                        console.log('   - Email verificado:', payload.email_verified);
+                    }
+                } catch (e) {
+                    console.log('❌ Error decodificando token:', e);
+                }
+
+                // Mostrar mensaje de carga
+                mostrarMensaje('Verificando con el servidor...', 'info');
+
+                try {
+                    // Enviar token al backend
+                    const fetchResponse = await fetch('http://localhost:8080/api/auth/google', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ token: response.credential })
+                    });
+
+                    console.log('📊 Status del servidor:', fetchResponse.status);
+                    console.log('📊 Status text:', fetchResponse.statusText);
+
+                    // 🔴 IMPORTANTE: Primero obtener el texto de la respuesta
+                    const responseText = await fetchResponse.text();
+                    console.log('📦 Respuesta del servidor (texto):', responseText);
+
+                    // Intentar parsear como JSON
+                    try {
+                        const data = JSON.parse(responseText);
+                        console.log('✅ JSON parseado correctamente:', data);
+
+                        if (fetchResponse.ok) {
+                            console.log('✅ LOGIN EXITOSO');
+                            console.log('👤 Usuario:', data);
+
+                            // Guardar datos
+                            localStorage.setItem('token', data.token);
+                            localStorage.setItem('user', JSON.stringify(data));
+
+                            mostrarMensaje('¡Login exitoso! Redirigiendo...', 'success');
+
+                            // Redirigir después de 1.5 segundos
+                            setTimeout(() => {
+                                window.location.href = 'index.html';
+                            }, 1500);
+                        } else {
+                            console.error('❌ Error del backend:', data.error);
+                            mostrarMensaje('Error: ' + (data.error || 'Error en el servidor'), 'error');
+                        }
+
+                    } catch (jsonError) {
+                        console.error('❌ Error parseando JSON:', jsonError);
+                        console.error('🔴 La respuesta NO es JSON válido');
+                        console.error('🔴 Contenido:', responseText);
+
+                        // Si la respuesta está vacía
+                        if (responseText === '') {
+                            mostrarMensaje('El servidor respondió vacío (error 500 interno)', 'error');
+                        } else {
+                            mostrarMensaje('Error: Respuesta inválida del servidor', 'error');
+                        }
+                    }
+
+                } catch (error) {
+                    console.error('🔴 Error de red:', error);
+                    mostrarMensaje('Error de conexión con el servidor', 'error');
+                }
+            } else {
+                console.error('❌ No se recibió credential');
+            }
+        }
+
+
+        // También vincular después de que el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('📄 DOM Content Loaded');
+            vincularBotonGoogle();
+        });
+
+        console.log('✅ Script de Google Login cargad');
+    </script>
 </body>
 
 </html>

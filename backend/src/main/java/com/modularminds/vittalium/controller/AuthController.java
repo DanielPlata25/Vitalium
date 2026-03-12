@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.modularminds.vittalium.service.GoogleTokenVerifier;  // ← NUEVO
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;  // ← NUEVO
+
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "*")
@@ -19,6 +22,9 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private GoogleTokenVerifier googleTokenVerifier;  // ← NUEVO
 
     // POST - Registro de usuario
     @PostMapping("/register")
@@ -43,6 +49,36 @@ public class AuthController {
             Map<String, String> error = new HashMap<>();
             error.put("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+        }
+    }
+
+    // POST - Login/Registro con Google
+    @PostMapping("/google")
+    public ResponseEntity<?> googleLogin(@RequestBody Map<String, String> request) {
+        try {
+            String token = request.get("token");
+
+            if (token == null || token.isEmpty()) {
+                return ResponseEntity.badRequest().body(Map.of("error", "Token no proporcionado"));
+            }
+
+            // Verificar token con Google
+            GoogleIdToken.Payload payload = googleTokenVerifier.verifyToken(token);
+
+            if (payload == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("error", "Token de Google inválido"));
+            }
+
+            // Procesar usuario de Google (buscar o crear)
+            AuthResponseDTO response = authService.processGoogleLogin(payload);
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Error procesando login con Google: " + e.getMessage()));
         }
     }
 }

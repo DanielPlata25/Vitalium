@@ -1,5 +1,5 @@
 package com.modularminds.vittalium.service;
-
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;  // ← NUEVO
 import com.modularminds.vittalium.dto.AuthResponseDTO;
 import com.modularminds.vittalium.dto.LoginDTO;
 import com.modularminds.vittalium.dto.RegisterDTO;
@@ -14,4 +14,7 @@ public interface AuthService {
     //login (valida credenciales)
     //Map<String, Object> login(String email, String password);
     AuthResponseDTO login(LoginDTO loginDTO);
+
+    // 🔴 NUEVO: Procesar login con Google
+    AuthResponseDTO processGoogleLogin(GoogleIdToken.Payload payload);
 }

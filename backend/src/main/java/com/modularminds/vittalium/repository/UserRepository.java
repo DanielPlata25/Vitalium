@@ -13,4 +13,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     //verifica si existe un email
     Boolean existsByEmail(String email);
+
+    // 🔴 NUEVO: Busca usuario por Google Sub (ID de Google)
+    Optional<User> findByGoogleSub(String googleSub);
 }

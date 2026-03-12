@@ -38,6 +38,16 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // 🔴 NUEVAS DEPENDENCIAS PARA GOOGLE LOGIN 🔴
+    // Spring Security (lo tenías comentado, lo activamos)
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // OAuth2 Client para manejar el login con Google
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    // Google API Client para verificar tokens
+    implementation 'com.google.api-client:google-api-client:2.2.0'
 }
 
 tasks.named('test') {
