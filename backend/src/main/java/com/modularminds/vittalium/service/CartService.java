@@ -22,7 +22,7 @@ public class CartService   {
 
         //VERIFICAMOS SI ESE PRODUCTO YA ESTA EN EL CARRITO DEL CUSTOMER
         Optional<Cart> existing = cartRepository
-                .findByIdCustomerAndProductIdProduct(idCustomer,idProduct);
+                .findByIdCustomerAndIdProduct(idCustomer,idProduct);
 
         if (existing.isPresent()){
             //AQUI SUMAMOS LA CANTIDAD

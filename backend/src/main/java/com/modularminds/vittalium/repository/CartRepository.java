@@ -11,7 +11,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     List<Cart> findByIdCustomer(Long idCustomer);
 
     //VERIFICA SI YA EXISTE ESE PRODUCTO EN EL CARRITO
-    Optional<Cart> findByIdCustomerAndProductIdProduct(
+    Optional<Cart> findByIdCustomerAndIdProduct(
             Long idCustomer, Long idProduct
     );
 }

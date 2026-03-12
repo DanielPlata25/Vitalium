@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/api/cart")
+@RequestMapping(path = "/api")
 @AllArgsConstructor
 
 public class CartController {
@@ -15,7 +15,7 @@ public class CartController {
     //DEPENDENCIA
     private final CartService cartService;
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "/cart/add")
     public ResponseEntity<Cart> addItem(
             @RequestParam Long idCustomer,
             @RequestParam Long idProduct,
