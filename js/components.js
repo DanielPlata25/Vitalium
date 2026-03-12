@@ -23,13 +23,12 @@ window.actualizarContadorCarrito = function() {
     badge.textContent = totalItems;
     badge.style.display = totalItems > 0 ? 'flex' : 'none';
     
-    // Si tienes una clase CSS para animación, la activamos aquí
     if (totalItems > 0) {
         badge.classList.add('animar-badge');
     }
 };
 
-// 3. Inicialización centralizada
+// 3. Inicialización centralizada (CORREGIDA)
 document.addEventListener('DOMContentLoaded', async () => {
     // Cargamos primero el navbar y footer
     await cargarComponente('./components/navbar.html', 'navbar-container');
@@ -37,12 +36,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     console.log('✅ Componentes base cargados');
 
-    // Ahora que el DOM está listo, ejecutamos las funciones de lógica
+    // Actualizar contador del carrito
     window.actualizarContadorCarrito();
     
-    // Llamamos a la gestión de sesión que definiste en auth.js
-    if (typeof gestionarSesionNavbar === 'function') {
-        gestionarSesionNavbar();
+    // LLAMADA CORREGIDA: usar actualizarNavbarSesion en lugar de gestionarSesionNavbar
+    if (typeof window.actualizarNavbarSesion === 'function') {
+        window.actualizarNavbarSesion();
+    } else {
+        console.warn('⚠️ función actualizarNavbarSesion no encontrada');
     }
 });
 

@@ -19,27 +19,31 @@
             </ul>
 
             <div class="d-flex align-items-center gap-2">
+                <!-- Dropdown de usuario (visible cuando hay sesión iniciada) -->
                 <div class="dropdown" id="userDropdown" style="display: none;">
                     <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user me-1"></i> <span class="navbar-usuario-nombre">Cuenta</span>
+                        <i class="fas fa-user me-1"></i> <span id="usuarioNombre" class="navbar-usuario-nombre">Cuenta</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                         <li><a class="dropdown-item" href="../perfil.html"><i class="fas fa-user-circle me-2"></i>Mi Perfil</a></li>
-                        <div class="admin-only" style="display: none;">
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="../admin-dashboard.html"><i class="fas fa-cog me-2"></i>Admin Dashboard</a></li>
-                            <li><a class="dropdown-item" href="../productos.html"><i class="fas fa-box me-2"></i>Gestionar Productos</a></li>
-                            <li><a class="dropdown-item" href="../recomendaciones.html"><i class="fas fa-clipboard-list me-2"></i>Recomendaciones</a></li>
-                        </div>
+                        
+                        <!-- Opciones solo para admin (se mostrarán/ocultarán con JS) -->
+                        <li class="admin-only" style="display: none;"><hr class="dropdown-divider"></li>
+                        <li class="admin-only" style="display: none;"><a class="dropdown-item" href="../admin-dashboard.html"><i class="fas fa-cog me-2"></i>Admin Dashboard</a></li>
+                        <li class="admin-only" style="display: none;"><a class="dropdown-item" href="../productos.html"><i class="fas fa-box me-2"></i>Gestionar Productos</a></li>
+                        <li class="admin-only" style="display: none;"><a class="dropdown-item" href="../recomendaciones.html"><i class="fas fa-clipboard-list me-2"></i>Recomendaciones</a></li>
+                        
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger btn-cerrar-sesion" href="#"><i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</a></li>
+                        <li><a class="dropdown-item text-danger" href="#" id="btnCerrarSesion"><i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</a></li>
                     </ul>
                 </div>
 
-                <a href="../login.html" class="btn btn-outline-light btn-iniciar-sesion">
+                <!-- Botón de iniciar sesión (visible cuando NO hay sesión) -->
+                <a href="../login.html" class="btn btn-outline-light" id="btnIniciarSesion">
                     <i class="fas fa-user me-1"></i>Iniciar Sesión
                 </a>
 
+                <!-- Carrito (visible solo para usuarios normales con sesión) -->
                 <div id="cartContainer" style="display: none;">
                     <a href="../carrito.html" class="btn btn-outline-light position-relative">
                         <i class="fas fa-shopping-cart me-1"></i>Carrito

@@ -24,6 +24,7 @@ function obtenerToken() {
 function cerrarSesion() {
     localStorage.removeItem('vittalium_token');
     localStorage.removeItem('vittalium_user');
+    actualizarNavbarSesion(); // Actualizar navbar inmediatamente
     window.location.href = './index.html';
 }
 
@@ -118,43 +119,55 @@ function logout() {
     cerrarSesion();
 }
 
-// ACTUALIZAR NAVBAR SEGÚN SESIÓN
-
+// ACTUALIZAR NAVBAR SEGÚN SESIÓN (VERSIÓN CORREGIDA)
 function actualizarNavbarSesion() {
     const user = obtenerSesion();
-    const btnIniciarSesion = document.querySelector('.btn-iniciar-sesion');
-    const btnCerrarSesion = document.querySelector('.btn-cerrar-sesion');
-    const nombreUsuario = document.querySelector('.navbar-usuario-nombre');
+    
+    // Elementos del navbar
+    const userDropdown = document.getElementById('userDropdown');
+    const btnIniciarSesion = document.getElementById('btnIniciarSesion');
+    const nombreUsuario = document.getElementById('usuarioNombre');
     const cartContainer = document.getElementById('cartContainer');
     const adminOnlyElements = document.querySelectorAll('.admin-only');
+    const btnCerrarSesion = document.getElementById('btnCerrarSesion');
 
     if (user) {
-        // --- LÓGICA DE USUARIO LOGUEADO ---
+        // --- USUARIO LOGUEADO ---
+        if (userDropdown) userDropdown.style.display = 'block';
         if (btnIniciarSesion) btnIniciarSesion.style.display = 'none';
-        if (btnCerrarSesion) {
-            btnCerrarSesion.style.display = 'inline-block';
-            btnCerrarSesion.removeEventListener('click', cerrarSesion); // Limpiar previos
-            btnCerrarSesion.addEventListener('click', cerrarSesion);
-        }
         if (nombreUsuario) nombreUsuario.textContent = user.customerName || user.email;
 
-        // Lógica de roles (Carrito vs Admin)
+        // Configurar evento de cerrar sesión
+        if (btnCerrarSesion) {
+            btnCerrarSesion.removeEventListener('click', cerrarSesion);
+            btnCerrarSesion.addEventListener('click', (e) => {
+                e.preventDefault();
+                cerrarSesion();
+            });
+        }
+
+        // Lógica de roles
         if (user.rolId === 1) {
-            // Es Administrador
-            cartContainer.style.display = 'none';
+            // ADMIN: no ve carrito, ve opciones de admin
+            if (cartContainer) cartContainer.style.display = 'none';
             adminOnlyElements.forEach(el => el.style.display = 'block');
         } else {
-            // Es Cliente
-            cartContainer.style.display = 'block';
+            // CLIENTE: ve carrito, no ve opciones de admin
+            if (cartContainer) cartContainer.style.display = 'block';
             adminOnlyElements.forEach(el => el.style.display = 'none');
+            
+            // Actualizar contador del carrito
+            if (typeof window.actualizarContadorCarrito === 'function') {
+                window.actualizarContadorCarrito();
+            }
         }
     } else {
-        // --- LÓGICA DE USUARIO NO LOGUEADO (Invitado) ---
-        if (btnIniciarSesion) btnIniciarSesion.style.display = 'inline-block';
-        if (btnCerrarSesion) btnCerrarSesion.style.display = 'none';
+        // --- USUARIO NO LOGUEADO ---
+        if (userDropdown) userDropdown.style.display = 'none';
+        if (btnIniciarSesion) btnIniciarSesion.style.display = 'block';
         if (cartContainer) cartContainer.style.display = 'none';
         adminOnlyElements.forEach(el => el.style.display = 'none');
-        if (nombreUsuario) nombreUsuario.textContent = '';
+        if (nombreUsuario) nombreUsuario.textContent = 'Cuenta';
     }
 }
 
@@ -170,4 +183,7 @@ function redirigirSiLogueado() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', actualizarNavbarSesion);
+// EXPONER FUNCIÓN GLOBALMENTE
+window.actualizarNavbarSesion = actualizarNavbarSesion;
+window.cerrarSesion = cerrarSesion;
+
