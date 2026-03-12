@@ -85,12 +85,15 @@
     background-color: #629f5a;
     color: white;
     border: none;
-    padding: 15px;
+    padding: 9px;
     border-radius: 8px;
     font-size: 16px;
-    font-weight: bold;
+    font-weight:normal;
     cursor: pointer;
     margin-top: 20px;
+    transition: transform 0.2s;
+    cursor: pointer;
+
 }
 
 .resumen-pago {
@@ -108,7 +111,7 @@
 }
 
 .detalles-pago #envio-val{
-    color:#385934;
+    color:#527b4e;
     float: right;
     
 }
@@ -172,16 +175,17 @@
 .btn-eliminar {
     background: none;      /* Quita el fondo gris */
     border: none;          /* Quita el borde */
-    padding: 0 !important;            /* Quita el espacio interno */
     cursor: pointer;       /* Hace que aparezca la manita al pasar el mouse */
     display: flex;         /* Ayuda a centrar el icono */
     align-items:flex-end;
     transition: transform 0.2s; /* Opcional: para un efecto suave */
     width: 20px;
-    position:initial;
     top: 10px;
-    right: 10px;
-    float: right;
+    overflow: hidden;
+    right: 15px;
+    float: left;
+    
+
 }
 
 /* Opcional: que el bote se haga un poquito más grande al pasar el mouse */
@@ -190,10 +194,8 @@
 }
 
 .precio-unitario{
-    float: left;
-
-}
-.precio-total{
+    color: #629f5a;
+    font-size:xx-large;
 
 }
 

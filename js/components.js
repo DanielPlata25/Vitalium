@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Cargar footer
     await cargarComponente('./components/footer.html', 'footer-container');
     
-    console.log('✅ Navbar y Footer cargados');
+    //console.log('✅ Navbar y Footer cargados');
     
     // 👇 AHORA SÍ inicializar el menú hamburguesa
     inicializarMenu();
@@ -64,7 +64,7 @@ function inicializarMenu() {
     
     // Verificar que existan los elementos
     if (!menuBtn || !navLinks) {
-        console.error('No se encontró el botón o los links del menú');
+        //console.error('No se encontró el botón o los links del menú');
         actualizarContadorCarrito();
         return;
     }
