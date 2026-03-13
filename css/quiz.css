@@ -10,7 +10,10 @@ body {
   background: linear-gradient(to bottom, #2D5A27, #70AD47, #A9D08E);
   font-family: 'Inter', sans-serif;
 }
-
+a {
+    text-decoration: none;
+    color: inherit;
+}
 .container-total {
   display: flex;
   justify-content: center;
