@@ -24,18 +24,18 @@
                 </div>
             </div>
             <div class="container_RecomendacionesDerecha">
-                <button class="botonRestaurar">Restaurar por defecto</button>
-                <button class="botonGuardar">Guardar cambios</button>
+                <button class="botonRestaurar" type="button">Restaurar por defecto</button>
+                <button class="botonGuardar" type="button">Guardar cambios</button>
             </div>
         </div>
 
         <div class="container_ComoFuncionaTotal">
             <div class="containerImagenI"></div>
             <div class="containerTextoCF">
-                <strong>¿Cómo funciona?</strong> Cada categoría corresponde a una o más preguntas del cuestionario de salud.
-                Cuando el usuario responde "Sí" a una pregunta, se le muestran los productos asignados a esa categoría.
-                Puedes agregar o quitar productos de cada categoría libremente. Actualmente hay
-                <strong>16 productos asignados</strong> en total.
+                <strong>¿Cómo funciona?</strong> Cada categoría corresponde a un puntaje exacto del cuestionario.
+                Cuando el usuario obtiene ese puntaje, se le muestran los productos asignados a esa recomendación.
+                Puedes agregar o quitar productos libremente. El máximo por recomendación es de
+                <strong>3 productos</strong>.
             </div>
         </div>
 
@@ -47,44 +47,44 @@
 
                     <div class="categoria-item active" data-categoria="equilibrio-vital">
                         <span class="cat-icon">⚖️</span>
-                        <span class="cat-nombre">Equilibrio Vital, 1 Punto</span>
-                        <span class="cat-badge">2</span>
+                        <span class="cat-nombre">Equilibrio Vital, 0 puntos</span>
+                        <span class="cat-badge">0</span>
                     </div>
 
                     <div class="categoria-item" data-categoria="bienestar-interior">
                         <span class="cat-icon">🌿</span>
-                        <span class="cat-nombre">Bienestar Interior, 2 puntos</span>
-                        <span class="cat-badge">2</span>
+                        <span class="cat-nombre">Bienestar Interior, 1 punto</span>
+                        <span class="cat-badge">0</span>
                     </div>
 
                     <div class="categoria-item" data-categoria="control-energia">
                         <span class="cat-icon">⚡</span>
-                        <span class="cat-nombre">Control & Balance Energía, 3 puntos</span>
-                        <span class="cat-badge">2</span>
+                        <span class="cat-nombre">Control & Balance Energía, 2 puntos</span>
+                        <span class="cat-badge">0</span>
                     </div>
 
                     <div class="categoria-item" data-categoria="control-estres">
                         <span class="cat-icon">🔺</span>
-                        <span class="cat-nombre">Control & Balance Estrés, 4 puntos</span>
-                        <span class="cat-badge">2</span>
+                        <span class="cat-nombre">Control & Balance Estrés, 3 puntos</span>
+                        <span class="cat-badge">0</span>
                     </div>
 
                     <div class="categoria-item" data-categoria="rendimiento">
                         <span class="cat-icon">🏋️</span>
-                        <span class="cat-nombre">Rendimiento, 5 puntos</span>
-                        <span class="cat-badge">3</span>
+                        <span class="cat-nombre">Rendimiento, 4 puntos</span>
+                        <span class="cat-badge">0</span>
                     </div>
 
                     <div class="categoria-item" data-categoria="movimiento-articular">
                         <span class="cat-icon">🔧</span>
-                        <span class="cat-nombre">Movimiento Articular, 6 puntos</span>
-                        <span class="cat-badge">2</span>
+                        <span class="cat-nombre">Movimiento Articular, 5 puntos</span>
+                        <span class="cat-badge">0</span>
                     </div>
 
                     <div class="categoria-item" data-categoria="mantenimiento-general">
                         <span class="cat-icon">🌟</span>
-                        <span class="cat-nombre">Mantenimiento General, 7 puntos</span>
-                        <span class="cat-badge">3</span>
+                        <span class="cat-nombre">Mantenimiento General, 6 puntos</span>
+                        <span class="cat-badge">0</span>
                     </div>
 
                 </div>
@@ -96,73 +96,28 @@
                     <div class="container_Clases">
                         <div class="container_ClaseImagen" id="imagenChiquita">⚖️</div>
                         <div class="container_ClaseTexto">
-                            <h2 id="tituloCategoria">Equilibrio Vital</h2>
-                            <p id="subtituloCategoria">2 productos asignados</p>
+                            <h2 id="tituloCategoria">Equilibrio Vital, 0 puntos</h2>
+                            <p id="subtituloCategoria">0 productos asignados</p>
                         </div>
                     </div>
-                    <button class="agregarProducto" id="btnAgregar">Agregar producto</button>
-                      <button class="cancelar" id="btnCancelar">X Cancelar</button>
+                    <button class="agregarProducto" id="btnAgregar" type="button">Agregar producto</button>
+                    <button class="cancelar" id="btnCancelar" type="button">X Cancelar</button>
                 </div>
-
 
                 <div class="container_ProductosAsignados1" id="panelAgregar">
                     <h3>+ Seleccionar productos para agregar</h3>
-                      <input type="text" placeholder="Buscar por nombre o categoría..." class="buscador">
-                    <div class="insertar-grid" id="insertar-grid">
-                        <div class="insertar-grid-imagen"> <img src="img/digestionPlaceholder.png" alt="" class="imagenGrid"></div>
-                        <div class="insertar-grid-detalles">
-                            <div class="insertar-grid-nombre">Vittalium Digestión Plus</div>
-                            <div class="insertar-grid-categoria">Bienestar Interior</div>
-                            <div class="insertar-grid-precio">$29.99</div>
-                        </div>
-                    </div>
+                    <input
+                        type="text"
+                        placeholder="Buscar por nombre o categoría..."
+                        class="buscador"
+                        id="buscadorProductos"
+                    >
+                    <div id="insertar-grid-lista"></div>
                 </div>
 
                 <div class="container_ProductosAsignados">
-                    <h3 id="productosAsignados">Productos asignados a "Equilibrio Vital"</h3>
-                    <div class="productosAsignados">
-                        <div class="producto1"> 
-                <div class="imagen1"> <img src="/img/producto.png" alt="" class="productoImagen"  id="productoImagen1"></div>
-                <div class="mitadAbajo">
-                    <div class="clase" id="nombreClase1"><span>Mantenimiento General</span></div>
-                    <div class="nombreProducto" id="nombreProducto1"><span>Vittalium Multivitamínico Premium</span></div>
-                    <div class="precios">
-                    <div class="precio"><span>$29.99</span></div>
-                    <img src="/img/borrar.png" alt="borrar" class="borrar" id="borrar1"></div>
-              
-                    </div>
-                </div>   
-               <div class="producto1"> 
-                <div class="imagen1"> <img src="/img/producto.png" alt="" class="productoImagen"  id="productoImagen1"></div>
-                <div class="mitadAbajo">
-                    <div class="clase" id="nombreClase1"><span>Mantenimiento General</span></div>
-                    <div class="nombreProducto" id="nombreProducto1"><span>Vittalium Multivitamínico Premium</span></div>
-                    <div class="precios">
-                    <div class="precio"><span>$29.99</span></div>
-                    <img src="/img/borrar.png" alt="borrar" class="borrar" id="borrar1"></div>
-              
-                    </div>
-                </div> 
- <div class="producto1"> 
-                <div class="imagen1"> <img src="/img/producto.png" alt="" class="productoImagen"  id="productoImagen1"></div>
-                <div class="mitadAbajo">
-                    <div class="clase" id="nombreClase1"><span>Mantenimiento General</span></div>
-                    <div class="nombreProducto" id="nombreProducto1"><span>Vittalium Multivitamínico Premium</span></div>
-                    <div class="precios">
-                    <div class="precio"><span>$29.99</span></div>
-                    <img src="/img/borrar.png" alt="borrar" class="borrar" id="borrar1"></div>
-              
-                    </div>
-                </div> 
-
-
-
-
-            </div> 
-
-
-
-
+                    <h3 id="productosAsignados">Productos asignados a "Equilibrio Vital, 0 puntos"</h3>
+                    <div class="productosAsignados" id="productosAsignadosLista"></div>
                 </div>
 
                 <div class="container_Resumen">
@@ -177,97 +132,56 @@
                             </tr>
                         </thead>
                         <tbody id="resumen-tbody">
-                            
-                            <tr  class="categoria-item2 active" data-categoria="equilibrio-vital">
-                              
-                        <td >Equilibrio Vital</td>
-                        <td> <span  class="productos"> 2</span> </td>
-                        <td class="categoriaResumenPadre"><span class="categoriaResumen"> Control Glucémico</span>
-                        <span class="categoriaResumen"> Cardio Balance</span>
-                        </td> 
-                        <td class="editar"> Editar</td> </tr>
 
-                       
-                           <tr class="categoria-item2" data-categoria="bienestar-interior">
-                     
+                            <tr class="categoria-item2 active" data-categoria="equilibrio-vital">
+                                <td>Equilibrio Vital</td>
+                                <td><span class="productos">0</span></td>
+                                <td class="categoriaResumenPadre"></td>
+                                <td class="editar">Editar</td>
+                            </tr>
 
-                        <td>Bienestar Interior</td>
-                        <td> <span  class="productos"> 2</span> </td>
-                        <td class="categoriaResumenPadre"><span class="categoriaResumen"> Control Glucémico</span>
-                        <span class="categoriaResumen"> Cardio Balance</span>
-                        </td>
-                        <td class="editar"> Editar</td>
-                     </tr>
-                                           
-   
-                        <tr class="categoria-item2" data-categoria="control-energia">
-                             
-                        <td>Control Energia</td>
-                        <td> <span  class="productos"> 2</span> </td>
-                        <td class="categoriaResumenPadre"><span class="categoriaResumen"> Control Glucémico</span>
-                        <span class="categoriaResumen"> Cardio Balance</span>
-                        </td>
-                        <td class="editar"> Editar</td>
-                    
-                </tr> 
+                            <tr class="categoria-item2" data-categoria="bienestar-interior">
+                                <td>Bienestar Interior</td>
+                                <td><span class="productos">0</span></td>
+                                <td class="categoriaResumenPadre"></td>
+                                <td class="editar">Editar</td>
+                            </tr>
 
+                            <tr class="categoria-item2" data-categoria="control-energia">
+                                <td>Control Energía</td>
+                                <td><span class="productos">0</span></td>
+                                <td class="categoriaResumenPadre"></td>
+                                <td class="editar">Editar</td>
+                            </tr>
 
+                            <tr class="categoria-item2" data-categoria="control-estres">
+                                <td>Control Estrés</td>
+                                <td><span class="productos">0</span></td>
+                                <td class="categoriaResumenPadre"></td>
+                                <td class="editar">Editar</td>
+                            </tr>
 
+                            <tr class="categoria-item2" data-categoria="rendimiento">
+                                <td>Rendimiento</td>
+                                <td><span class="productos">0</span></td>
+                                <td class="categoriaResumenPadre"></td>
+                                <td class="editar">Editar</td>
+                            </tr>
 
+                            <tr class="categoria-item2" data-categoria="movimiento-articular">
+                                <td>Movimiento Articular</td>
+                                <td><span class="productos">0</span></td>
+                                <td class="categoriaResumenPadre"></td>
+                                <td class="editar">Editar</td>
+                            </tr>
 
-                                            
-                           <tr class="categoria-item2" data-categoria="control-estres">
-                            
-                        <td>Control Estrés</td>
-                        <td> <span  class="productos"> 2</span> </td>
-                        <td class="categoriaResumenPadre"><span class="categoriaResumen"> Control Glucémico</span>
-                        <span class="categoriaResumen"> Cardio Balance</span>
-                        </td>
-                        <td class="editar"> Editar</td> 
-               
-                    </tr> 
-                           
-                        
+                            <tr class="categoria-item2" data-categoria="mantenimiento-general">
+                                <td>Mantenimiento General</td>
+                                <td><span class="productos">0</span></td>
+                                <td class="categoriaResumenPadre"></td>
+                                <td class="editar">Editar</td>
+                            </tr>
 
-                           <tr class="categoria-item2" data-categoria="rendimiento">
-                            
-                                            
-                        <td>Rendimiento</td>
-                        <td> <span  class="productos"> 2</span> </td>
-                        <td class="categoriaResumenPadre"><span class="categoriaResumen"> Control Glucémico</span>
-                        <span class="categoriaResumen"> Cardio Balance</span>
-                        </td>
-                        <td class="editar"> Editar</td> </tr>  
-
-
-
-                                           
-
-                           <tr class="categoria-item2" data-categoria="movimiento-articular">
-                             
-                        <td>Movimiento Articular</td>
-                        <td> <span  class="productos"> 2</span> </td>
-                        <td class="categoriaResumenPadre"><span class="categoriaResumen"> Control Glucémico</span>
-                        <span class="categoriaResumen"> Cardio Balance</span>
-                        </td>
-                        <td class="editar"> Editar</td> </tr> 
-
-
-
-
-
-                   
-
-
-
-                           <tr class="categoria-item2" data-categoria="mantenimiento-general">
-                            
-                        <td>Mantenimiento general</td>
-                        <td> <span  class="productos"> 2</span> </td>
-                        <td class="categoriaResumenPadre"><span class="categoriaResumen"> Control Glucémico</span>
-                        <span class="categoriaResumen"> Cardio Balance</span>
-                        </td>
-                        <td class="editar"> Editar</td> </tr>  
                         </tbody>
                     </table>
                 </div>
@@ -279,8 +193,6 @@
             <a href="#">Volver al Dashboard</a>
         </div>
 
-
-     
         <script src="./js/navbar.js"></script>
         <script src="./js/auth.js"></script>
         <script src="./js/components.js"></script>

@@ -1,143 +1,186 @@
-const respuestasGuardadas = Number(JSON.parse(localStorage.getItem("respuestas")));
-console.log(respuestasGuardadas);
+document.addEventListener("DOMContentLoaded", async () => {
+  const respuestasGuardadas = Number(JSON.parse(localStorage.getItem("respuestas")));
+  console.log("Puntaje recuperado:", respuestasGuardadas);
 
-// ========= 0 a 2 mantenimiento  =========
-if (respuestasGuardadas >= 0 && respuestasGuardadas <= 2) {
+  function redirigirAlQuizConMensaje() {
+    document.body.innerHTML = `
+      <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:Arial,sans-serif;background:#f7f7f7;">
+        <div style="background:white;padding:32px 40px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,0.08);text-align:center;max-width:420px;">
+          <h2 style="margin-bottom:12px;">Primero realiza el quizz</h2>
+          <p style="margin-bottom:0;color:#555;">Te estamos redirigiendo para que completes tu evaluación y podamos mostrarte recomendaciones personalizadas.</p>
+        </div>
+      </div>
+    `;
 
-  // ===== PRODUCTO 1 =====
-  document.getElementById("productoImagen1").src = "";
-  document.getElementById("nombreClase1").textContent = "";
-  document.getElementById("nombreProducto1").textContent = "";
-  document.getElementById("descripcionProducto1").textContent = "";
+    setTimeout(() => {
+      window.location.href = "/quiz.html";
+    }, 1800);
+  }
 
-  document.querySelector(".producto1 .beneficio1 p").textContent = "";
-  document.querySelector(".producto1 .beneficio2 p").textContent = "";
-  document.querySelector(".producto1 .beneficio3 p").textContent = "";
+  function limpiarCard(numero) {
+    document.getElementById(`productoImagen${numero}`).src = "";
+    document.getElementById(`productoImagen${numero}`).alt = "";
+    document.getElementById(`nombreClase${numero}`).textContent = "";
+    document.getElementById(`nombreProducto${numero}`).textContent = "";
+    document.getElementById(`descripcionProducto${numero}`).textContent = "";
+    document.querySelector(`.producto${numero} .precio span`).textContent = "";
 
-  document.querySelector(".producto1 .precio span").textContent = "";
-  document.querySelector(".producto1 .agregar").innerHTML =
-    `<img src="/img/carrito.png" alt="carrito" class="carrito"> ` + "";
+    const beneficiosMap = {
+      1: [".beneficio1 p", ".beneficio2 p", ".beneficio3 p"],
+      2: [".beneficio2-1 p", ".beneficio2-2 p", ".beneficio2-3 p"],
+      3: [".beneficio3-1 p", ".beneficio3-2 p", ".beneficio3-3 p"]
+    };
 
-  // ===== PRODUCTO 2 =====
-  document.getElementById("productoImagen2").src = "";
-  document.getElementById("nombreClase2").textContent = "";
-  document.getElementById("nombreProducto2").textContent = "";
-  document.getElementById("descripcionProducto2").textContent = "";
+    beneficiosMap[numero].forEach((selector) => {
+      const el = document.querySelector(`.producto${numero} ${selector}`);
+      if (el) el.textContent = "";
+    });
+  }
 
-  document.querySelector(".producto2 .beneficio2-1 p").textContent = "";
-  document.querySelector(".producto2 .beneficio2-2 p").textContent = "";
-  document.querySelector(".producto2 .beneficio2-3 p").textContent = "";
+  function renderCard(numero, product) {
+  if (!product) {
+    limpiarCard(numero);
+    return;
+  }
 
-  document.querySelector(".producto2 .precio span").textContent = "";
-  document.querySelector(".producto2 .agregar").innerHTML =
-    `<img src="/img/carrito.png" alt="carrito" class="carrito"> ` + "";
+  const img = document.getElementById(`productoImagen${numero}`);
+  const nombreClase = document.getElementById(`nombreClase${numero}`);
+  const nombreProducto = document.getElementById(`nombreProducto${numero}`);
+  const descripcionProducto = document.getElementById(`descripcionProducto${numero}`);
+  const precio = document.querySelector(`.producto${numero} .precio span`);
+  const botonAgregar = document.querySelector(`.producto${numero} .agregar`);
 
-  // ===== PRODUCTO 3 =====
-  document.getElementById("productoImagen3").src = "";
-  document.getElementById("nombreClase3").textContent = "";
-  document.getElementById("nombreProducto3").textContent = "";
-  document.getElementById("descripcionProducto3").textContent = "";
+  img.src = product.imageUrl || "/img/producto.png";
+  img.alt = product.productName || "producto";
+  nombreClase.textContent = "Recomendado para ti";
+  nombreProducto.textContent = product.productName || "";
+  descripcionProducto.textContent = product.description || "";
+  precio.textContent = product.price != null ? `$${product.price}` : "";
 
-  document.querySelector(".producto3 .beneficio3-1 p").textContent = "";
-  document.querySelector(".producto3 .beneficio3-2 p").textContent = "";
-  document.querySelector(".producto3 .beneficio3-3 p").textContent = "";
+  if (botonAgregar) {
+    botonAgregar.setAttribute("data-producto", product.productName || "");
+    botonAgregar.setAttribute("data-precio", product.price ?? 0);
+    botonAgregar.setAttribute("data-img", product.imageUrl || "/img/producto.png");
+  }
 
-  document.querySelector(".producto3 .precio span").textContent = "";
-  document.querySelector(".producto3 .agregar").innerHTML =
-    `<img src="/img/carrito.png" alt="carrito" class="carrito"> ` + "";
+  const beneficiosMap = {
+    1: [".beneficio1 p", ".beneficio2 p", ".beneficio3 p"],
+    2: [".beneficio2-1 p", ".beneficio2-2 p", ".beneficio2-3 p"],
+    3: [".beneficio3-1 p", ".beneficio3-2 p", ".beneficio3-3 p"]
+  };
 
+  const beneficios = [];
+  if (product.description) beneficios.push(product.description);
+  if (product.price != null) beneficios.push("Precio accesible");
+  beneficios.push("Producto recomendado");
 
-// ========= 3 a 4 =========
-} else if (respuestasGuardadas >= 3 && respuestasGuardadas <= 4) {
+  beneficiosMap[numero].forEach((selector, index) => {
+    const el = document.querySelector(`.producto${numero} ${selector}`);
+    if (el) {
+      el.textContent = beneficios[index] || "";
+    }
+  });
+}
 
-  // ===== PRODUCTO 1 =====
-  document.getElementById("productoImagen1").src = "";
-  document.getElementById("nombreClase1").textContent = "";
-  document.getElementById("nombreProducto1").textContent = "";
-  document.getElementById("descripcionProducto1").textContent = "";
+  if (isNaN(respuestasGuardadas)) {
+    redirigirAlQuizConMensaje();
+    return;
+  }
 
-  document.querySelector(".producto1 .beneficio1 p").textContent = "";
-  document.querySelector(".producto1 .beneficio2 p").textContent = "";
-  document.querySelector(".producto1 .beneficio3 p").textContent = "";
+  try {
+    const response = await fetch(
+      `http://localhost:8080/api/recommendations/by-points?points=${respuestasGuardadas}`
+    );
 
-  document.querySelector(".producto1 .precio span").textContent = "";
-  document.querySelector(".producto1 .agregar").innerHTML =
-    `<img src="/img/carrito.png" alt="carrito" class="carrito"> ` + "";
+    console.log("Status response:", response.status);
 
-  // ===== PRODUCTO 2 =====
-  document.getElementById("productoImagen2").src = "";
-  document.getElementById("nombreClase2").textContent = "";
-  document.getElementById("nombreProducto2").textContent = "";
-  document.getElementById("descripcionProducto2").textContent = "";
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Error backend recomendaciones:", response.status, errorText);
+      alert(`No se pudieron cargar las recomendaciones. Status: ${response.status}`);
+      return;
+    }
 
-  document.querySelector(".producto2 .beneficio2-1 p").textContent = "";
-  document.querySelector(".producto2 .beneficio2-2 p").textContent = "";
-  document.querySelector(".producto2 .beneficio2-3 p").textContent = "";
+    const data = await response.json();
+    console.log("Recomendaciones:", data);
 
-  document.querySelector(".producto2 .precio span").textContent = "";
-  document.querySelector(".producto2 .agregar").innerHTML =
-    `<img src="/img/carrito.png" alt="carrito" class="carrito"> ` + "";
+    // Pintar nombre de recomendación
+    const nombreRecomendacion = document.getElementById("nombreRecomendacion");
+    const nombreRecomendacionTexto = document.getElementById("nombreRecomendacionTexto");
 
-  // ===== PRODUCTO 3 =====
-  document.getElementById("productoImagen3").src = "";
-  document.getElementById("nombreClase3").textContent = "";
-  document.getElementById("nombreProducto3").textContent = "";
-  document.getElementById("descripcionProducto3").textContent = "";
+    if (nombreRecomendacion) {
+      nombreRecomendacion.textContent = data.recommendationName || "Recomendación personalizada";
+    }
 
-  document.querySelector(".producto3 .beneficio3-1 p").textContent = "";
-  document.querySelector(".producto3 .beneficio3-2 p").textContent = "";
-  document.querySelector(".producto3 .beneficio3-3 p").textContent = "";
+    if (nombreRecomendacionTexto) {
+      nombreRecomendacionTexto.textContent = data.recommendationName || "Recomendación personalizada";
+    }
 
-  document.querySelector(".producto3 .precio span").textContent = "";
-  document.querySelector(".producto3 .agregar").innerHTML =
-    `<img src="/img/carrito.png" alt="carrito" class="carrito"> ` + "";
+    // Pintar cards
+   const products = data.products || [];
 
+renderCard(1, products[0]);
+renderCard(2, products[1]);
+renderCard(3, products[2]);
 
-// ========= 5 a 6 =========
-} else if (respuestasGuardadas >= 5 && respuestasGuardadas <= 6) {
+inicializarBotonesAgregarRecomendaciones();
+actualizarContadorCarrito();
 
-  // ===== PRODUCTO 1 =====
-  document.getElementById("productoImagen1").src = "";
-  document.getElementById("nombreClase1").textContent = "";
-  document.getElementById("nombreProducto1").textContent = "";
-  document.getElementById("descripcionProducto1").textContent = "";
+  } catch (error) {
+    console.error("Error fetch recomendaciones:", error);
+    alert("Ocurrió un error al conectar con el backend.");
+  }
+});
+function agregarAlCarrito(productoNuevo) {
+  let carrito = JSON.parse(localStorage.getItem("vittalium_cart")) || [];
+  const existe = carrito.find(item => item.name === productoNuevo.name);
 
-  document.querySelector(".producto1 .beneficio1 p").textContent = "";
-  document.querySelector(".producto1 .beneficio2 p").textContent = "";
-  document.querySelector(".producto1 .beneficio3 p").textContent = "";
+  if (existe) {
+    existe.quantity += 1;
+  } else {
+    carrito.push(productoNuevo);
+  }
 
-  document.querySelector(".producto1 .precio span").textContent = "";
-  document.querySelector(".producto1 .agregar").innerHTML =
-    `<img src="/img/carrito.png" alt="carrito" class="carrito"> ` + "";
+  localStorage.setItem("vittalium_cart", JSON.stringify(carrito));
 
-  // ===== PRODUCTO 2 =====
-  document.getElementById("productoImagen2").src = "";
-  document.getElementById("nombreClase2").textContent = "";
-  document.getElementById("nombreProducto2").textContent = "";
-  document.getElementById("descripcionProducto2").textContent = "";
+  if (typeof actualizarContadorCarrito === "function") {
+    actualizarContadorCarrito();
+  }
 
-  document.querySelector(".producto2 .beneficio2-1 p").textContent = "";
-  document.querySelector(".producto2 .beneficio2-2 p").textContent = "";
-  document.querySelector(".producto2 .beneficio2-3 p").textContent = "";
+  console.log("Carrito actualizado:", productoNuevo.name);
+}
 
-  document.querySelector(".producto2 .precio span").textContent = "";
-  document.querySelector(".producto2 .agregar").innerHTML =
-    `<img src="/img/carrito.png" alt="carrito" class="carrito"> ` + "";
+function actualizarContadorCarrito() {
+  const badge = document.getElementById("cart-count");
+  if (!badge) return;
 
-  // ===== PRODUCTO 3 =====
-  document.getElementById("productoImagen3").src = "";
-  document.getElementById("nombreClase3").textContent = "";
-  document.getElementById("nombreProducto3").textContent = "";
-  document.getElementById("descripcionProducto3").textContent = "";
+  const carrito = JSON.parse(localStorage.getItem("vittalium_cart")) || [];
+  const totalItems = carrito.reduce((acc, item) => acc + item.quantity, 0);
 
-  document.querySelector(".producto3 .beneficio3-1 p").textContent = "";
-  document.querySelector(".producto3 .beneficio3-2 p").textContent = "";
-  document.querySelector(".producto3 .beneficio3-3 p").textContent = "";
+  badge.textContent = totalItems;
+  badge.style.display = totalItems > 0 ? "flex" : "none";
+}
 
-  document.querySelector(".producto3 .precio span").textContent = "";
-  document.querySelector(".producto3 .agregar").innerHTML =
-    `<img src="/img/carrito.png" alt="carrito" class="carrito"> ` + "";
+function inicializarBotonesAgregarRecomendaciones() {
+  const botones = document.querySelectorAll(".agregar");
 
-} else {
-  console.warn("Puntaje fuera de rango o no existe en localStorage:", respuestasGuardadas);
+  botones.forEach((boton) => {
+    boton.addEventListener("click", (e) => {
+      const nombreProducto = e.currentTarget.getAttribute("data-producto");
+      const precioProducto = Number(e.currentTarget.getAttribute("data-precio"));
+      const imagenProducto = e.currentTarget.getAttribute("data-img");
+
+      if (!nombreProducto) {
+        alert("No se encontró el producto.");
+        return;
+      }
+
+      agregarAlCarrito({
+        name: nombreProducto,
+        price: precioProducto,
+        img: imagenProducto || "https://placehold.co/300x300?text=Sin+imagen",
+        quantity: 1
+      });
+    });
+  });
 }
