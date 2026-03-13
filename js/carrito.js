@@ -98,3 +98,35 @@ function actualizarResumen(subtotal) {
         console.warn("No se pudieron actualizar los totales. Revisa los IDs en el HTML.");
     }
 }
+// Seleccionamos el botón
+const btnPago = document.querySelector('.btn-pago');
+
+// Este método funciona aunque el botón se cree después de cargar la página
+// Este método funciona aunque el botón se cree después de cargar la página
+document.addEventListener('click', function (event) {
+    // Verifica si lo que tocaste es el botón de pago
+    if (event.target && event.target.textContent.includes('Proceder al Pago')) {
+        
+        // Lanzamos SweetAlert2
+        Swal.fire({
+            title: '¡Gracias por su compra!',
+            text: 'Tu pedido en Vittalium ha sido procesado.',
+            icon: 'success',
+            confirmButtonColor: '#7ab356',
+            confirmButtonText: 'Genial'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Limpiamos el carrito del storage
+                localStorage.removeItem('vittalium_cart');
+                
+                // Actualizamos el contador del navbar
+                if (window.actualizarContadorCarrito) {
+                    window.actualizarContadorCarrito();
+                }
+
+                // Redirigimos
+                window.location.href = 'index.html';
+            }
+        });
+    }
+});
