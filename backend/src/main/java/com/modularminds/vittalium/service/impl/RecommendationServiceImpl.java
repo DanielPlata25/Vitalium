@@ -10,6 +10,7 @@ import com.modularminds.vittalium.repository.ProductsRepository;
 import com.modularminds.vittalium.repository.RecommendationProductRepository;
 import com.modularminds.vittalium.repository.RecommendationRepository;
 import com.modularminds.vittalium.service.RecommendationService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -90,6 +91,7 @@ public class RecommendationServiceImpl implements RecommendationService {
     }
 
     @Override
+    @Transactional
     public void updateRecommendationProductsByPoints(Integer points, List<Long> productIds) {
         if (productIds == null) {
             throw new RuntimeException("La lista de productos no puede ser nula");
@@ -102,7 +104,7 @@ public class RecommendationServiceImpl implements RecommendationService {
         Recommendation recommendation = recommendationRepository.findByPointsAndIsActiveTrue(points)
                 .orElseThrow(() -> new RuntimeException("No se encontró la recomendación para el puntaje: " + points));
 
-        recommendationProductRepository.deleteByIdRecommendation(recommendation.getIdRecommendation());
+        recommendationProductRepository.deleteAllByIdRecommendation(recommendation.getIdRecommendation());
 
         for (int i = 0; i < productIds.size(); i++) {
             Long productId = productIds.get(i);
