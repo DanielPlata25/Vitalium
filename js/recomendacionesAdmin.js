@@ -25,6 +25,7 @@ let categoriaActual = null;
 let puntosActuales = null;
 let productosBusqueda = [];
 let productosSeleccionados = [];
+let guardando = false;
 
 btnCancelar.style.display = "none";
 panelAgregar.style.display = "none";
@@ -39,6 +40,14 @@ function cerrarEdicion() {
   btnAgregar.style.display = "";
   btnCancelar.style.display = "none";
   panelAgregar.style.display = "none";
+}
+
+function normalizarProducto(producto) {
+  return {
+    ...producto,
+    idProduct: Number(producto.idProduct),
+    price: producto.price != null ? Number(producto.price) : null
+  };
 }
 
 function actualizarBadgeYCabecera() {
@@ -65,9 +74,7 @@ function actualizarBadgeYCabecera() {
     const nombres = categoriaResumen.querySelector(".categoriaResumenPadre");
     if (nombres) {
       nombres.innerHTML = productosSeleccionados
-        .map(
-          (p) => `<span class="categoriaResumen">${p.productName}</span>`
-        )
+        .map((p) => `<span class="categoriaResumen">${p.productName}</span>`)
         .join("");
     }
   }
@@ -109,6 +116,7 @@ function renderProductosAsignados() {
             alt="borrar" 
             class="borrar" 
             data-index="${index}"
+            role="button"
           >
         </div>
       </div>
@@ -120,6 +128,8 @@ function renderProductosAsignados() {
   contenedorAsignados.querySelectorAll(".borrar").forEach((btn) => {
     btn.addEventListener("click", () => {
       const index = Number(btn.dataset.index);
+
+      if (Number.isNaN(index)) return;
 
       productosSeleccionados.splice(index, 1);
 
@@ -173,10 +183,7 @@ function renderBusqueda() {
           return;
         }
 
-        productosSeleccionados.push({
-          ...product,
-          idProduct: Number(product.idProduct)
-        });
+        productosSeleccionados.push(normalizarProducto(product));
 
         actualizarBadgeYCabecera();
         renderProductosAsignados();
@@ -201,10 +208,11 @@ async function buscarProductos(query = "") {
       throw new Error("No se pudieron cargar productos");
     }
 
-    productosBusqueda = (await response.json()).map((p) => ({
-      ...p,
-      idProduct: Number(p.idProduct)
-    }));
+    const data = await response.json();
+
+    productosBusqueda = Array.isArray(data)
+      ? data.map(normalizarProducto)
+      : [];
 
     renderBusqueda();
   } catch (error) {
@@ -225,10 +233,9 @@ async function cargarRecomendacionPorPuntos(points) {
 
     const data = await response.json();
 
-    productosSeleccionados = (data.products || []).map((p) => ({
-      ...p,
-      idProduct: Number(p.idProduct)
-    }));
+    productosSeleccionados = Array.isArray(data.products)
+      ? data.products.map(normalizarProducto)
+      : [];
 
     actualizarBadgeYCabecera();
     renderProductosAsignados();
@@ -288,7 +295,17 @@ async function guardarCambios() {
     return;
   }
 
+  if (guardando) return;
+  guardando = true;
+  btnGuardar.disabled = true;
+
   try {
+    const idsAGuardar = productosSeleccionados
+      .map((p) => Number(p.idProduct))
+      .filter((id) => !Number.isNaN(id));
+
+    console.log("Guardando productos:", idsAGuardar);
+
     const response = await fetch(
       `http://localhost:8080/api/recommendations/by-points/${puntosActuales}/products`,
       {
@@ -297,7 +314,7 @@ async function guardarCambios() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          productIds: productosSeleccionados.map((p) => Number(p.idProduct))
+          productIds: idsAGuardar
         })
       }
     );
@@ -305,16 +322,20 @@ async function guardarCambios() {
     const data = await response.json();
 
     if (!response.ok) {
+      console.error("Error backend al guardar:", data);
       alert(data.error || "No se pudieron guardar los cambios.");
       return;
     }
 
     alert("Productos asignados guardados correctamente.");
-    cerrarEdicion();
     await cargarRecomendacionPorPuntos(puntosActuales);
+    cerrarEdicion();
   } catch (error) {
     console.error("Error guardando recomendación:", error);
     alert("Ocurrió un error al guardar.");
+  } finally {
+    guardando = false;
+    btnGuardar.disabled = false;
   }
 }
 
