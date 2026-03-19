@@ -80,7 +80,7 @@
 }
 
 /* Botón Proceder al Pago (Verde de Figma) */
-.btn-proceder {
+.btnPago {
     width: 100%;
     background-color: #629f5a;
     color: white;
@@ -91,9 +91,25 @@
     font-weight:normal;
     cursor: pointer;
     margin-top: 20px;
-    transition: transform 0.2s;
     cursor: pointer;
+}
 
+@keyframes saltar {
+    0% { transform: translateY(0); }
+    40% { transform: translateY(-20px); }
+    60% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+.btnPago:hover{
+    background-color: #8bc36a; /* Un verde un poco más claro */
+    transform: translateY(-3px); /* El botón "sube" un poquito */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* La sombra crece */
+}
+
+.btnPago:active {
+    transform: translateY(0); /* El botón baja cuando lo presionas */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .resumen-pago {

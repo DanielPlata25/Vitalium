@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Vitalium.iml" filepath="$PROJECT_DIR$/.idea/Vitalium.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/vittalium.main.iml" filepath="$PROJECT_DIR$/.idea/modules/vittalium.main.iml" />
     </modules>
   </component>
 </project>
